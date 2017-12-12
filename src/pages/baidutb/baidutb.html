@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>课堂演练</ion-title>
+  </ion-navbar>
+  <ion-navbar>
+    <ion-title style="height: 10px">
+      <img src="assets/img/tuceng-28.png">百度贴吧
+      <div style="float: right">
+      <img src="assets/img/tuceng-29.png" />
+      <img src="assets/img/tuceng-30.png" />
+      </div>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="cards-bg social-cards">
+  <ion-card *ngFor="let item of items">
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="{{item.tx_img}}">
+      </ion-avatar>
+      <h2>{{item.name}}</h2>
+      <p>{{item.floor}} | {{item.time}}</p>
+    </ion-item>
+    <img src="{{item.nr_src}}">
+    <ion-card-content>
+      <p>{{item.nr}}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-input  type="text" style="border: 1px"></ion-input>
+  </ion-toolbar>
+</ion-footer>
