@@ -20,7 +20,7 @@ export class MapPage {
 
   ionViewDidLoad() {
 
-      this.confData.getMap().subscribe((mapData: any) => {
+        this.confData.getMap().subscribe((mapData: any) => {
         let mapEle = this.mapElement.nativeElement;
 
         let map = new google.maps.Map(mapEle, {
