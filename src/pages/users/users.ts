@@ -13,6 +13,7 @@ import { UpdatePage } from '../update/update'
 import { LoginsPage } from '../logins/logins'
 import {ProxyHttpService} from "../../providers/proxy.http.service";
 import {UserData} from "../../providers/user-data";
+import {Base64} from "@ionic-native/base64";
 @IonicPage()
 @Component({
   selector: 'page-users',
@@ -29,6 +30,7 @@ export class UsersPage {
               public actionSheetCtrl: ActionSheetController,
               public alertCtrl: AlertController,
               public imagePicker: ImagePicker,
+              private base64: Base64,
               public camera: Camera,
               public userData:UserData,
               public http: ProxyHttpService,
@@ -37,8 +39,8 @@ export class UsersPage {
   ) {
     this.userData.getUsername().then(value => this.name=value)
     this.phone = navParams.get('phone');
-    this.userId = navParams.get('userId');
-    this.imagepath = navParams.get('imagepath');
+    this.userData.getUserID().then(value => this.userId=value)
+
   }
   goChangePhone(){
     this.navCtrl.push(PhonePage, {userId: this.userId});
@@ -58,17 +60,21 @@ export class UsersPage {
     let url;
     this.userData.getAvatar().then(value => {
       url=value;
+
+
+
+      if(!url||url.length==0){
+        this.avatar = "assets/img/header.png";
+      }else{
+        this.avatar=url;
+        this.showToast('bottom',this.avatar);
+      }
+
+
+
     })
 
-    if(url == '' || url == null|| url == '\\files\\Head\\crisisUser.png'){
-      this.avatar = "assets/img/header.png";
-    }else{
-      this.avatar=ProxyHttpService.IP_PORT+url;
-    }
-    let alert = this.alertCtrl.create({title: "上传失败", message: this.avatar, buttons: ["确定"]});
-    alert.present().then(value => {
-      return value;
-    });
+
   }
 
   presentActionSheet() {
@@ -99,16 +105,20 @@ export class UsersPage {
     });
   }
 
-  imgAdd(){
-    const params = {img: this.avatar, imgpath: this.imagepath , userId: this.userId}
+  imgAdd(data){
+    const params = {img: data, imgpath:"" , userId: this.userId}
+
     let loading = this.loadingCtrl.create({
       content: '上传中...'
     });
+    loading.present()
     this.http.updateHeadPic(params).subscribe(res => {
       if(res['code'] == 0){
         loading.dismiss();
         this.showToast('bottom', res['msg']);
-        this.avatar = res['ImgUrl'];
+        this.userData.setAvatar(ProxyHttpService.IP_PORT+ res['ImgUrl'])
+
+        // this.avatar =ProxyHttpService.IP_PORT+ res['ImgUrl'];
       }else{
         loading.dismiss();
         this.showToast('bottom', res['msg']);
@@ -127,8 +137,16 @@ export class UsersPage {
 
     this.camera.getPicture(options).then(image => {
       console.log('Image URI: ' + image);
+
       this.avatar = image.slice(7);
-      this.imgAdd();
+
+      let filePath: string = this.avatar
+      this.base64.encodeFile(filePath).then((base64File: string) => {
+        this.imgAdd(base64File);
+      }, (err) => {
+        console.log(err);
+      });
+
     }, error => {
       console.log('Error: ' + error);
     });
@@ -145,8 +163,14 @@ export class UsersPage {
         this.presentAlert();
       } else if (images.length === 1) {
         console.log('Image URI: ' + images[0]);
+
         this.avatar = images[0].slice(7);
-        this.imgAdd();
+        let filePath: string = this.avatar
+        this.base64.encodeFile(filePath).then((base64File: string) => {
+          this.imgAdd(base64File);
+        }, (err) => {
+          console.log(err);
+        });
       }
     }, error => {
       console.log('Error: ' + error);

@@ -89,4 +89,5 @@
         <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="cordova-plugin-speechrecognition" spec="^1.2.0" />
+    <plugin name="com-badrit-base64" spec="^0.2.0" />
 </widget>

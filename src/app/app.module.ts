@@ -41,6 +41,7 @@ import {IndexPage} from "../pages/index/index";
 import {ClassroomPage} from "../pages/classroom/classroom";
 import {GroupingPage} from "../pages/grouping/grouping";
 import {DecisionPage} from "../pages/decision/decision";
+import {Base64} from "@ionic-native/base64";
 import {RecordsPage} from "../pages/records/records";
 
 import {BaidutbPage} from "../pages/baidutb/baidutb";
@@ -145,6 +146,7 @@ import {BaidutbPage} from "../pages/baidutb/baidutb";
     UserData,
     InAppBrowser,
     Camera,
+    Base64,
     ImagePicker,
     SplashScreen
   ]
