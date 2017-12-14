@@ -13,6 +13,9 @@ export class SimulationPage {
   userId;
   noDate;
   list = [];
+  spinner1: boolean = true;
+  hasmore = true;
+  pageNo = 1;
   local = 'http://192.168.0.52:8080/files/ProjectImg/';
 
   constructor(public navCtrl: NavController,
@@ -21,17 +24,32 @@ export class SimulationPage {
               public navParams: NavParams) {
     this.userData.getUserID().then(value => this.userId=value)
   }
-
   ionViewWillEnter(){
     const params = {u_id: this.userId}
     this.http.getSimulationList(params).subscribe(res => {
       this.list = res['list'];
-      if(res['list'].length == 0){
-        this.noDate = '暂无数据';
-      }
+      this.pageNo += 1;
+      this.spinner1 = false;
     });
   }
-
+  doInfinite(infiniteScroll) {
+    if (this.hasmore == false) {
+      infiniteScroll.complete();
+      return;
+    }
+    console.log('this.pageNo',this.pageNo)
+    const params = {u_id: this.userId}
+    this.http.getSimulationList(params).subscribe(res => {
+      if (res['list'].length  > 0) {
+        this.list = this.list.concat(res['list']);
+        this.pageNo += 1;
+      } else {
+        this.hasmore = false;
+        console.log("没有数据啦！");
+      }
+      infiniteScroll.complete();
+    });
+  }
   getList(){
     this.navCtrl.push(SimulationListPage);
   }

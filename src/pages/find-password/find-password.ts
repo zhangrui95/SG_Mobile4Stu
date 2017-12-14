@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import {IonicPage, LoadingController, NavController, ToastController} from 'ionic-angular';
 import { findPassword } from '../../interfaces/user-options';
 import {ProxyHttpService} from "../../providers/proxy.http.service";
+import {LoginsPage} from "../logins/logins";
 
 @IonicPage()
 @Component({
@@ -78,5 +79,9 @@ export class FindPasswordPage {
     if (form.valid) {
 
     }
+  }
+
+  goLogin(){
+    this.navCtrl.push(LoginsPage);
   }
 }
