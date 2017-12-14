@@ -87,7 +87,7 @@ import {GradePage} from "../pages/grade/grade";
     BaidutbPage,
     FindPasswordPage,
     TounaofbPage,
-    DanmuPage
+    DanmuPage,
     FindPasswordPage,
     GradePage
   ],
@@ -126,7 +126,7 @@ import {GradePage} from "../pages/grade/grade";
         { component: SimulationPage, name: 'SimulationPage', segment: 'simulation' },
         { component: SimulationListPage, name: 'SimulationListPage', segment: 'simulationList' },
         { component: TounaofbPage, name: 'TounaofbPage', segment: 'tounaofb' },
-        { component: DanmuPage, name: 'DanmuPage', segment: 'danmu' }
+        { component: DanmuPage, name: 'DanmuPage', segment: 'danmu' },
         { component: GradePage, name: 'GradePage', segment: 'grade' },
       ]
     }),
@@ -166,7 +166,7 @@ import {GradePage} from "../pages/grade/grade";
     SimulationListPage,
     FindPasswordPage,
     TounaofbPage,
-    DanmuPage
+    DanmuPage,
     FindPasswordPage,
     GradePage
   ],
