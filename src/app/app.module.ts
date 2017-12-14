@@ -46,6 +46,8 @@ import {RecordsPage} from "../pages/records/records";
 import {SimulationPage} from "../pages/simulation/simulation";
 
 import {BaidutbPage} from "../pages/baidutb/baidutb";
+import {TounaofbPage} from "../pages/tounaofb/tounaofb";
+import {DanmuPage} from "../pages/danmu/danmu";
 import {FindPasswordPage} from "../pages/find-password/find-password";
 import {BarcodeScanner} from "@ionic-native/barcode-scanner";
 import {SimulationListPage} from "../pages/simulation-list/simulation-list";
@@ -82,7 +84,9 @@ import {RecordsListPage} from "../pages/records-list/records-list";
     RecordsListPage,
     IndexPage,
     BaidutbPage,
-    FindPasswordPage
+    FindPasswordPage,
+    TounaofbPage,
+    DanmuPage
   ],
   imports: [
     BrowserModule,
@@ -118,6 +122,8 @@ import {RecordsListPage} from "../pages/records-list/records-list";
         { component: BaidutbPage, name: 'BaidutbPage', segment: 'baidutb' },
         { component: SimulationPage, name: 'SimulationPage', segment: 'simulation' },
         { component: SimulationListPage, name: 'SimulationListPage', segment: 'simulationList' },
+        { component: TounaofbPage, name: 'TounaofbPage', segment: 'tounaofb' },
+        { component: DanmuPage, name: 'DanmuPage', segment: 'danmu' }
       ]
     }),
     IonicStorageModule.forRoot()
@@ -154,7 +160,9 @@ import {RecordsListPage} from "../pages/records-list/records-list";
     BaidutbPage,
     SimulationPage,
     SimulationListPage,
-    FindPasswordPage
+    FindPasswordPage,
+    TounaofbPage,
+    DanmuPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
