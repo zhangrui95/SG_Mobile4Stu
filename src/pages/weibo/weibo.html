@@ -6,44 +6,46 @@
 
 
 <ion-content>
-<div class="top-div">全部微博(42330)</div>
 
+    <div class="top-div" style="position:fixed;width: 100%;">全部微博(42330)</div>
 
-<div class="box1">
-  <div class="hea-div"><img class="head-image" [src]="avatar" ></div>
-  <div class="wb-name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;新浪微博
-    <span class="right-div">》</span>
-  <br/>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">37分钟前 &nbsp;&nbsp;来自专业版微博平台</span>
-  </div>
-</div>
+  <div style="margin: 30px 1% 30% 1%">
+    <div class="box1">
+      <div class="hea-div"><img class="head-image" [src]="avatar"></div>
+      <div class="wb-name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;新浪微博
+        <span class="right-div">》</span>
+        <br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">37分钟前 &nbsp;&nbsp;来自专业版微博平台</span>
+      </div>
+    </div>
 
-  <br/>
-  <div class="zw">
-    【正在直播】：中国留学生中国留学生中国留学生中国留学生中国留学生中国留学生中国留学生中国留学生中国留学生中国留学生中国留学生中国留学生中国留学生
-    中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留
-    中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留
-    <span class="font-blue"> #看看直播# 看看新闻KNEWS的微博直播 </span>
-  </div>
-  <div class="zw">
-    <img class="head-img2" [src]="videoimg" >
-  </div>
-  <hr/>
+    <br/>
+    <div class="zw">
+      【正在直播】：中国留学生中国留学生中国留学生中国留学生中国留学生中国留学生中国留学生中国留学生中国留学生中国留学生中国留学生中国留学生中国留学生
+      中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留
+      中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留中国留
+      <span class="font-blue"> #看看直播# 看看新闻KNEWS的微博直播 </span>
+    </div>
+    <div class="zw">
+      <img class="head-img2" [src]="videoimg">
+    </div>
+    <hr/>
 
-  <div class="box2">
-    <span>1300</span>
-    <span>2万</span>
-    <span>8000</span>
-  </div>
-  <div class="box1">
-    <div class="hea-div"><img class="head-image" [src]="avatar" ></div>
-    <div class="wb-name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CURRY 005
-      <span class="right-div"></span>
-      <br/>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">第1楼 |&nbsp;&nbsp;今天14:53</span>
+    <div class="box2">
+      <span>1300</span>
+      <span>2万</span>
+      <span>8000</span>
+    </div>
+    <div style="background-color: #EFEFEF;height: 15px;margin-left: -5%;"></div>
+    <div class="box1">
+      <div class="hea-div"><img class="head-image" [src]="avatar"></div>
+      <div class="wb-name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CURRY 005
+        <span class="right-div"></span>
+        <br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">第1楼 |&nbsp;&nbsp;今天14:53</span>
+      </div>
     </div>
   </div>
-
   <div *ngIf="isShow">
     <div
       style="background-color: #000;position:fixed;left: 30%;top: 38%;height: 20%;width: 40%;opacity: 0.6;border-radius: 5px; "></div>
@@ -55,11 +57,12 @@
   </div>
   <div style="position:fixed;bottom: 0px;background-color: #EFEFEF;width: 100%;">
     <img src="{{src}}" height="38" width="52"
-         style="display:inline-block;margin: 0px 10px -14px 10px;" (touchstart)="mousedownd();" (touchend)="mouseup();"/>
+         style="display:inline-block;margin: 0px 10px -14px 10px;" (touchstart)="mousedownd();"
+         (touchend)="mouseup();"/>
     <input type="text"
            style="height:40px;display:inline-block;margin: 10px 10px 8px -1px;vertical-align:top; border-radius:5px; border: 0;width:215px"/>
     <button
-            style="background-color: #2D3451;color: white;width:70px;height: 40px;display:inline-block;margin: 10px 5px 5px 1px;border-radius:5px">
+      style="background-color: #2D3451;color: white;width:70px;height: 40px;display:inline-block;margin: 10px 5px 5px 1px;border-radius:5px">
       发送
     </button>
   </div>

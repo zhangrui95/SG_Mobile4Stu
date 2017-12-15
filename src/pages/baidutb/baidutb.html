@@ -13,21 +13,30 @@
     <img src="assets/img/tuceng-29x2.png" height="28" width="24"
          style="float:right;display:inline-block;margin:2px 25px 0px 0px"/>
   </div>
-  <div style="margin: 0px -10px 68px -10px">
-    <h2 style="font-weight: 400;margin: 55px 0px 20px 27px">事件名称</h2>
-    <ion-card *ngFor="let item of items">
-      <ion-item>
-        <ion-avatar item-start>
-          <img src="{{item.tx_img}}" >
-        </ion-avatar>
-        <h2>{{item.name}}</h2>
-        <p>{{item.floor}} | {{item.time}}</p>
-      </ion-item>
-      <img src="{{item.nr_src}}" style="padding-left: 5%;padding-right: 5%;">
-      <ion-card-content>
+  <div style="margin: 0px 0px 40px 3%">
+    <h2 style="font-weight: 400;margin: 55px 0px 6px 5px">事件名称</h2>
+    <div *ngFor="let item of items" >
+      <div >
+        <div class="hea-div"><img style=" height: 50px;width: 50px;" src="{{item.tx_img}}"></div>
+        <div class="wb-name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.name}}
+          <span class="right-div"></span>
+          <br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">{{item.floor}} | {{item.time}}</span>
+        </div>
+      </div>
+      <!--<ion-item>-->
+        <!--<ion-avatar item-start >-->
+          <!--<img src="{{item.tx_img}}">-->
+        <!--</ion-avatar>-->
+        <!--<h2>{{item.name}}</h2>-->
+        <!--<p>{{item.floor}} | {{item.time}}</p>-->
+      <!--</ion-item>-->
+      <img src="{{item.nr_src}}" style="padding-left: 1%;padding-right: 4%;">
+      <div>
         <p>{{item.nr}}</p>
-      </ion-card-content>
-    </ion-card>
+      </div>
+      <div style="background-color: #EFEFEF;height: 15px;margin-left: -5%;"></div>
+    </div>
   </div>
   <div *ngIf="isShow">
     <div
@@ -40,7 +49,8 @@
   </div>
   <div style="position:fixed;bottom: 0px;background-color: #EFEFEF;width: 100%;">
     <img src="{{src}}" height="38" width="52"
-         style="display:inline-block;margin: 0px 10px -14px 10px;" (touchstart)="mousedownd();" (touchend)="mouseup();"/>
+         style="display:inline-block;margin: 0px 10px -14px 10px;" (touchstart)="mousedownd();"
+         (touchend)="mouseup();"/>
     <input type="text"
            style="height:40px;display:inline-block;margin: 10px 10px 8px -1px;vertical-align:top; border-radius:5px; border: 0;width:215px"/>
     <button (click)="send();"

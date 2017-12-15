@@ -5,27 +5,30 @@
 </ion-header>
 
 <ion-content class="cards-bg social-cards">
-  <div style="margin: -10px -10px 68px -10px">
-    <ion-card style="padding-top: 20px;padding-left: 5%;padding-right: 5%;padding-bottom: 30px;">
+  <div style="margin: 0px 0px 40px 3%">
+    <div style="padding-top: 20px;padding-left: 5%;padding-right: 5%;padding-bottom: 30px;">
       <label style="margin-bottom: 20px;display: inline-block;font-size: medium">
         该网帖在论坛中引发了多人评论，引起了小部分网友的关注。该网帖在论坛中引发了多人评论，引起了小部分网友的关注。该网帖在论坛中引发了多人评论，引起了小部分网友的关注。
       </label>
       <img src="assets/img/speakers/mouse.jpg"/>
-    </ion-card>
 
-    <ion-card *ngFor="let item of items">
-      <ion-item>
-        <ion-avatar item-start>
-          <img src="{{item.tx_img}}">
-        </ion-avatar>
-        <h2>{{item.name}}</h2>
-        <p>{{item.floor}} | {{item.time}}</p>
-      </ion-item>
+    </div>
+    <div style="background-color: #EFEFEF;height: 15px;margin-left: -5%;"></div>
+    <div *ngFor="let item of items">
+      <div >
+        <div style="padding-left: 1%;padding-top: 15px;float: left;"><img style=" height: 50px;width: 50px;" src="{{item.tx_img}}"></div>
+        <div style="padding-top: 15px;align-self:center;line-height: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.name}}
+          <span class="right-div"></span>
+          <br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">{{item.floor}} | {{item.time}}</span>
+        </div>
+      </div>
       <img src="{{item.nr_src}}">
-      <ion-card-content>
+      <div>
         <p>{{item.nr}}</p>
-      </ion-card-content>
-    </ion-card>
+      </div>
+      <div style="background-color: #EFEFEF;height: 15px;margin-left: -5%;"></div>
+    </div>
   </div>
   <div *ngIf="isShow">
     <div
