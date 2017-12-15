@@ -5,14 +5,19 @@
 </ion-header>
 
 <ion-content>
+  <div class="no-date">{{noDate}}</div>
   <ion-list inset>
-    <ion-item *ngFor="let item of list">
+    <ion-item *ngFor="let item of list" (click)="getList()">
       <ion-thumbnail item-start>
-        <img src="{{item.img}}">
+        <img src="{{local}}{{item.p_image}}"/>
       </ion-thumbnail>
-      <h2>{{item.name}}</h2>
-      <p>{{item.time}}</p>
+      <h2>{{item.p_name}}</h2>
+      <p>{{item.createtime}}</p>
       <ion-icon class="img-icon-go" name="ios-arrow-forward" item-end></ion-icon>
     </ion-item>
   </ion-list>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载更多...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

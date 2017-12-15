@@ -1,19 +1,12 @@
 <ion-header>
   <ion-navbar color="dark">
     <ion-title>2017年食品汞超标事件</ion-title>
-    <img (click)="goGrouping()" src="assets/img/icon5.png" class="header-img"/>
+    <img src="assets/img/user.png" class="head-img head-top" (click)="getUser()"/>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-list no-lines  class="border-left">
-    <div class="list" (click)="goGrouping()">
-      <img src="assets/img/icon3.png"/>
-      <button ion-item>
-        分组
-        <ion-icon class="icon-forward" name="ios-arrow-forward"  item-end></ion-icon>
-      </button>
-    </div>
     <div class="list" *ngFor="let item of items" (click)="goPage(item.type)">
       <img src="assets/img/icon3.png"/>
       <button ion-item>

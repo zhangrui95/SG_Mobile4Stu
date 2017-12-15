@@ -25,8 +25,6 @@ import { TabsPage } from '../pages/tabs-page/tabs-page';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SupportPage } from '../pages/support/support';
 import { UsersPage } from '../pages/users/users';
-import { WeiBoPage } from '../pages/weibo/weibo';
-import { QQPage } from '../pages/qq/qq';
 import { PhonePage } from '../pages/phone/phone'
 import { PasswordPage } from '../pages/password/password';
 import { UpdatePage } from "../pages/update/update";
@@ -48,6 +46,13 @@ import {RecordsPage} from "../pages/records/records";
 import {SimulationPage} from "../pages/simulation/simulation";
 
 import {BaidutbPage} from "../pages/baidutb/baidutb";
+import {TounaofbPage} from "../pages/tounaofb/tounaofb";
+import {DanmuPage} from "../pages/danmu/danmu";
+import {FindPasswordPage} from "../pages/find-password/find-password";
+import {BarcodeScanner} from "@ionic-native/barcode-scanner";
+import {SimulationListPage} from "../pages/simulation-list/simulation-list";
+import {RecordsListPage} from "../pages/records-list/records-list";
+import {GradePage} from "../pages/grade/grade";
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -75,11 +80,16 @@ import {BaidutbPage} from "../pages/baidutb/baidutb";
     DecisionPage,
     GroupingPage,
     SimulationPage,
+    SimulationListPage,
     RecordsPage,
+    RecordsListPage,
     IndexPage,
     BaidutbPage,
-    WeiBoPage,
-    QQPage
+    FindPasswordPage,
+    TounaofbPage,
+    DanmuPage,
+    FindPasswordPage,
+    GradePage
   ],
   imports: [
     BrowserModule,
@@ -110,10 +120,14 @@ import {BaidutbPage} from "../pages/baidutb/baidutb";
         { component: DecisionPage, name: 'DecisionPage', segment: 'decision' },
         { component: GroupingPage, name: 'GroupingPage', segment: 'grouping' },
         { component: RecordsPage, name: 'RecordsPage', segment: 'records' },
+        { component: RecordsListPage, name: 'RecordsListPage', segment: 'recordsList' },
+        { component: FindPasswordPage, name: 'FindPasswordPage', segment: 'findPassword' },
         { component: BaidutbPage, name: 'BaidutbPage', segment: 'baidutb' },
-        { component: WeiBoPage, name: 'WeiBoPage', segment: 'weibo' },
-        { component: QQPage, name: 'QQPage', segment: 'qq' },
         { component: SimulationPage, name: 'SimulationPage', segment: 'simulation' },
+        { component: SimulationListPage, name: 'SimulationListPage', segment: 'simulationList' },
+        { component: TounaofbPage, name: 'TounaofbPage', segment: 'tounaofb' },
+        { component: DanmuPage, name: 'DanmuPage', segment: 'danmu' },
+        { component: GradePage, name: 'GradePage', segment: 'grade' },
       ]
     }),
     IonicStorageModule.forRoot()
@@ -146,11 +160,15 @@ import {BaidutbPage} from "../pages/baidutb/baidutb";
     DecisionPage,
     GroupingPage,
     RecordsPage,
+    RecordsListPage,
     BaidutbPage,
     SimulationPage,
-    RecordsPage,
-    WeiBoPage,
-    QQPage
+    SimulationListPage,
+    FindPasswordPage,
+    TounaofbPage,
+    DanmuPage,
+    FindPasswordPage,
+    GradePage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
@@ -160,10 +178,9 @@ import {BaidutbPage} from "../pages/baidutb/baidutb";
     InAppBrowser,
     Camera,
     Base64,
+    BarcodeScanner,
     ImagePicker,
-    SplashScreen,
-    WeiBoPage,
-    QQPage
+    SplashScreen
   ]
 })
 export class AppModule { }

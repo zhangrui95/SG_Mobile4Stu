@@ -11,11 +11,11 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-baidutb',
-  templateUrl: 'baidutb.html',
+  selector: 'page-danmu',
+  templateUrl: 'danmu.html',
 })
 
-export class BaidutbPage {
+export class DanmuPage {
   gender;
   items = [
     {
@@ -23,7 +23,7 @@ export class BaidutbPage {
       name: '张三',
       floor: '第5楼',
       time: '今天 10:20',
-      nr_src: 'assets/img/speakers/mouse.jpg',
+      nr_src: '',
       nr: '测试测试测试测试测试测试测试测试测试测试测试'
     },
     {tx_img: 'assets/img/header.png', name: '李四', floor: '第4楼', time: '今天 10:10', nr_src: '', nr: '测试测试测试测试'},
@@ -42,18 +42,16 @@ export class BaidutbPage {
     this.isShow = false
     this.src = 'assets/img/juxing-10.png';
   }
-
   send(){
     this.items.push({tx_img: 'assets/img/header.png', name: '莎萨', floor: '第6楼', time: '今天 10:10', nr_src: '', nr: '测试测试测试测试'})
   }
-
   constructor(public navCtrl: NavController,
               public navParams: NavParams) {
 
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BaidutbPage');
+    console.log('ionViewDidLoad TounaofbPage');
   }
 
 }

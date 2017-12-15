@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import {ProxyHttpService} from "../../providers/proxy.http.service";
+import {UserData} from "../../providers/user-data";
 
 @IonicPage()
 @Component({
@@ -16,9 +17,10 @@ export class PasswordPage {
               public navParams: NavParams,
               public http: ProxyHttpService,
               public toastCtrl: ToastController,
+              public userData:UserData,
               public loadingCtrl: LoadingController
               ) {
-    this.userId = navParams.get('userId');
+    this.userData.getUserID().then(value => this.userId=value)
   }
 
   save(){

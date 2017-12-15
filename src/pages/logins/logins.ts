@@ -6,6 +6,7 @@ import {SigninPage} from "../signin/signin";
 import {ProxyHttpService} from "../../providers/proxy.http.service";
 import {IndexPage} from "../index/index";
 import {UserData} from "../../providers/user-data";
+import {FindPasswordPage} from "../find-password/find-password";
 
 @Component({
   selector: 'page-logins',
@@ -93,6 +94,10 @@ export class LoginsPage {
 
   onSignup() {
     this.navCtrl.push(SigninPage);
+  }
+
+  goFindPassword() {
+    this.navCtrl.push(FindPasswordPage);
   }
 
   showToast(position: string, text: string) {

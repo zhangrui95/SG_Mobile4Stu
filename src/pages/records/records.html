@@ -6,7 +6,7 @@
 
 <ion-content>
   <ion-list inset>
-    <ion-item *ngFor="let item of list">
+    <ion-item *ngFor="let item of list" (click)="getList()">
       <ion-thumbnail item-start>
         <img src="{{item.img}}">
       </ion-thumbnail>

@@ -7,21 +7,14 @@
 
 </ion-header>
 
-
 <ion-content padding>
-  <div>若你作为辉发乳业（集团）股份有限公司的决策者，关注到网贴后该如何决策？</div>
+  <div>{{issue}}</div>
   <form class="form-box">
-    <label>
-      <input type="radio" name="choice"/><span class="option">A</span><span class="word">公开调查帖子内容的真实性</span>
-    </label>
-    <label>
-      <input type="radio" name="choice"/><span class="option">B</span><span class="word">私下联系发帖人，删除网帖，控制消息的网络传播渠道</span>
-    </label>
-    <label>
-      <input type="radio" name="choice"/><span class="option">C</span><span class="word">公开调查帖子内容的真实性</span>
+    <label *ngFor="let item of options" (change)="getForm(item)">
+      <input type="radio" name="choice" /><span class="option">{{item.option}}</span><span class="word">{{item.text}}</span>
     </label>
   </form>
   <div padding class="mar-btn">
-    <button ion-button type="submit" block>确认投票</button>
+    <button ion-button type="submit" block (click)="vote()">确认投票</button>
   </div>
 </ion-content>

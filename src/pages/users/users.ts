@@ -8,12 +8,13 @@ import {ImagePicker, ImagePickerOptions} from "@ionic-native/image-picker";
 import {Camera, CameraOptions} from "@ionic-native/camera";
 
 import { PasswordPage } from "../password/password"
-import { PhonePage } from '../phone/phone'
 import { UpdatePage } from '../update/update'
 import { LoginsPage } from '../logins/logins'
 import {ProxyHttpService} from "../../providers/proxy.http.service";
 import {UserData} from "../../providers/user-data";
 import {Base64} from "@ionic-native/base64";
+import {PhonePage} from "../phone/phone";
+
 @IonicPage()
 @Component({
   selector: 'page-users',
@@ -43,6 +44,7 @@ export class UsersPage {
 
   }
   goChangePhone(){
+
     this.navCtrl.push(PhonePage, {userId: this.userId});
   }
   goChangePassword(){
@@ -51,23 +53,37 @@ export class UsersPage {
   goUpdate(){
     this.navCtrl.push(UpdatePage);
   }
-  getOut(){
-    this.userData.logout();
-    this.navCtrl.push(LoginsPage);
-
+  getOut() {
+    let confirm = this.alertCtrl.create({
+      title: '确定退出登录吗?',
+      buttons: [
+        {
+          text: '取消',
+          handler: () => {
+          }
+        },
+        {
+          text: '确定',
+          handler: () => {
+            this.userData.logout();
+            this.navCtrl.push(LoginsPage);
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
+
   ionViewWillEnter(){
     let url;
     this.userData.getAvatar().then(value => {
       url=value;
 
 
-
       if(!url||url.length==0){
         this.avatar = "assets/img/header.png";
       }else{
         this.avatar=url;
-        this.showToast('bottom',this.avatar);
       }
 
 
@@ -141,6 +157,7 @@ export class UsersPage {
       this.avatar = image.slice(7);
 
       let filePath: string = this.avatar
+
       this.base64.encodeFile(filePath).then((base64File: string) => {
         this.imgAdd(base64File);
       }, (err) => {

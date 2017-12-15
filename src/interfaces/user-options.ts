@@ -11,7 +11,9 @@ export interface UserSign {
   phone: string
 }
 
-export interface ChangePhone {
-  oldPhone: number;
-  newPhone: number;
+export interface findPassword {
+  phone: string,
+  password: string,
+  password1: string,
+  verificationCode: string
 }

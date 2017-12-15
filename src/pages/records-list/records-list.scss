@@ -1,0 +1,31 @@
+page-records-list {
+  .toolbar-title{
+    font-size: 18px;
+    font-weight: 100;
+  }
+  .toolbar-content-ios{
+
+  }
+  .border-left{
+    .list{
+      position: relative;
+      img{
+        position: absolute;
+        left: 0;
+        top: 22px;
+        z-index: 999;
+      }
+      button{
+        font-size: 16px;
+        padding-left: 30px;
+        .icon-forward{
+          font-size: 20px;
+          line-height: 35px;
+        }
+      }
+    }
+  }
+  .button-effect{
+    position: absolute;
+  }
+}

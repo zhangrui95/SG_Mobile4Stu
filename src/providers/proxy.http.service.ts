@@ -42,6 +42,11 @@ export class ProxyHttpService {
     return this._post("/userstu/updateHeadPic.do",params)
   }
 
+  getSimulationList(params){
+    return this._get("/phoneAppController/getSimulationList.do",params)
+  }
+
+
   _post(url,params?:any){
     return this.http.post(this.BASE_URL+url,JSON.stringify(params))
   }
