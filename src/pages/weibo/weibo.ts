@@ -22,6 +22,19 @@ export class WeiBoPage {
   imagepath;
   avatar = "assets/img/header.png";
   videoimg = "assets/img/video.png";
+
+  isShow=false;
+  src='assets/img/juxing-10.png';
+  mousedownd() {
+    this.isShow = true
+    this.src = 'assets/img/yuyin-3.png';
+  }
+
+  mouseup() {
+    this.isShow = false
+    this.src = 'assets/img/juxing-10.png';
+  }
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public actionSheetCtrl: ActionSheetController,
@@ -53,4 +66,9 @@ export class WeiBoPage {
     this.navCtrl.push(LoginsPage);
 
   }
+
+
+  // send(){
+  //   this.items.push({tx_img: 'assets/img/header.png', name: '莎萨', floor: '第6楼', time: '今天 10:10', nr_src: '', nr: '测试测试测试测试'})
+  // }
 }
