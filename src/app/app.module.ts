@@ -25,6 +25,8 @@ import { TabsPage } from '../pages/tabs-page/tabs-page';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SupportPage } from '../pages/support/support';
 import { UsersPage } from '../pages/users/users';
+import { WeiBoPage } from '../pages/weibo/weibo';
+import { QQPage } from '../pages/qq/qq';
 import { PhonePage } from '../pages/phone/phone'
 import { PasswordPage } from '../pages/password/password';
 import { UpdatePage } from "../pages/update/update";
@@ -75,7 +77,9 @@ import {BaidutbPage} from "../pages/baidutb/baidutb";
     SimulationPage,
     RecordsPage,
     IndexPage,
-    BaidutbPage
+    BaidutbPage,
+    WeiBoPage,
+    QQPage
   ],
   imports: [
     BrowserModule,
@@ -107,6 +111,8 @@ import {BaidutbPage} from "../pages/baidutb/baidutb";
         { component: GroupingPage, name: 'GroupingPage', segment: 'grouping' },
         { component: RecordsPage, name: 'RecordsPage', segment: 'records' },
         { component: BaidutbPage, name: 'BaidutbPage', segment: 'baidutb' },
+        { component: WeiBoPage, name: 'WeiBoPage', segment: 'weibo' },
+        { component: QQPage, name: 'QQPage', segment: 'qq' },
         { component: SimulationPage, name: 'SimulationPage', segment: 'simulation' },
       ]
     }),
@@ -142,7 +148,9 @@ import {BaidutbPage} from "../pages/baidutb/baidutb";
     RecordsPage,
     BaidutbPage,
     SimulationPage,
-    RecordsPage
+    RecordsPage,
+    WeiBoPage,
+    QQPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
@@ -153,7 +161,9 @@ import {BaidutbPage} from "../pages/baidutb/baidutb";
     Camera,
     Base64,
     ImagePicker,
-    SplashScreen
+    SplashScreen,
+    WeiBoPage,
+    QQPage
   ]
 })
 export class AppModule { }
