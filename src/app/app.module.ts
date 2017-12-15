@@ -53,6 +53,9 @@ import {BarcodeScanner} from "@ionic-native/barcode-scanner";
 import {SimulationListPage} from "../pages/simulation-list/simulation-list";
 import {RecordsListPage} from "../pages/records-list/records-list";
 import {GradePage} from "../pages/grade/grade";
+
+import { WeiBoPage } from '../pages/weibo/weibo';
+import { QQPage } from '../pages/qq/qq';
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -89,7 +92,9 @@ import {GradePage} from "../pages/grade/grade";
     TounaofbPage,
     DanmuPage,
     FindPasswordPage,
-    GradePage
+    GradePage,
+    WeiBoPage,
+    QQPage
   ],
   imports: [
     BrowserModule,
@@ -128,6 +133,9 @@ import {GradePage} from "../pages/grade/grade";
         { component: TounaofbPage, name: 'TounaofbPage', segment: 'tounaofb' },
         { component: DanmuPage, name: 'DanmuPage', segment: 'danmu' },
         { component: GradePage, name: 'GradePage', segment: 'grade' },
+
+        { component: WeiBoPage, name: 'WeiBoPage', segment: 'weibo' },
+        { component: QQPage, name: 'QQPage', segment: 'qq' },
       ]
     }),
     IonicStorageModule.forRoot()
@@ -168,7 +176,9 @@ import {GradePage} from "../pages/grade/grade";
     TounaofbPage,
     DanmuPage,
     FindPasswordPage,
-    GradePage
+    GradePage,
+    WeiBoPage,
+    QQPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
@@ -180,7 +190,9 @@ import {GradePage} from "../pages/grade/grade";
     Base64,
     BarcodeScanner,
     ImagePicker,
-    SplashScreen
+    SplashScreen,
+    WeiBoPage,
+    QQPage
   ]
 })
 export class AppModule { }
