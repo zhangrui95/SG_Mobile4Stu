@@ -35,6 +35,15 @@
       <p class="danger-text" ion-text [hidden]="phone.valid || submitted == false" color="danger" padding-left>
         手机号码不能为空
       </p>
+      <ion-item>
+        <ion-label>验&nbsp;&nbsp;证&nbsp;&nbsp;码</ion-label>
+        <ion-input [(ngModel)]="login.verificationCode" name="verificationCode" type="number" #verificationCode="ngModel" required>
+        </ion-input>
+        <button ion-button item-end (click)="countDown()">{{verifyCode.verifyCodeTips}}</button>
+      </ion-item>
+      <p class="danger-text" ion-text [hidden]="verificationCode.valid || submitted == false" color="danger" padding-left>
+        验证码不能为空
+      </p>
     </ion-list>
   </form>
   <div padding class="mar-btn">

@@ -8,7 +8,8 @@ export interface UserSign {
   username: string,
   password: string,
   RealName: string,
-  phone: string
+  phone: string,
+  verificationCode: string
 }
 
 export interface findPassword {

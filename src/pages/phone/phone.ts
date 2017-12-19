@@ -12,8 +12,15 @@ import {UserData} from "../../providers/user-data";
 export class PhonePage {
   oldPhone;
   newPhone;
+  verificationCode;
   // pwd;
   userId;
+  name;
+  verifyCode: any = {
+    verifyCodeTips: "获取验证码",
+    countdown: 60,
+    disable: true
+  }
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public http: ProxyHttpService,
@@ -22,6 +29,7 @@ export class PhonePage {
               public loadingCtrl: LoadingController
   ) {
     this.userData.getUserID().then(value => this.userId=value)
+    this.userData.getUsername().then(value => this.name=value)
   }
   save(){
     let loading = this.loadingCtrl.create({
@@ -33,7 +41,7 @@ export class PhonePage {
     }else if(!pattern.test(this.newPhone)){
       this.showToast('bottom','新手机号输入不正确');
     }else{
-      const params = {phone:this.oldPhone, newPhone:this.newPhone,userid:this.userId.toString()}
+      const params = {phone:this.oldPhone,UserName:this.name, newPhone:this.newPhone,userid:this.userId.toString(),VCode:this.verificationCode}
       this.http.updatePhone(params).subscribe(res => {
         if(res['code'] == 0){
           loading.dismiss();
@@ -55,6 +63,37 @@ export class PhonePage {
     });
 
     toast.present(toast);
+  }
+
+  settime() {
+    if (this.verifyCode.countdown == 1) {
+      this.verifyCode.countdown = 60;
+      this.verifyCode.verifyCodeTips = "获取验证码";
+      this.verifyCode.disable = true;
+      return;
+    } else {
+      this.verifyCode.countdown--;
+    }
+
+    this.verifyCode.verifyCodeTips = "重新获取(" + this.verifyCode.countdown + ")";
+    setTimeout(() => {
+      this.verifyCode.verifyCodeTips = "重新获取(" + this.verifyCode.countdown + ")";
+      this.settime();
+    }, 1000);
+  }
+  countDown(){
+    if(this.verifyCode.disable){
+      if(this.oldPhone == ''||this.newPhone == ''){
+        this.showToast('bottom', '必填项不能为空');
+      }else{
+        const params = {phone:this.oldPhone,UserName:this.name,newPhone:this.newPhone,userid:this.userId.toString(),VCode:''}
+        this.http.updatePhone(params).subscribe(res => {
+          console.log(res)
+          this.settime();
+          this.verifyCode.disable = false;
+        });
+      }
+    }
   }
 
 }

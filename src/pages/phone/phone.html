@@ -19,6 +19,12 @@
       <ion-label>新手机号</ion-label>
       <ion-input [(ngModel)]="newPhone" type="number"></ion-input>
     </ion-item>
+
+    <ion-item>
+      <ion-label>验&nbsp;&nbsp;证&nbsp;&nbsp;码</ion-label>
+      <ion-input [(ngModel)]="verificationCode" type="number"></ion-input>
+      <button ion-button item-end (click)="countDown()">{{verifyCode.verifyCodeTips}}</button>
+    </ion-item>
     <p></p>
 
   </ion-list>

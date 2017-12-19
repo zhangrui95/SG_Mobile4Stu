@@ -47,7 +47,7 @@ export class ProxyHttpService {
   }
 
   initPass(params){
-    return this._get("/userstu/initPass.do",params)
+    return this._post("/userstu/initPass.do",params)
   }
 
   _post(url,params?:any){

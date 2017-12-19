@@ -16,8 +16,13 @@ import {UserData} from "../../providers/user-data";
 })
 export class SigninPage {
 
-  login: UserSign = { username: '', password: '' , RealName: '', phone: ''};
+  login: UserSign = { username: '', password: '' , RealName: '', phone: '', verificationCode: ''};
   submitted = false;
+  verifyCode: any = {
+    verifyCodeTips: "获取验证码",
+    countdown: 60,
+    disable: true
+  }
 
   constructor( public navCtrl: NavController,
                public http: ProxyHttpService,
@@ -32,7 +37,7 @@ export class SigninPage {
     });
     if (form.valid) {
       loading.present();
-      const params = {LoginName:this.login.username, LoginPwd:this.login.password, RealName:this.login.RealName, Phone:this.login.phone}
+      const params = {LoginName:this.login.username, LoginPwd:this.login.password, RealName:this.login.RealName, Phone:this.login.phone, VCode:this.login.verificationCode}
       this.http.register(params).subscribe(res => {
         if(res['code'] == 0){
           loading.dismiss();
@@ -44,6 +49,37 @@ export class SigninPage {
         }
       });
 
+    }
+  }
+
+  settime() {
+    if (this.verifyCode.countdown == 1) {
+      this.verifyCode.countdown = 60;
+      this.verifyCode.verifyCodeTips = "获取验证码";
+      this.verifyCode.disable = true;
+      return;
+    } else {
+      this.verifyCode.countdown--;
+    }
+
+    this.verifyCode.verifyCodeTips = "重新获取(" + this.verifyCode.countdown + ")";
+    setTimeout(() => {
+      this.verifyCode.verifyCodeTips = "重新获取(" + this.verifyCode.countdown + ")";
+      this.settime();
+    }, 1000);
+  }
+  countDown(){
+    if(this.verifyCode.disable){
+      if(this.login.username == ''||this.login.password == ''||this.login.RealName == ''||this.login.phone == ''){
+        this.showToast('bottom', '必填项不能为空');
+      }else{
+        const params = {LoginName:this.login.username, LoginPwd:this.login.password, RealName:this.login.RealName, Phone:this.login.phone, VCode:''}
+        this.http.register(params).subscribe(res => {
+          console.log(res)
+          this.settime();
+          this.verifyCode.disable = false;
+        });
+      }
     }
   }
 
