@@ -46,6 +46,9 @@ export class ProxyHttpService {
     return this._get("/phoneAppController/getSimulationList.do",params)
   }
 
+  initPass(params){
+    return this._get("/userstu/initPass.do",params)
+  }
 
   _post(url,params?:any){
     return this.http.post(this.BASE_URL+url,JSON.stringify(params))
