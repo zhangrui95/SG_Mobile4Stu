@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import {ProxyHttpService} from "../../providers/proxy.http.service";
 import {UserData} from "../../providers/user-data";
-import {UsersPage} from "../users/users";
 
 @IonicPage()
 @Component({
@@ -37,7 +36,6 @@ export class PasswordPage {
           if(res['code'] == 0){
             loading.dismiss();
             this.showToast('bottom',res['msg']);
-            this.navCtrl.push(UsersPage);
           }else{
             loading.dismiss();
             this.showToast('bottom',res['msg']);
