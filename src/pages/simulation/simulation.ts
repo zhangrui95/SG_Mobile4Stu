@@ -25,8 +25,11 @@ export class SimulationPage {
     this.userData.getUserID().then(value => this.userId=value)
   }
   ionViewWillEnter(){
-    const params = {u_id: this.userId}
+    const params = {u_id: this.userId, pi: this.pageNo, ps: 10}
     this.http.getSimulationList(params).subscribe(res => {
+      if(res['list'].length == 0&&this.pageNo == 1){
+          this.noDate = '暂无数据';
+      }
       this.list = res['list'];
       this.pageNo += 1;
       this.spinner1 = false;
@@ -37,18 +40,16 @@ export class SimulationPage {
       infiniteScroll.complete();
       return;
     }
-    console.log('this.pageNo',this.pageNo)
-    const params = {u_id: this.userId}
-    this.http.getSimulationList(params).subscribe(res => {
-      if (res['list'].length  > 0) {
-        this.list = this.list.concat(res['list']);
-        this.pageNo += 1;
-      } else {
-        this.hasmore = false;
-        console.log("没有数据啦！");
-      }
-      infiniteScroll.complete();
-    });
+      const params = {u_id: this.userId, pi: this.pageNo, ps: 10};
+      this.http.getSimulationList(params).subscribe(res => {
+        if (res['list'].length  > 0) {
+          this.list = this.list.concat(res['list']);
+          this.pageNo += 1;
+        } else {
+          this.hasmore = false;
+        }
+        infiniteScroll.complete();
+      });
   }
   getList(){
     this.navCtrl.push(SimulationListPage);
