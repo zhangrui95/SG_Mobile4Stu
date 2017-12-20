@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import {ProxyHttpService} from "../../providers/proxy.http.service";
 import {UserData} from "../../providers/user-data";
+import {UsersPage} from "../users/users";
 
 
 @IonicPage()
@@ -16,6 +17,7 @@ export class PhonePage {
   // pwd;
   userId;
   name;
+  pattern = /^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/;
   verifyCode: any = {
     verifyCodeTips: "获取验证码",
     countdown: 60,
@@ -35,10 +37,9 @@ export class PhonePage {
     let loading = this.loadingCtrl.create({
       content: '修改中...'
     });
-    let pattern = /^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/;
     if(this.oldPhone == null||this.newPhone == null){
       this.showToast('bottom','手机号不能为空');
-    }else if(!pattern.test(this.newPhone)){
+    }else if(!this.pattern.test(this.newPhone)){
       this.showToast('bottom','新手机号输入不正确');
     }else{
       const params = {phone:this.oldPhone,UserName:this.name, newPhone:this.newPhone,userid:this.userId.toString(),VCode:this.verificationCode}
@@ -46,6 +47,7 @@ export class PhonePage {
         if(res['code'] == 0){
           loading.dismiss();
           this.showToast('bottom',res['msg']);
+          this.navCtrl.push(UsersPage);
         }else{
           loading.dismiss();
           this.showToast('bottom',res['msg']);
@@ -83,14 +85,20 @@ export class PhonePage {
   }
   countDown(){
     if(this.verifyCode.disable){
-      if(this.oldPhone == ''||this.newPhone == ''){
-        this.showToast('bottom', '必填项不能为空');
+      if(this.oldPhone == null||this.newPhone == null){
+        this.showToast('bottom','手机号不能为空');
+      }else if(!this.pattern.test(this.newPhone)){
+        this.showToast('bottom','新手机号输入不正确');
       }else{
         const params = {phone:this.oldPhone,UserName:this.name,newPhone:this.newPhone,userid:this.userId.toString(),VCode:''}
         this.http.updatePhone(params).subscribe(res => {
-          console.log(res)
-          this.settime();
-          this.verifyCode.disable = false;
+          if(res['code'] == 0){
+            this.settime();
+            this.verifyCode.disable = false;
+            this.showToast('bottom',res['msg']);
+          }else{
+            this.showToast('bottom',res['msg']);
+          }
         });
       }
     }
