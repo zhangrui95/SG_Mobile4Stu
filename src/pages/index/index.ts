@@ -80,10 +80,12 @@ export class IndexPage {
   getClassRoom() {
     this.barcodeScanner.scan({resultDisplayDuration:0}).then((barcodeData) => {
       // Success! Barcode data is here
+      this.showToast('bottom',barcodeData.text+"")
       if(!barcodeData.cancelled){
 
         if (barcodeData.text.indexOf('4dec1f9e20f86b62335ba913ae29fa0d')!=-1 ) {
           let data=JSON.parse(barcodeData.text)
+          this.showToast('bottom',data)
           this.navCtrl.push(ClassroomPage, {data:data});
         } else{
           this.showToast('bottom',"扫描到的二维码有误，请重新尝试")
