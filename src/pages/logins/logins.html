@@ -1,9 +1,12 @@
-<ion-content padding>
+<ion-content>
+  <img src="assets/img/bjt.png" class="bg"/>
   <img src="assets/img/logo.png" class="logo"/>
+  <div class="title-logo">开启数据互联新引擎</div>
+  <div class="title-logo title-logo-english">OPEN A NEW ENGINE FOR DATA INTERCONNECTION</div>
   <form #loginForm="ngForm" novalidate>
     <ion-list inset>
       <ion-item>
-        <ion-input class="input-border user-icon" placeholder="请输入用户名/手机号码" [(ngModel)]="login.username" name="username" type="text" #username="ngModel" required>
+        <ion-input class="input-bg" placeholder="用户名/手机号码" [(ngModel)]="login.username" name="username" type="text" #username="ngModel" required>
         </ion-input>
       </ion-item>
       <p class="danger-text" ion-text [hidden]="username.valid || submitted == false" color="danger" padding-left>
@@ -11,7 +14,7 @@
       </p>
       <ion-item>
         <ion-icon ios="ios-lock" md="md-lock"></ion-icon>
-        <ion-input class="input-border lock-icon" placeholder="请输入密码" [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
+        <ion-input class="input-bg" placeholder="密码" [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
         </ion-input>
       </ion-item>
       <p class="danger-text" ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
@@ -19,9 +22,18 @@
       </p>
     </ion-list>
   </form>
-  <div class="mar-btn" padding>
-    <button ion-button (click)="onLogin(loginForm)" type="submit" block style="margin-bottom:20px;height: 50px;background: #2c3550;">登  录</button>
-    <button ion-button (click)="onSignup()" color="dark" outline style="height: 50px;width: 100%;">注  册</button>
+  <button class="btton-box" ion-button (click)="onLogin(loginForm)" type="submit" block style="background: #1aa7b8;">马上登陆</button>
+  <div class="item-box">
+    <label class="float-l">
+      <input type="checkbox"/>
+      <span>两周内自动登录</span>
+    </label>
+    <p class="float-r go-login" (click)="goFindPassword()">忘记密码？</p>
   </div>
-  <p class="go-login" (click)="goFindPassword()">忘记密码 ></p>
+  <div class="item-box">
+    <div class="xian float-l"></div>
+    <div class="or-word float-l">OR</div>
+    <div class="xian float-l"></div>
+  </div>
+  <button class="btton-box" ion-button (click)="onSignup()" block style="background: rgba(31,90,168,0.6);">注册新账号</button>
 </ion-content>

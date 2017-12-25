@@ -5,6 +5,13 @@ $color:#404040;
   height: 1px;
   background-color: #fff;
 }
+.bg{
+  width: 100%;
+  position: absolute;
+  top:0;
+  left: 0;
+  z-index: -1;
+}
 .danger-text{
   margin: 0;
   font-size: 14px;
@@ -13,10 +20,10 @@ $color:#404040;
   margin-top: 50px;
 }
 .go-login{
-  font-size: 14px;
+  font-size: 16px;
   line-height: 0;
   text-align: center;
-  color: $color;
+  color: #1aa7b8;
 }
 .item-ios{
   .icon-forward{
@@ -49,4 +56,10 @@ $color:#404040;
 .no-date{
   text-align: center;
   margin-top: 20px;
+}
+.float-l{
+  float: left;
+}
+.float-r{
+  float: right;
 }
