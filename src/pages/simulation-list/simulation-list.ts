@@ -20,7 +20,6 @@ export class SimulationListPage {
     });
     toast.present(toast);
   }
-
   goGrouping(){
     this.navCtrl.push(GroupingPage);
   }
@@ -30,5 +29,4 @@ export class SimulationListPage {
       this.navCtrl.push(DecisionPage)
     }
   }
-
 }

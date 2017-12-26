@@ -15,26 +15,80 @@ page-simulation-list {
     top: 15px;
     right: 10px;
   }
-  .border-left{
-    .list{
-      position: relative;
-      img{
-        position: absolute;
-        left: 0;
-        top: 22px;
-        z-index: 999;
-      }
-      button{
-        font-size: 16px;
-        padding-left: 30px;
-        .icon-forward{
-          font-size: 20px;
-          line-height: 35px;
-        }
+  .item{
+    background: transparent;
+    color: #eee;
+  }
+  .item-box{
+    margin: 20px auto 0px;
+    .xian{
+      width: 10%;
+      margin-top: 10px;
+    }
+    .or-word{
+      width: 80%;
+      font-size: 12px;
+    }
+  }
+  .wen{
+    float: left;
+    width: 46px;
+  }
+  .wen-word-box{
+    color: #fff;
+    text-align: left;
+    font-size: 14px;
+    margin: 4px 10px;
+    div{
+      &:nth-child(1){
+        color: #ffdc73;
       }
     }
   }
-  .button-effect{
-    position: absolute;
+  .choice-btn{
+    width: 70px;
+    height: 28px;
+    line-height: 28px;
+    color: #fff;
+    background: #1aa7b8;
+    border-radius: 5px;
+    float: right;
+    font-size: 14px;
+    margin-top: 9px;
+  }
+  .list-num{
+    color: #1aa7b8;
+    font-size: 24px;
+    width: 15%;
+    text-align: center;
+    border-bottom: 1px solid #1aa7b8;
+    height: 60px;
+    line-height: 60px;
+  }
+  .list-g{
+    font-size: 30px;
+    width: 7%;
+    text-align: left;
+    line-height: 60px;
+    border-bottom: 1px solid #b0b0b0;
+    height: 60px;
+    color: #929292;
+  }
+  .list-name{
+    font-size: 16px;
+    width: 78%;
+    text-align: left;
+    line-height: 60px;
+    border-bottom: 1px solid #b0b0b0;
+    height: 60px;
+  }
+  .label{
+    margin: 0 8px 0px 0px;
+  }
+  .item-ios[detail-push] .item-inner, button.item-ios:not([detail-none]) .item-inner, a.item-ios:not([detail-none]) .item-inner{
+    padding-right: 0;
+  }
+  .item.activated{
+    background: transparent;
   }
 }

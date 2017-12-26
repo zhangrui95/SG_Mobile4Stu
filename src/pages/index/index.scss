@@ -68,6 +68,7 @@ page-index {
     }
   }
   .item-box{
+    margin: 15px auto 20px;
     .xian{
       width: 10%;
       margin-top: 6px;
@@ -78,14 +79,6 @@ page-index {
     }
   }
   .index-news-box{
-    margin-top: 20px;
-    float: left;
-    width: 100%;
-    color: #fff;
-    background: rgba(0,0,0,0.5);
-    text-align: center;
-    padding:10px 10px 15px;
-    border-radius: 3px;
     div{
       &:nth-child(1){
         font-size: 24px;
