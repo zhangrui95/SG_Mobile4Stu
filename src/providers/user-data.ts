@@ -30,26 +30,29 @@ export class UserData {
     }
   };
 
-  login(username: string,userID:string,url:string,loginName:string): void {
+  login(username: string,userID:string,Phone:string,url:string,loginName:string): void {
     this.storage.set(this.HAS_LOGGED_IN, true);
     this.setUsername(username);
     this.setUserID(userID)
     this.setAvatar(url)
     this.setLoginName(loginName);
+    this.setPhone(Phone);
     this.events.publish('user:login');
   };
 
-  signup(username: string,userID?:string,url?:string): void {
+  signup(username: string,Phone?:string,userID?:string,url?:string): void {
     this.storage.set(this.HAS_LOGGED_IN, true);
     this.setUsername(username);
     this.setUserID(userID)
     this.setAvatar(url)
+    this.setPhone(Phone);
     this.events.publish('user:signup');
   };
 
   logout(): void {
     this.storage.remove(this.HAS_LOGGED_IN);
     this.storage.remove('username');
+    this.storage.remove('Phone');
     this.storage.remove('userId');
     this.storage.remove('avatarUrl');
     this.events.publish('user:logout');
@@ -58,6 +61,9 @@ export class UserData {
   setUsername(username: string): void {
     this.storage.set('username', username);
   };
+  setPhone(Phone: string):void{
+    this.storage.set('Phone', Phone);
+  }
   setUserID(userId: string): void {
     this.storage.set('userId', userId);
   };
@@ -69,6 +75,11 @@ export class UserData {
   };
   getUsername(): Promise<string> {
     return this.storage.get('username').then((value) => {
+      return value;
+    });
+  };
+  getUserPhone(): Promise<string> {
+    return this.storage.get('Phone').then((value) => {
       return value;
     });
   };

@@ -6,28 +6,46 @@
 <ion-content>
   <div class="header-box">
     <div class="header-img">
-        <img class="upload-img" [src]="avatar" (click)="presentActionSheet()">
-      <!--<div class="upload-img" tappable  (click)="presentActionSheet()"></div>-->
+        <img class="upload-img" [src]="avatar">
+        <div class="btn-img" (click)="presentActionSheet()">上传头像</div>
     </div>
-    <div class="header-img user-name-box">
-      {{name}}
+    <div class="header-img user-name-box" style="margin-top: 10px;">
+      <div>
+        {{name}}
+      </div>
+      <div>
+        15663803677
+      </div>
     </div>
   </div>
-  <ion-list inset>
-    <button ion-item (click)="goChangePhone()">
-      修改手机
-      <ion-icon class="icon-forward" name="ios-arrow-forward"  item-end></ion-icon>
-    </button>
-    <button ion-item (click)="goChangePassword()">
-      修改密码
-      <ion-icon class="icon-forward" name="ios-arrow-forward"  item-end></ion-icon>
-    </button>
-    <button ion-item (click)="goUpdate()">
-      版本更新
+  <ion-list no-lines style="margin-top: 15px;">
+      <button ion-item (click)="goChangePhone()">
+        <div class="float-l list-num"><img src="assets/img/shj.png" class="icon-w"/></div>
+        <div class="float-l list-g">|</div>
+        <div class="float-l list-name">修改手机</div>
+        <ion-icon class="icon-forward" name="ios-arrow-forward"  item-end></ion-icon>
+      </button>
+      <button ion-item (click)="goChangePassword()">
+        <div class="float-l list-num"><img src="assets/img/mim.png" class="icon-w"/></div>
+        <div class="float-l list-g">|</div>
+        <div class="float-l list-name">修改密码</div>
+        <ion-icon class="icon-forward" name="ios-arrow-forward"  item-end></ion-icon>
+      </button>
+      <button ion-item (click)="goUpdate()">
+        <div class="float-l list-num"><img src="assets/img/bab.png" class="icon-w"/></div>
+        <div class="float-l list-g">|</div>
+        <div class="float-l list-name">版本更新</div>
+        <ion-icon class="icon-forward" name="ios-arrow-forward"  item-end></ion-icon>
+      </button>
+    <button ion-item>
+      <div class="float-l list-num"><img src="assets/img/qic.png" class="icon-w"/></div>
+      <div class="float-l list-g">|</div>
+      <div class="float-l list-name">清除缓存</div>
       <ion-icon class="icon-forward" name="ios-arrow-forward"  item-end></ion-icon>
     </button>
   </ion-list>
-  <div class="mar-btn" padding>
-    <button (click)="getOut()" ion-button color="danger" block>退出登录</button>
+  <div padding>
+    <button (click)="getOut()" style="background: rgba(255,0,0,0.5);height: 50px;" ion-button block>退出登录</button>
   </div>
+  <page-bottom></page-bottom>
 </ion-content>

@@ -39,7 +39,7 @@ export class UsersPage {
               public loadingCtrl: LoadingController
   ) {
     this.userData.getUsername().then(value => this.name=value)
-    this.phone = navParams.get('phone');
+    this.userData.getUserPhone().then(value => this.phone=value)
     this.userData.getUserID().then(value => this.userId=value)
 
   }

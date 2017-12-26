@@ -79,11 +79,12 @@ export class LoginsPage {
           this.navCtrl.push(IndexPage, {
             userid: '',
             name: res['username'],
-            phone: res['phone'],
+            phone: res['Phone'],
             userId: res['userId'],
             imagepath: res['imagepath']
           });
-          this.userData.login(res['username'],res['userId'],  res['imagepath'], this.login.username)
+          console.log(res)
+          this.userData.login(res['username'],res['userId'],res['imagepath'],res['Phone'], this.login.username)
         } else {
           loading.dismiss();
           this.showToast('bottom', res['msg']);
