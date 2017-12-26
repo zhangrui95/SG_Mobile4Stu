@@ -57,6 +57,7 @@ import {GradePage} from "../pages/grade/grade";
 import { WeiBoPage } from '../pages/weibo/weibo';
 import { QQPage } from '../pages/qq/qq';
 import {BottomPage} from "../pages/bottom/bottom";
+import {ServerSocket} from "../providers/ws.service";
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -195,6 +196,7 @@ import {BottomPage} from "../pages/bottom/bottom";
     ImagePicker,
     SplashScreen,
     WeiBoPage,
+    ServerSocket,
     QQPage
   ]
 })
