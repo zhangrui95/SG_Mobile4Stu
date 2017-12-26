@@ -1,19 +1,72 @@
 page-logins {
   .logo{
     display: block;
-    width: 40%;
-    margin: 40px auto;
+    width: 28%;
+    margin: 85px auto 20px;
     max-width: 200px;
   }
-  .user-icon{
-    background:url("./../assets/img/icon2.png") no-repeat 0 12px;
-    padding-left:20px;
+  .title-logo{
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
   }
-  .lock-icon{
-    background:url("./../assets/img/icon1.png") no-repeat 0 12px;
-    padding-left:20px;
+  .item{
+    background: transparent;
+    width: 96%;
+    margin: 0 auto;
+  }
+  .list-ios[inset] .item{
+    border-bottom: 0;
+    padding: 0;
+  }
+  .list-md .item-block .item-inner{
+    border-bottom: 0;
+  }
+  .title-logo-english{
+    font-size: 12px;
+    line-height: 24px;
+  }
+  .input-bg{
+    background: rgba(0,0,0,0.6);
+    padding:2px 20px;
+    color: #fff;
+    border-radius: 5px;
+    margin:7px 10px;
   }
   .text-input{
     font-size: 16px;
+  }
+  .btton-box{
+    width:80%;
+    height: 50px;
+    margin: 0 auto;
+    border: 0;
+    color: #fff;
+  }
+  .item-box{
+    width:80%;
+    color: #959595;
+    margin: 10px auto;
+    overflow: hidden;
+  }
+  .or-word{
+    text-align: center;
+    color: #939393;
+    font-size: 20px;
+    width: 20%;
+  }
+  .xian{
+    height: 1px;
+    background: #939393;
+    width: 40%;
+    margin-top: 12px;
+  }
+  .item-box{
+    input{
+      width: 20px;
+      height: 20px;
+      margin: 3px 5px 0 0;
+      float: left;
+    }
   }
 }
