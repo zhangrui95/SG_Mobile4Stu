@@ -3,39 +3,89 @@ page-grouping {
     font-size: 18px;
     font-weight: 100;
   }
-  .til-top{
-    height: 60px;
-    line-height: 60px;
-    text-align: center;
-    font-weight: 700;
+  //.til-top{
+  //  height: 60px;
+  //  line-height: 60px;
+  //  text-align: center;
+  //  font-weight: 700;
+  //}
+  //.img-top{
+  //  width: 75px;
+  //  display: block;
+  //  margin: 0 auto 30px;
+  //}
+  //.group-table{
+  //  margin: 0 auto;
+  //  width: 100%;
+  //  td{
+  //    text-align: center;
+  //    height: 50px;
+  //    &:nth-child(1){
+  //      width: 40%;
+  //    }
+  //    &:nth-child(2){
+  //      width: 30%;
+  //    }
+  //    &:nth-child(3){
+  //      width: 30%;
+  //      button{
+  //        font-size: 14px;
+  //        width: 85%;
+  //        height: 30px;
+  //        background: #2e97df;
+  //      }
+  //    }
+  //
+  //  }
+  //}
+  .item-box{
+    margin: 20px auto 30px;
+    .xian{
+      width: 15%;
+      margin-top: 10px;
+    }
+    .or-word{
+      width: 70%;
+      font-size: 12px;
+    }
   }
-  .img-top{
-    width: 75px;
-    display: block;
-    margin: 0 auto 30px;
-  }
-  .group-table{
-    margin: 0 auto;
-    width: 100%;
-    td{
-      text-align: center;
+  .group-list-box{
+    height: 50px;
+    border-bottom: 1px solid #333;
+    color: #ddd;
+    margin-top: 20px;
+    .group-list{
       height: 50px;
-      &:nth-child(1){
-        width: 40%;
-      }
-      &:nth-child(2){
-        width: 30%;
-      }
-      &:nth-child(3){
-        width: 30%;
-        button{
-          font-size: 14px;
-          width: 85%;
-          height: 30px;
-          background: #2e97df;
+      background: rgba(0,0,0,0.5);
+      border-radius: 5px 5px 0 0;
+      width: 94%;
+      margin: 0 auto;
+      line-height: 50px;
+      .head-icon{
+        width: 50px;
+        height: 50px;
+        border-radius: 50px;
+        overflow: hidden;
+        background: #fff;
+        margin: -10px 0 0 10px;
+        img{
+          width: 40px;
+          height: 40px;
+          margin: 5px;
         }
       }
-
+      .group-name{
+        margin: 0 5px 0 10px;
+      }
+      .group-num{
+        margin: 0 5px;
+        color: #ffdc73;
+      }
+      .add-icon{
+        width: 30px;
+        height: 30px;
+        margin: 10px;
+      }
     }
   }
 }
