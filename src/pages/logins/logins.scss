@@ -1,9 +1,14 @@
 page-logins {
   .logo{
     display: block;
-    width: 28%;
-    margin: 85px auto 20px;
+    width: 25%;
+    margin: 15% auto 20px;
     max-width: 200px;
+  }
+  @media (max-width: 320px) {
+    .logo{
+      margin: 8% auto 20px;
+    }
   }
   .title-logo{
     color: #fff;
@@ -27,8 +32,8 @@ page-logins {
     line-height: 24px;
   }
   .input-bg{
-    background: rgba(0,0,0,0.6);
-    padding:2px 20px;
+    background: rgba(0,0,0,0.5);
+    padding:3px 20px;
     color: #fff;
     border-radius: 5px;
     margin:7px 10px;
@@ -37,36 +42,36 @@ page-logins {
     font-size: 16px;
   }
   .btton-box{
-    width:80%;
-    height: 50px;
+    width:82%;
+    height: 46px;
     margin: 0 auto;
     border: 0;
     color: #fff;
   }
   .item-box{
-    width:80%;
-    color: #959595;
-    margin: 10px auto;
-    overflow: hidden;
-  }
-  .or-word{
-    text-align: center;
-    color: #939393;
-    font-size: 20px;
-    width: 20%;
-  }
-  .xian{
-    height: 1px;
-    background: #939393;
-    width: 40%;
-    margin-top: 12px;
-  }
-  .item-box{
     input{
-      width: 20px;
-      height: 20px;
-      margin: 3px 5px 0 0;
+      width: 18px;
+      height: 18px;
+      margin: 1px 5px 0 0;
       float: left;
     }
+  }
+  .item-ios.item-block .item-inner{
+    padding-right: 0;
+  }
+  .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner{
+    border-bottom-color: transparent;
+    -webkit-box-shadow: inset 0 -1px 0 0 transparent;
+    box-shadow: inset 0 -1px 0 0 transparent;
+  }
+  .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner, .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner{
+    border-bottom-color: transparent;
+    -webkit-box-shadow: inset 0 -1px 0 0 transparent;
+    box-shadow: inset 0 -1px 0 0 transparent;
+  }
+  .item-inner{
+    border-bottom-color: transparent;
+    -webkit-box-shadow: inset 0 -1px 0 0 transparent;
+    box-shadow: inset 0 -1px 0 0 transparent;
   }
 }

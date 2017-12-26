@@ -1,5 +1,5 @@
 <ion-content>
-  <img src="assets/img/bjt.png" class="bg"/>
+  <!--<img src="assets/img/bjt.png" class="bg"/>-->
   <img src="assets/img/logo.png" class="logo"/>
   <div class="title-logo">开启数据互联新引擎</div>
   <div class="title-logo title-logo-english">OPEN A NEW ENGINE FOR DATA INTERCONNECTION</div>
@@ -24,16 +24,17 @@
   </form>
   <button class="btton-box" ion-button (click)="onLogin(loginForm)" type="submit" block style="background: #1aa7b8;">马上登陆</button>
   <div class="item-box">
-    <label class="float-l">
+    <label class="float-l" style="margin-top: 4px;">
       <input type="checkbox"/>
       <span>两周内自动登录</span>
     </label>
     <p class="float-r go-login" (click)="goFindPassword()">忘记密码？</p>
   </div>
-  <div class="item-box">
+  <div class="item-box" style="margin-top: 15px;">
     <div class="xian float-l"></div>
     <div class="or-word float-l">OR</div>
     <div class="xian float-l"></div>
   </div>
-  <button class="btton-box" ion-button (click)="onSignup()" block style="background: rgba(31,90,168,0.6);">注册新账号</button>
+  <button class="btton-box" ion-button (click)="onSignup()" block style="background: rgba(6,28,68,0.5);">注册新账号</button>
+  <page-bottom></page-bottom>
 </ion-content>

@@ -56,6 +56,7 @@ import {GradePage} from "../pages/grade/grade";
 
 import { WeiBoPage } from '../pages/weibo/weibo';
 import { QQPage } from '../pages/qq/qq';
+import {BottomPage} from "../pages/bottom/bottom";
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -79,6 +80,7 @@ import { QQPage } from '../pages/qq/qq';
     LoginsPage,
     SigninPage,
     PhonePage,
+    BottomPage,
     ClassroomPage,
     DecisionPage,
     GroupingPage,
@@ -119,6 +121,7 @@ import { QQPage } from '../pages/qq/qq';
         { component: UpdatePage, name: 'UpdatePage', segment: 'update' },
         { component: LoginsPage, name: 'LoginsPage', segment: 'logins' },
         { component: PhonePage, name: 'PhonePage', segment: 'phone' },
+        { component: BottomPage, name: 'BottomPage', segment: 'bottom' },
         { component: SigninPage, name: 'SigninPage', segment: 'signin' },
         { component: IndexPage, name: 'IndexPage', segment: 'index' },
         { component: ClassroomPage, name: 'ClassroomPage', segment: 'classroom' },
@@ -133,7 +136,6 @@ import { QQPage } from '../pages/qq/qq';
         { component: TounaofbPage, name: 'TounaofbPage', segment: 'tounaofb' },
         { component: DanmuPage, name: 'DanmuPage', segment: 'danmu' },
         { component: GradePage, name: 'GradePage', segment: 'grade' },
-
         { component: WeiBoPage, name: 'WeiBoPage', segment: 'weibo' },
         { component: QQPage, name: 'QQPage', segment: 'qq' },
       ]
@@ -163,6 +165,7 @@ import { QQPage } from '../pages/qq/qq';
     LoginsPage,
     SigninPage,
     PhonePage,
+    BottomPage,
     IndexPage,
     ClassroomPage,
     DecisionPage,

@@ -20,7 +20,7 @@ $color:#404040;
   margin-top: 50px;
 }
 .go-login{
-  font-size: 16px;
+  font-size: 14px;
   line-height: 0;
   text-align: center;
   color: #1aa7b8;
@@ -40,17 +40,17 @@ $color:#404040;
 }
 .toolbar-content-ios{
   .head-img{
-    width: 1.1em;
-    top: 11px;
+    width: 2.1em;
+    top: 4px;
   }
   .head-top{
     top: 13px;
   }
 }
 .head-img{
-  width: 1.2em;
+  width: 2.2em;
   position: absolute;
-  top: 16px;
+  top: 8px;
   right: 15px;
 }
 .no-date{
@@ -62,4 +62,26 @@ $color:#404040;
 }
 .float-r{
   float: right;
+}
+.fixed-content{
+  background: url('./../assets/img/bjt.png') no-repeat;
+}
+.item-box{
+  font-size: 14px;
+  width:80%;
+  color: #959595;
+  margin: 10px auto;
+  overflow: hidden;
+}
+.or-word{
+  text-align: center;
+  color: #aaa;
+  font-size: 20px;
+  width: 20%;
+}
+.xian{
+  height: 1px;
+  background: #939393;
+  width: 40%;
+  margin-top: 12px;
 }
