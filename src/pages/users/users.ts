@@ -209,4 +209,8 @@ export class UsersPage {
     toast.present(toast);
   }
 
+  getClear(){
+    this.showToast('bottom', '清除缓存成功');
+  }
+
 }

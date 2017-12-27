@@ -1,17 +1,24 @@
 <ion-header>
-
   <ion-navbar color="dark">
     <ion-title>版本更新</ion-title>
   </ion-navbar>
-
 </ion-header>
-
-
-<ion-content>
-  <div class="box">当前版本：{{versionName}}</div>
-  <div padding>{{repairContent}}</div>
-  <div class="btn" padding>
-    <button ion-button style="height: 50px;margin: 20px 0;background: #2c3550;" block color="dark">立即更新</button>
-    <button ion-button style="height: 50px;width: 100%;" outline color="dark">最新版本</button>
+<ion-content padding>
+  <img src="assets/img/logo.png" class="logo"/>
+  <div class="pos-r">
+    <div class="ver-til">
+      <div class="float-l bor"></div>
+      <div class="float-l til-name">当前版本</div>
+      <div class="float-l bor"></div>
+    </div>
+    <div class="version-name">
+      {{versionName}}
+    </div>
+    <div class="dark-box">
+      {{repairContent}}
+    </div>
   </div>
+  <button class="btn" ion-button  block style="background: #1aa7b8;">立即更新</button>
+  <button class="btn" ion-button  block style="background: rgba(6,28,68,0.5);">最新版本</button>
+  <page-bottom></page-bottom>
 </ion-content>

@@ -112,3 +112,14 @@ input {
 input:focus {
   outline:none;
 }
+.logo{
+  display: block;
+  width: 25%;
+  margin: 15% auto 20px;
+  max-width: 200px;
+}
+@media (max-width: 320px) {
+  .logo{
+    margin: 8% auto 20px;
+  }
+}
