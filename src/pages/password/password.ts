@@ -13,6 +13,11 @@ export class PasswordPage {
   newpwd;
   newpwds;
   userId;
+  Imgsrc1 = 'assets/img/xmm.png';
+  Imgsrc2 = 'assets/img/xmm.png';
+  showEye = false;
+  type1 = 'password';
+  type2 = 'password';
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public http: ProxyHttpService,
@@ -56,5 +61,29 @@ export class PasswordPage {
       position: position
     });
     toast.present(toast);
+  }
+
+  showText(state){
+    if(state === 0){
+      if(!this.showEye){
+        this.Imgsrc1 = 'assets/img/eye-no.png';
+        this.showEye = true;
+        this.type1 = 'text';
+      }else{
+        this.Imgsrc1 = 'assets/img/xmm.png';
+        this.showEye = false;
+        this.type1 = 'password';
+      }
+    }else{
+      if(!this.showEye){
+        this.Imgsrc2 = 'assets/img/eye-no.png';
+        this.showEye = true;
+        this.type2 = 'text';
+      }else{
+        this.Imgsrc2 = 'assets/img/xmm.png';
+        this.showEye = false;
+        this.type2 = 'password';
+      }
+    }
   }
 }

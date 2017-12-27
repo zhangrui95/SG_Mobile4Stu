@@ -12,8 +12,12 @@ import {UserData} from "../../providers/user-data";
 export class PhonePage {
   oldPhone;
   newPhone;
+  Password;
   verificationCode;
   // pwd;
+  Imgsrc = 'assets/img/xmm.png';
+  showEye = false;
+  type = 'password';
   userId;
   name;
   pattern = /^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/;
@@ -41,7 +45,7 @@ export class PhonePage {
     }else if(!this.pattern.test(this.newPhone)){
       this.showToast('bottom','新手机号输入不正确');
     }else{
-      const params = {phone:this.oldPhone,UserName:this.name, newPhone:this.newPhone,userid:this.userId.toString(),VCode:this.verificationCode}
+      const params = {phone:this.oldPhone,UserName:this.name, newPhone:this.newPhone,userid:this.userId.toString(),passWord:this.Password,VCode:this.verificationCode}
       this.http.updatePhone(params).subscribe(res => {
         if(res['code'] == 0){
           loading.dismiss();
@@ -88,7 +92,7 @@ export class PhonePage {
       }else if(!this.pattern.test(this.newPhone)){
         this.showToast('bottom','新手机号输入不正确');
       }else{
-        const params = {phone:this.oldPhone,UserName:this.name,newPhone:this.newPhone,userid:this.userId.toString(),VCode:''}
+        const params = {phone:this.oldPhone,UserName:this.name,newPhone:this.newPhone,userid:this.userId.toString(),passWord:this.Password,VCode:''}
         this.http.updatePhone(params).subscribe(res => {
           if(res['code'] == 0){
             this.settime();
@@ -99,6 +103,17 @@ export class PhonePage {
           }
         });
       }
+    }
+  }
+  showText(){
+    if(!this.showEye){
+      this.Imgsrc = 'assets/img/eye-no.png';
+      this.showEye = true;
+      this.type = 'text';
+    }else{
+      this.Imgsrc = 'assets/img/xmm.png';
+      this.showEye = false;
+      this.type = 'password';
     }
   }
 

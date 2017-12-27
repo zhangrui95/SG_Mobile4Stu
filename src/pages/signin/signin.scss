@@ -74,4 +74,7 @@ page-signin {
   .item-button{
     box-shadow: 0 0 0;
   }
+  .input-has-focus,.item-input-has-focus{
+    border: none;
+  }
 }

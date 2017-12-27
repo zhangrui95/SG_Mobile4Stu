@@ -8,29 +8,33 @@
 
 
 <ion-content padding>
+  <div class="item-box">
+    <div class="xian float-l"></div>
+    <div class="or-word float-l">INFORMATION CHANGE</div>
+    <div class="xian float-l"></div>
+  </div>
   <ion-list inset>
 
     <ion-item>
-      <ion-label>原手机号</ion-label>
-      <ion-input [(ngModel)]="oldPhone" type="number"></ion-input>
+      <ion-input placeholder="原手机号" class="input-bg" [(ngModel)]="oldPhone" type="number"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label>新手机号</ion-label>
-      <ion-input [(ngModel)]="newPhone" type="number"></ion-input>
+      <ion-input placeholder="原始密码" class="input-bg" [(ngModel)]="Password" type="{{type}}"></ion-input>
+      <img src="{{Imgsrc}}" (click)="showText()" item-end/>
     </ion-item>
 
     <ion-item>
-      <ion-label>验&nbsp;&nbsp;证&nbsp;&nbsp;码</ion-label>
-      <ion-input [(ngModel)]="verificationCode" type="number"></ion-input>
-      <button ion-button item-end (click)="countDown()">{{verifyCode.verifyCodeTips}}</button>
+      <ion-input placeholder="新手机号" class="input-bg" [(ngModel)]="newPhone" type="number"></ion-input>
+      <button class="yzm-btn" ion-button item-end (click)="countDown()">{{verifyCode.verifyCodeTips}}</button>
     </ion-item>
-    <p></p>
 
+    <ion-item>
+      <ion-input placeholder="输入手机验证码" class="input-bg" [(ngModel)]="verificationCode" type="number"></ion-input>
+    </ion-item>
   </ion-list>
-
-  <div class="mar-btn" padding>
-    <button ion-button block (click)="save()" style="background:#2c3550;height: 50px;">提交</button>
+  <div class="button-boxs" padding>
+    <button  class="btn-green" ion-button block (click)="save()">确认修改</button>
   </div>
-
+  <page-bottom></page-bottom>
 </ion-content>
