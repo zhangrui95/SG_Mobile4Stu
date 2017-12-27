@@ -5,7 +5,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<div class="fixed-content" padding>
   <div class="item-box">
     <div class="xian float-l"></div>
     <div class="or-word float-l">CLASSROOM REHEARSAL 课堂演练</div>
@@ -19,30 +19,17 @@
     </div>
     <div class="choice-btn" (click)="goGrouping()">选择角色</div>
   </div>
-  <ion-list no-lines  class="border-left">
-    <!--<div class="list" (click)="goGrouping()">-->
-      <!--<button ion-item>-->
-        <!--<div class="float-l list-num">01</div>-->
-        <!--<div class="float-l list-g">|</div>-->
-        <!--<div class="float-l list-name">事件起因-百度贴吧</div>-->
-        <!--<ion-icon class="icon-forward" name="ios-arrow-forward"  item-end></ion-icon>-->
-      <!--</button>-->
-    <!--</div>-->
-    <div class="list" *ngFor="let item of items;let i = index;" (click)="goPage(item.type)">
-      <button ion-item>
-        <div class="float-l list-num"><span *ngIf="i < 9">0</span>{{i+1}}</div>
-        <div class="float-l list-g">|</div>
-        <div class="float-l list-name">{{ item.name }}</div>
-        <ion-icon class="icon-forward" name="ios-arrow-forward"  item-end></ion-icon>
-      </button>
-    </div>
-    <!--<div class="list">-->
-      <!--<img src="assets/img/icon.png"/>-->
-      <!--<button ion-item>-->
-        <!--最终走向-->
-        <!--<ion-icon class="icon-forward" name="ios-arrow-forward"  item-end></ion-icon>-->
-      <!--</button>-->
-    <!--</div>-->
-  </ion-list>
-  <page-bottom></page-bottom>
-</ion-content>
+  <div class="scroll-box" #scrollBox>
+    <ion-list no-lines  class="border-left">
+      <div class="list" *ngFor="let item of items;let i = index;" (click)="goPage(item.type)">
+        <button ion-item>
+          <div class="float-l list-num"><span *ngIf="i < 9">0</span>{{i+1}}</div>
+          <div class="float-l list-g">|</div>
+          <div class="float-l list-name">{{ item.name }}</div>
+          <ion-icon class="icon-forward" name="ios-arrow-forward"  item-end></ion-icon>
+        </button>
+      </div>
+    </ion-list>
+    <page-bottom></page-bottom>
+  </div>
+</div>

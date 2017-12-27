@@ -66,4 +66,8 @@ page-phone {
   .item-button{
     box-shadow: 0 0 0;
   }
+  .button.activated{
+    background: transparent;
+    box-shadow: 0 0 0;
+  }
 }

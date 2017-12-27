@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {GroupingPage} from "../grouping/grouping";
 import {DecisionPage} from "../decision/decision";
@@ -8,12 +8,14 @@ import {BaidutbPage} from "../baidutb/baidutb";
 import {WeiBoPage} from "../weibo/weibo";
 import {QQPage} from "../qq/qq";
 
+
 @IonicPage()
 @Component({
   selector: 'page-classroom',
   templateUrl: 'classroom.html',
 })
 export class ClassroomPage {
+  @ViewChild('scrollBox') private myScrollContainer: ElementRef;
   items = [
     {name:'事件起因',type: '0'},
     {name:'第一次决策',type:'1'},
@@ -23,9 +25,16 @@ export class ClassroomPage {
     {name:'弹幕',type:'5'},
     {name:'新浪微博',type:'6'},
     {name:'QQ',type:'7'},
+    {name:'第二次决策',type:'1'},
+    {name:'弹幕',type:'5'},
+    {name:'新浪微博',type:'6'},
+    {name:'QQ',type:'7'},
     {name:'第二次决策',type:'1'}
     ]
-  constructor(public navCtrl: NavController, public navParams: NavParams,public toastCtrl:ToastController) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public toastCtrl:ToastController
+              ) {
   }
   showToast(position: string, text: string) {
     let toast = this.toastCtrl.create({
@@ -36,7 +45,7 @@ export class ClassroomPage {
     toast.present(toast);
   }
   ionViewDidLoad() {
-
+    this.scrollToBottom();
   }
 
   goGrouping(){
@@ -63,5 +72,10 @@ export class ClassroomPage {
     if(type == '7'){
       this.navCtrl.push(QQPage)
     }
+  }
+  scrollToBottom(): void {
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch(err) { }
   }
 }
