@@ -15,6 +15,5 @@ export interface UserSign {
 export interface findPassword {
   phone: string,
   password: string,
-  password1: string,
   verificationCode: string
 }

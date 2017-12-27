@@ -14,9 +14,9 @@ import {UserData} from "../../providers/user-data";
 export class FindPasswordPage {
   name;
   userId;
-  find: findPassword = { phone: '', password: '' , password1: '', verificationCode: ''};
+  find: findPassword = { phone: '', password: '' , verificationCode: ''};
   submitted = false;
-  Imgsrc = 'assets/img/eye.png';
+  Imgsrc = 'assets/img/xmm.png';
   showEye = false;
   type = 'password';
   verifyCode: any = {
@@ -55,10 +55,6 @@ export class FindPasswordPage {
     if(this.verifyCode.disable){
         if(this.find.phone == ''){
           this.showToast('bottom', '手机号不能为空');
-        }else if(this.find.password == ''||this.find.password1 == ''){
-          this.showToast('bottom', '密码不能为空');
-        }else if(this.find.password != this.find.password1){
-          this.showToast('bottom', '两次密码不一致');
         }else{
           const params = {Phone:this.find.phone,LoginPwd:this.find.password,VCode:''};
           console.log(params)
@@ -77,7 +73,7 @@ export class FindPasswordPage {
       this.showEye = true;
       this.type = 'text';
     }else{
-      this.Imgsrc = 'assets/img/eye.png';
+      this.Imgsrc = 'assets/img/xmm.png';
       this.showEye = false;
       this.type = 'password';
     }

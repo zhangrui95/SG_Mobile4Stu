@@ -1,26 +1,33 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>注册</ion-title>
+  </ion-navbar>
+</ion-header>
 <ion-content padding>
-  <div class="sign-name">注册信息</div>
+  <div class="item-box">
+    <div class="xian float-l"></div>
+    <div class="or-word float-l">USER REGISTRATION 填写相关信息</div>
+    <div class="xian float-l"></div>
+  </div>
   <form #loginForm="ngForm" novalidate>
     <ion-list inset>
       <ion-item>
-        <ion-label>用&nbsp;&nbsp;户&nbsp;&nbsp;名</ion-label>
-        <ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" required></ion-input>
+        <ion-input class="input-bg" placeholder="用户名" [(ngModel)]="login.username" name="username" type="text" #username="ngModel" required></ion-input>
       </ion-item>
       <p class="danger-text" ion-text [hidden]="username.valid || submitted == false" color="danger" padding-left>
         用户名不能为空
       </p>
       <ion-item>
-        <ion-label>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</ion-label>
-        <ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
+        <ion-input class="input-bg" placeholder="密码" [(ngModel)]="login.password" name="password" type="{{type}}" #password="ngModel" required>
         </ion-input>
+        <img src="{{Imgsrc}}" (click)="showText()" item-end/>
       </ion-item>
       <p class="danger-text" ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
         密码不能为空
       </p>
 
       <ion-item>
-        <ion-label>真实姓名</ion-label>
-        <ion-input [(ngModel)]="login.RealName" name="RealName" type="text" #RealName="ngModel" required>
+        <ion-input class="input-bg" placeholder="真实姓名" [(ngModel)]="login.RealName" name="RealName" type="text" #RealName="ngModel" required>
         </ion-input>
       </ion-item>
       <p class="danger-text" ion-text [hidden]="RealName.valid || submitted == false" color="danger" padding-left>
@@ -28,26 +35,25 @@
       </p>
 
       <ion-item>
-        <ion-label>手机号码</ion-label>
-        <ion-input [(ngModel)]="login.phone" name="phone" type="number" #phone="ngModel" required>
+        <ion-input class="input-bg" placeholder="手机号"  [(ngModel)]="login.phone" name="phone" type="number" #phone="ngModel" required>
         </ion-input>
+        <button class="yzm-btn" ion-button item-end (click)="countDown()">{{verifyCode.verifyCodeTips}}</button>
       </ion-item>
       <p class="danger-text" ion-text [hidden]="phone.valid || submitted == false" color="danger" padding-left>
         手机号码不能为空
       </p>
       <ion-item>
-        <ion-label>验&nbsp;&nbsp;证&nbsp;&nbsp;码</ion-label>
-        <ion-input [(ngModel)]="login.verificationCode" name="verificationCode" type="number" #verificationCode="ngModel" required>
+        <ion-input class="input-bg" placeholder="输入手机验证码"  [(ngModel)]="login.verificationCode" name="verificationCode" type="number" #verificationCode="ngModel" required>
         </ion-input>
-        <button ion-button item-end (click)="countDown()">{{verifyCode.verifyCodeTips}}</button>
       </ion-item>
       <p class="danger-text" ion-text [hidden]="verificationCode.valid || submitted == false" color="danger" padding-left>
         验证码不能为空
       </p>
     </ion-list>
   </form>
-  <div padding class="mar-btn">
-    <button ion-button (click)="onLogin(loginForm)" style="height: 50px;background: #2c3550;" type="submit" block>注  册</button>
+  <div class="button-boxs" padding>
+    <button class="btn-green" ion-button (click)="onLogin(loginForm)" type="submit" block>注册新账号</button>
   </div>
-  <p class="go-login" (click)="goLogin()">已有账号，去登陆 ></p>
+  <p class="go-login" style="color: #fff;" (click)="goLogin()">已有账号？马上去登陆 ></p>
+  <page-bottom></page-bottom>
 </ion-content>

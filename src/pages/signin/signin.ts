@@ -18,6 +18,9 @@ export class SigninPage {
 
   login: UserSign = { username: '', password: '' , RealName: '', phone: '', verificationCode: ''};
   submitted = false;
+  Imgsrc = 'assets/img/xmm.png';
+  showEye = false;
+  type = 'password';
   verifyCode: any = {
     verifyCodeTips: "获取验证码",
     countdown: 60,
@@ -52,6 +55,18 @@ export class SigninPage {
     }
   }
 
+  showText(){
+    if(!this.showEye){
+      this.Imgsrc = 'assets/img/eye-no.png';
+      this.showEye = true;
+      this.type = 'text';
+    }else{
+      this.Imgsrc = 'assets/img/xmm.png';
+      this.showEye = false;
+      this.type = 'password';
+    }
+  }
+
   settime() {
     if (this.verifyCode.countdown == 1) {
       this.verifyCode.countdown = 60;
@@ -70,8 +85,8 @@ export class SigninPage {
   }
   countDown(){
     if(this.verifyCode.disable){
-      if(this.login.username == ''||this.login.password == ''||this.login.RealName == ''||this.login.phone == ''){
-        this.showToast('bottom', '必填项不能为空');
+      if(this.login.phone == ''){
+        this.showToast('bottom', '手机号不能为空');
       }else{
         const params = {LoginName:this.login.username, LoginPwd:this.login.password, RealName:this.login.RealName, Phone:this.login.phone, VCode:''}
         this.http.register(params).subscribe(res => {

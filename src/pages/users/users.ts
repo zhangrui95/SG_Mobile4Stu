@@ -41,7 +41,6 @@ export class UsersPage {
     this.userData.getUsername().then(value => this.name=value)
     this.userData.getUserPhone().then(value => this.phone=value)
     this.userData.getUserID().then(value => this.userId=value)
-
   }
   goChangePhone(){
 
