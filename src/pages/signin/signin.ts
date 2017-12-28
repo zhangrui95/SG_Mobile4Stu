@@ -20,6 +20,7 @@ export class SigninPage {
   submitted = false;
   Imgsrc = 'assets/img/xmm.png';
   showEye = false;
+
   type = 'password';
   verifyCode: any = {
     verifyCodeTips: "获取验证码",
@@ -56,6 +57,7 @@ export class SigninPage {
   }
 
   showText(){
+    alert(this.showEye)
     if(!this.showEye){
       this.Imgsrc = 'assets/img/eye-no.png';
       this.showEye = true;

@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import {HttpClient, HttpParams} from "@angular/common/http";
+import {UserData} from "./user-data";
 
 
 @Injectable()
@@ -13,7 +14,7 @@ export class ProxyHttpService {
   public static IP_PORT="http://192.168.0.52:8080";
   public static PROJECT_PACKAGE="/VisualizationMgt"
   public BASE_URL=ProxyHttpService.IP_PORT+ProxyHttpService.PROJECT_PACKAGE
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient,public userData:UserData) {
 
   }
 
@@ -51,9 +52,23 @@ export class ProxyHttpService {
   }
 
   _post(url,params?:any){
-    return this.http.post(this.BASE_URL+url,JSON.stringify(params))
+    var p = new HttpParams();
+    for (let key in params) {
+      p = p.append(key, params[key])
+    }
+    p = p.append("deviceType", "phone");
+    p = p.append("token", this.userData.userToken)
+    return this.http.post(this.BASE_URL+url,JSON.stringify(p))
   }
-  _get(url,params?:HttpParams){
-    return this.http.get(this.BASE_URL+url,{params:params})
+
+  _get(url, params?: HttpParams) {
+    var p = new HttpParams();
+    for (let key in params) {
+      p = p.append(key, params[key])
+    }
+    p = p.append("deviceType", "phone");
+    p = p.append("token", this.userData.userToken)
+    return this.http.get(this.BASE_URL + url, {params: p})
+
   }
 }

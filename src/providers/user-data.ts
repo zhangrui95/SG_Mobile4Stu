@@ -10,11 +10,14 @@ export class UserData {
   HAS_LOGGED_IN = 'hasLoggedIn';
   HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
 
-  constructor(
-    public events: Events,
-    public storage: Storage
-  ) {}
+  public userToken;
 
+  constructor(public events: Events,
+              public storage: Storage) {
+    this.getToken().then(value => {
+      this.userToken = value;
+    })
+  }
   hasFavorite(sessionName: string): boolean {
     return (this._favorites.indexOf(sessionName) > -1);
   };
@@ -61,6 +64,7 @@ export class UserData {
     this.events.publish('user:logout');
   };
   setToken(token: string): void {
+    this.userToken = token;
     this.storage.set('token', token);
   };
   getToken(): Promise<string> {
