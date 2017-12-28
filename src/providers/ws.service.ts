@@ -24,7 +24,7 @@ export class ServerSocket {
     // and closed when the observer count falls to zero.
     this.userData.getToken().then(value =>  this.messages = websocketConnect(
 
-      'ws://192.168.0.52/VisualizationMgt/websocket.do?token='+value + "&type=pc",
+      'ws://192.168.0.52/VisualizationMgt/websocket.do?token='+value + "&type=phone",
       this.inputStream = new QueueingSubject<string>()
     ).messages.share())
 
