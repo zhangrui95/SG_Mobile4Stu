@@ -8,7 +8,7 @@
     "url": "https://github.com/ionic-team/ionic-conference-app.git"
   },
   "scripts": {
-    "start": "ionic serve",
+    "start": "ionic serve --port 8102",
     "build": "ionic-app-scripts build",
     "clean": "ionic-app-scripts clean",
     "lint": "ionic-app-scripts lint",

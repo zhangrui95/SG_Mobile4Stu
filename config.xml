@@ -19,7 +19,6 @@
         <icon density="xxxhdpi" src="resources/android/icon/drawable-xxxhdpi-icon.png" />
         <icon src="resources/android/icon/drawable-xxxhdpi-icon.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
-        <splash density="land-xxxhdpi" src="resources/android/splash/drawable-land-xxxhdpi-screen.png" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -52,17 +51,17 @@
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
     <preference name="SplashShowOnlyFirstTime" value="false" />
-    <preference name="orientation" value="default" />
+    <preference name="orientation" value="portrait" />
     <preference name="ScrollEnabled" value="false" />
     <preference name="StatusBarStyle" value="BlackOpaque" />
     <preference name="android-minSdkVersion" value="16" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashMaintainAspectRatio" value="true" />
-    <preference name="FadeSplashScreenDuration" value="300" />
+    <preference name="FadeSplashScreenDuration" value="600" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="AutoHideSplashScreen" value="false" />
-    <preference name="SplashScreenDelay" value="1000" />
+    <preference name="SplashScreenDelay" value="3000" />
     <preference name="loadUrlTimeoutValue" value="120000" />
     <allow-navigation href="http://192.168.100.26:8100" />
     <plugin name="cordova-plugin-crosswalk-webview" spec="^2.3.0">
@@ -74,7 +73,6 @@
     </plugin>
     <plugin name="cordova-plugin-device" spec="^1.1.7" />
     <plugin name="cordova-plugin-inappbrowser" spec="^1.7.2" />
-    <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
     <plugin name="cordova-plugin-statusbar" spec="^2.3.0" />
@@ -90,4 +88,5 @@
     </plugin>
     <plugin name="cordova-plugin-speechrecognition" spec="^1.2.0" />
     <plugin name="com-badrit-base64" spec="^0.2.0" />
+    <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
 </widget>

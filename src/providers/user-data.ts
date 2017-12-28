@@ -30,11 +30,12 @@ export class UserData {
     }
   };
 
-  login(username: string,userID:string,url:string,phone:string,loginName:string): void {
+  login(username: string,token:string,userID:string,url:string,phone:string,loginName:string): void {
     this.storage.set(this.HAS_LOGGED_IN, true);
     this.setUsername(username);
     this.setUserID(userID)
     this.setAvatar(url)
+    this.setToken(token);
     this.setLoginName(loginName);
     this.setPhone(phone);
     this.events.publish('user:login');
@@ -45,6 +46,7 @@ export class UserData {
     this.setUsername(username);
     this.setUserID(userID)
     this.setAvatar(url)
+
     this.setPhone(phone);
     this.events.publish('user:signup');
   };
@@ -54,10 +56,18 @@ export class UserData {
     this.storage.remove('username');
     this.storage.remove('phone');
     this.storage.remove('userId');
+    this.storage.remove('token');
     this.storage.remove('avatarUrl');
     this.events.publish('user:logout');
   };
-
+  setToken(token: string): void {
+    this.storage.set('token', token);
+  };
+  getToken(): Promise<string> {
+    return this.storage.get('token').then((value) => {
+      return value;
+    });
+  };
   setUsername(username: string): void {
     this.storage.set('username', username);
   };
