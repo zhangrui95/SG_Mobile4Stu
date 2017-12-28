@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { NavController } from 'ionic-angular';
+import {Keyboard, NavController, ToastController} from 'ionic-angular';
 
 import { UserData } from '../../providers/user-data';
 
@@ -19,8 +19,15 @@ export class LoginPage {
   login: UserOptions = { username: '', password: '' };
   submitted = false;
 
-  constructor(public navCtrl: NavController, public userData: UserData) { }
+  constructor(public navCtrl: NavController, public userData: UserData,public keyBoard:Keyboard,public toast:ToastController) {
 
+    this.keyBoard.onClose(this.closeCallback)
+  }
+  closeCallback() {
+    // call what ever functionality you want on keyboard close
+    this.toast.create()
+    console.log('Closing time');
+  }
   onLogin(form: NgForm) {
     this.submitted = true;
 
