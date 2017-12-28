@@ -52,13 +52,10 @@ export class ProxyHttpService {
   }
 
   _post(url,params?:any){
-    var p = new HttpParams();
-    for (let key in params) {
-      p = p.append(key, params[key])
-    }
-    p = p.append("deviceType", "phone");
-    p = p.append("token", this.userData.userToken)
-    return this.http.post(this.BASE_URL+url,JSON.stringify(p))
+    params.deviceType="pad"
+    params.token=this.userData.userToken;
+    console.log(JSON.stringify(params))
+    return this.http.post(this.BASE_URL + url, JSON.stringify(params))
   }
 
   _get(url, params?: HttpParams) {
