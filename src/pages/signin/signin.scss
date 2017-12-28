@@ -77,4 +77,8 @@ page-signin {
   .input-has-focus,.item-input-has-focus{
     border: none;
   }
+  .button.activated{
+    background: transparent;
+    box-shadow: 0 0 0;
+  }
 }
