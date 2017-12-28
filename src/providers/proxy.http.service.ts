@@ -51,6 +51,14 @@ export class ProxyHttpService {
     return this._post("/userstu/initPass.do",params)
   }
 
+  getProcessOfStu(params){
+    return this._get("/phoneAppController/getProcessOfStu.do",params)
+  }
+
+  getPushFreeGroListForPhone(params){
+    return this._post("/tabletController/getPushFreeGroListForPhone.do",params)
+  }
+
   _post(url,params?:any){
     params.deviceType="pad"
     params.token=this.userData.userToken;

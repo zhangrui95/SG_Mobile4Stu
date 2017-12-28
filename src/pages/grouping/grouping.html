@@ -6,27 +6,6 @@
 
 
 <ion-content padding>
-  <!--<div class="til-top">等待角色分配</div>-->
-  <!--<img src="assets/img/img1.png" class="img-top"/>-->
-  <!--<div class="til-top">分组方案</div>-->
-  <!--<table class="group-table">-->
-    <!--<thead>-->
-      <!--<tr>-->
-        <!--<td>分组名称</td>-->
-        <!--<td>人数</td>-->
-        <!--<td>操作</td>-->
-      <!--</tr>-->
-    <!--</thead>-->
-    <!--<tbody>-->
-      <!--<tr *ngFor="let item of list">-->
-        <!--<td>{{item.name}}</td>-->
-        <!--<td>{{item.num}}</td>-->
-        <!--<td>-->
-          <!--<button ion-button>加入改组</button>-->
-        <!--</td>-->
-      <!--</tr>-->
-    <!--</tbody>-->
-  <!--</table>-->
   <div class="item-box">
     <div class="xian float-l"></div>
     <div class="or-word float-l">CHOICE OF ROLES 选择角色</div>
@@ -37,9 +16,9 @@
       <div class="float-l head-icon">
         <img src="assets/img/img1.png"/>
       </div>
-      <div class="float-l group-name">{{item.name}}</div>
-      <div class="float-l group-num">{{item.num}}/7</div>
-      <img class="float-r add-icon" src="assets/img/add.png"/>
+      <div class="float-l group-name">{{item.text}}</div>
+      <div class="float-l group-num">0/{{item.limit}}</div>
+      <img class="float-r add-icon" src="assets/img/add.png" (click)="getJoin()"/>
     </div>
   </div>
   <page-bottom></page-bottom>

@@ -43,7 +43,6 @@ export class UsersPage {
     this.userData.getUserID().then(value => this.userId=value)
   }
   goChangePhone(){
-
     this.navCtrl.push(PhonePage, {userId: this.userId});
   }
   goChangePassword(){
