@@ -22,10 +22,12 @@ export class ServerSocket {
     // Using share() causes a single websocket to be created when the first
     // observer subscribes. This socket is shared with subsequent observers
     // and closed when the observer count falls to zero.
-    this.messages = websocketConnect(
-      'ws://192.168.0.52/VisualizationMgt/websocket.do?token='+this.userData.getToken() + "&type=pc",
+    this.userData.getToken().then(value =>  this.messages = websocketConnect(
+
+      'ws://192.168.0.52/VisualizationMgt/websocket.do?token='+value + "&type=pc",
       this.inputStream = new QueueingSubject<string>()
-    ).messages.share()
+    ).messages.share())
+
   }
 
   public send(message: string): void {
