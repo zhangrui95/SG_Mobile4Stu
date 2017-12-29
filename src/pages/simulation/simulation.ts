@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {SimulationListPage} from "../simulation-list/simulation-list";
+// import {SimulationListPage} from "../simulation-list/simulation-list";
 import {ProxyHttpService} from "../../providers/proxy.http.service";
 import {UserData} from "../../providers/user-data";
+import {ClassroomPage} from "../classroom/classroom";
 
 @IonicPage()
 @Component({
@@ -52,7 +53,8 @@ export class SimulationPage {
       });
   }
   getList(){
-    this.navCtrl.push(SimulationListPage);
+    // this.navCtrl.push(SimulationListPage);
+    this.navCtrl.push(ClassroomPage);
   }
 
 }
