@@ -22,8 +22,10 @@ export class ClassroomPage {
   items = [];
   userId;
   showBtn = true;
+  GroupNews = false;
   allocation = false;
-  groupList;
+  groOfStu;
+  sim_id;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public toastCtrl:ToastController,
@@ -31,6 +33,7 @@ export class ClassroomPage {
               public userData:UserData,
               public ws :ServerSocket
               ) {
+    // this.sim_id = this.navParams.get('data').sim_id;
     this.userData.getUserID().then(value => this.userId=value);
     this.ws.connect();
   }
@@ -44,27 +47,20 @@ export class ClassroomPage {
     toast.present(toast);
   }
   ionViewDidEnter() {
-    // this.allocation = true;
     this.getProcessOfStu();
-    // setInterval(()=>{
-    //   this.getPushFreeGroListForPhone();
-    // },2000);
     setTimeout(()=>{
         this.getPushFreeGroListForPhone();
       },2000);
     this.messagesSubscription=this.ws.messages.subscribe(msg=>{
       if(msg !== null){
         let action = JSON.parse(msg)['action'];
-        let list = JSON.parse(msg)['listGro'];
         if(action !== "undefined" ){
           if(action === "phone_process_update"){
             this.getProcessOfStu();
             this.scrollToBottom();
           }else if(action === "phone_group"){
-            this.groupList = list;
+            this.getProcessOfStu();
             this.allocation = true;
-          }else if(action === "phone_group_members_update"){
-
           }
         }
       }
@@ -74,7 +70,7 @@ export class ClassroomPage {
     this.messagesSubscription.unsubscribe()
   }
   getPushFreeGroListForPhone(){
-    const params = {"sim_id":"18","GroupId":[{"id":"23",img:'assets/img/img1.png',text:'这是什么组1',"type":"fixed","limit":"999"},{"id":"2",img:'assets/img/dsr.png',text:'组二啊',"type":"fixed","limit":"120"},{"id":"09",img:'assets/img/dsr.png',text:'组三',"type":"fixed","limit":"253"}]}
+    const params = {'sim_id':18,"GroupId":[{"id":"2",img:'assets/img/img1.png',text:'这是什么组',"type":"fixed","limit":"999"},{"id":"3",img:'assets/img/img1.png',text:'你好',"type":"fixed","limit":"123"},{"id":"4",img:'assets/img/img1.png',text:'胜多负少',"type":"fixed","limit":"200"},{"id":"5",img:'assets/img/img1.png',text:'少放点撒地方',"type":"fixed","limit":"123"},{"id":"6",img:'assets/img/img1.png',text:'佛挡杀佛地方是',"type":"fixed","limit":"123"}]}
     this.http.getPushFreeGroListForPhone(params).subscribe(res => {
       console.log(res)
     });
@@ -82,14 +78,20 @@ export class ClassroomPage {
   getProcessOfStu(){
     const params = {sim_id:18, u_id:this.userId};
     this.http.getProcessOfStu(params).subscribe(res => {
-      console.log("res",res)
       this.items = res['list'];
+      this.groOfStu = res['groOfStu'];
+      if(res['groOfStu'] === ''){
+        this.GroupNews = false;
+        this.allocation = true;
+      }else{
+        this.GroupNews = true;
+        this.allocation = false;
+      }
     });
   }
 
   goGrouping(){
-    console.log(this.groupList);
-    this.navCtrl.push(GroupingPage,{groupList: this.groupList});
+    this.navCtrl.push(GroupingPage,{sim_id: "18"});
   }
 
   goPage(type){

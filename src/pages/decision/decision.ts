@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {UsersPage} from "../users/users";
 
 @IonicPage()
 @Component({
@@ -22,10 +21,6 @@ export class DecisionPage {
 
   getForm(item){
     this.Id = item.id;
-  }
-
-  getUser(){
-    this.navCtrl.push(UsersPage);
   }
 
   vote(){

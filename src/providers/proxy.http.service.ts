@@ -63,8 +63,17 @@ export class ProxyHttpService {
     return this._post("/phoneAppController/addfreeGroupOfStu.do",params)
   }
 
+  getGroupsList(params){
+    return this._get("/phoneAppController/getGroupsList.do",params)
+  }
+
+  addClassPractice(params){
+    return this._post("/phoneAppController/addClassPractice.do",params)
+  }
+
+
   _post(url,params?:any){
-    params.deviceType="pad"
+    params.deviceType="phone"
     params.token=this.userData.userToken;
     console.log(JSON.stringify(params))
     return this.http.post(this.BASE_URL + url, JSON.stringify(params))

@@ -19,6 +19,12 @@
     </div>
     <div *ngIf="showBtn" class="choice-btn" (click)="goGrouping()">选择角色</div>
   </div>
+  <div class="index-news-box mar-bottom" *ngIf="GroupNews">
+    <img src="{{groOfStu[0].g_image}}" class="wen"/>
+    <div class="float-l wen-word-box">
+      <div class="group-name">{{groOfStu[0].g_name}}</div>
+    </div>
+  </div>
   <div class="scroll-box" #scrollBox>
     <ion-list no-lines  class="border-left">
       <div class="list" *ngFor="let item of items;let i = index;" (click)="goPage(item.n_id)">
