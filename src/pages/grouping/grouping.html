@@ -11,14 +11,14 @@
     <div class="or-word float-l">CHOICE OF ROLES 选择角色</div>
     <div class="xian float-l"></div>
   </div>
-  <div class="group-list-box" *ngFor="let item of list">
+  <div class="group-list-box" *ngFor="let item of list;let i = index;">
     <div class="group-list">
       <div class="float-l head-icon">
-        <img src="assets/img/img1.png"/>
+        <img src="{{item.img}}"/>
       </div>
       <div class="float-l group-name">{{item.text}}</div>
-      <div class="float-l group-num">0/{{item.limit}}</div>
-      <img class="float-r add-icon" src="assets/img/add.png" (click)="getJoin()"/>
+      <div class="float-l group-num">{{totalStu[i]}}/{{item.limit}}</div>
+      <img class="float-r add-icon" src="assets/img/add.png" (click)="getJoin(item, i)"/>
     </div>
   </div>
   <page-bottom></page-bottom>

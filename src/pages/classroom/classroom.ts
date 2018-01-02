@@ -31,8 +31,8 @@ export class ClassroomPage {
               public userData:UserData,
               public ws :ServerSocket
               ) {
-    this.userData.getUserID().then(value => this.userId=value)
-    this.ws.connect()
+    this.userData.getUserID().then(value => this.userId=value);
+    this.ws.connect();
   }
   messagesSubscription;
   showToast(position: string, text: string) {
@@ -43,12 +43,15 @@ export class ClassroomPage {
     });
     toast.present(toast);
   }
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     // this.allocation = true;
     this.getProcessOfStu();
+    // setInterval(()=>{
+    //   this.getPushFreeGroListForPhone();
+    // },2000);
     setTimeout(()=>{
-      this.getPushFreeGroListForPhone();
-    },2000);
+        this.getPushFreeGroListForPhone();
+      },2000);
     this.messagesSubscription=this.ws.messages.subscribe(msg=>{
       if(msg !== null){
         let action = JSON.parse(msg)['action'];
@@ -65,13 +68,13 @@ export class ClassroomPage {
           }
         }
       }
-    })
+    });
   }
   ionViewDidLeave(){
-    // this.messagesSubscription.unsubscribe()
+    this.messagesSubscription.unsubscribe()
   }
   getPushFreeGroListForPhone(){
-    const params = {"sim_id":"18","GroupId":[{"id":"23",img:'',text:'这是什么组1',"type":"fixed","limit":"6"},{"id":"2",img:'',text:'组二啊',"type":"fixed","limit":"6"},{"id":"09",img:'',text:'组三',"type":"fixed","limit":"6"}]}
+    const params = {"sim_id":"18","GroupId":[{"id":"23",img:'assets/img/img1.png',text:'这是什么组1',"type":"fixed","limit":"999"},{"id":"2",img:'assets/img/dsr.png',text:'组二啊',"type":"fixed","limit":"120"},{"id":"09",img:'assets/img/dsr.png',text:'组三',"type":"fixed","limit":"253"}]}
     this.http.getPushFreeGroListForPhone(params).subscribe(res => {
       console.log(res)
     });
@@ -79,6 +82,7 @@ export class ClassroomPage {
   getProcessOfStu(){
     const params = {sim_id:18, u_id:this.userId};
     this.http.getProcessOfStu(params).subscribe(res => {
+      console.log("res",res)
       this.items = res['list'];
     });
   }

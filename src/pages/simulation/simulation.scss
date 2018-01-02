@@ -10,15 +10,28 @@ page-simulation {
     color: #999998;
   }
   .item h2{
-    color: #2c3451;
-    font-size: 1.4rem;
-    line-height: 3rem;
+    color: #fff;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    height: 3rem;
     overflow: hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
+    text-align: right;
   }
   .item p{
-    font-size: 1.2rem;
-    color: #797979;
+    font-size: 1.3rem;
+    color: #aaa;
+    text-align: right;
+    height: 2rem;
+    line-height: 3rem;
+  }
+  .list-md .item-block .item-inner{
+    border-bottom: 0;
+  }
+  .item{
+    background: rgba(0,0,0,0.5);
+    margin: 10px 0;
+    border-radius: 7px!important;
   }
 }

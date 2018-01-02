@@ -59,6 +59,10 @@ export class ProxyHttpService {
     return this._post("/tabletController/getPushFreeGroListForPhone.do",params)
   }
 
+  addfreeGroupOfStu(params){
+    return this._post("/phoneAppController/addfreeGroupOfStu.do",params)
+  }
+
   _post(url,params?:any){
     params.deviceType="pad"
     params.token=this.userData.userToken;
