@@ -7,6 +7,7 @@ import {DanmuPage} from "../danmu/danmu";
 import {BaidutbPage} from "../baidutb/baidutb";
 import {WeiBoPage} from "../weibo/weibo";
 import {QQPage} from "../qq/qq";
+import {ServerSocket} from "../../providers/ws.service";
 
 
 @IonicPage()
@@ -33,8 +34,10 @@ export class ClassroomPage {
     ]
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
+              public ws:ServerSocket,
               public toastCtrl:ToastController
               ) {
+    this.ws.connect();
   }
   showToast(position: string, text: string) {
     let toast = this.toastCtrl.create({

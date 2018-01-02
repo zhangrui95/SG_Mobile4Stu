@@ -58,6 +58,7 @@ import { WeiBoPage } from '../pages/weibo/weibo';
 import { QQPage } from '../pages/qq/qq';
 import {BottomPage} from "../pages/bottom/bottom";
 import {ServerSocket} from "../providers/ws.service";
+import {SceneListPage} from "../pages/scene-list/scene-list";
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -97,7 +98,8 @@ import {ServerSocket} from "../providers/ws.service";
     FindPasswordPage,
     GradePage,
     WeiBoPage,
-    QQPage
+    QQPage,
+    SceneListPage
   ],
   imports: [
     BrowserModule,
@@ -139,6 +141,7 @@ import {ServerSocket} from "../providers/ws.service";
         { component: GradePage, name: 'GradePage', segment: 'grade' },
         { component: WeiBoPage, name: 'WeiBoPage', segment: 'weibo' },
         { component: QQPage, name: 'QQPage', segment: 'qq' },
+        { component: SceneListPage, name: 'SceneListPage', segment: 'scene-list' },
       ]
     }),
     IonicStorageModule.forRoot()
@@ -182,7 +185,8 @@ import {ServerSocket} from "../providers/ws.service";
     FindPasswordPage,
     GradePage,
     WeiBoPage,
-    QQPage
+    QQPage,
+    SceneListPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
@@ -192,12 +196,18 @@ import {ServerSocket} from "../providers/ws.service";
     InAppBrowser,
     Camera,
     Base64,
+    BaidutbPage,
     BarcodeScanner,
     ImagePicker,
     SplashScreen,
     WeiBoPage,
     ServerSocket,
-    QQPage
+    QQPage,
+    DecisionPage,
+    BaidutbPage,
+    TounaofbPage,
+    DanmuPage,
+    SceneListPage
   ]
 })
 export class AppModule { }

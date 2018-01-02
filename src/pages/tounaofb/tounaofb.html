@@ -7,25 +7,28 @@
 <ion-content class="cards-bg social-cards">
   <div style="margin: 0px 0px 40px 3%">
     <div style="padding-top: 20px;padding-left: 5%;padding-right: 5%;padding-bottom: 30px;">
-      <label style="margin-bottom: 20px;display: inline-block;font-size: medium">
-        该网帖在论坛中引发了多人评论，引起了小部分网友的关注。该网帖在论坛中引发了多人评论，引起了小部分网友的关注。该网帖在论坛中引发了多人评论，引起了小部分网友的关注。
-      </label>
-      <img src="assets/img/speakers/mouse.jpg"/>
-
-    </div>
-    <div style="background-color: #EFEFEF;height: 15px;margin-left: -5%;"></div>
-    <div *ngFor="let item of items">
-      <div >
-        <div style="padding-left: 1%;padding-top: 15px;float: left;"><img style=" height: 50px;width: 50px;" src="{{item.tx_img}}"></div>
-        <div style="padding-top: 15px;align-self:center;line-height: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.name}}
-          <span class="right-div"></span>
-          <br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">{{item.floor}} | {{item.time}}</span>
+      <div *ngFor="let data of datas">
+        <div *ngIf="data.name=='brain'">
+          <label style="margin-bottom: 20px;display: inline-block;font-size: medium">
+            {{data.data.fillData.content}}
+          </label>
+          <!--<img src="assets/img/speakers/mouse.jpg"/>-->
         </div>
       </div>
-      <img src="{{item.nr_src}}">
+    </div>
+    <div style="background-color: #EFEFEF;height: 15px;margin-left: -5%;"></div>
+    <div *ngFor="let item of items;let n=index">
+      <div >
+        <div style="padding-left: 1%;padding-top: 15px;float: left;"><img style=" height: 50px;width: 50px;" [src]="item.ImagePath"></div>
+        <div style="padding-top: 15px;align-self:center;line-height: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.UserName}}
+          <span class="right-div"></span>
+          <br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">第{{n+1}}楼 | {{item.createtime}}</span>
+        </div>
+      </div>
+      <!--<img src="{{item.nr_src}}">-->
       <div>
-        <p>{{item.nr}}</p>
+        <p>{{item.answer}}</p>
       </div>
       <div style="background-color: #EFEFEF;height: 15px;margin-left: -5%;"></div>
     </div>
@@ -43,7 +46,7 @@
     <img src="{{src}}" height="38" width="52"
          style="display:inline-block;margin: 0px 10px -14px 10px;" (touchstart)="mousedownd();"
          (touchend)="mouseup();"/>
-    <input type="text"
+    <input type="text" [(ngModel)]="value"
            style="height:40px;display:inline-block;margin: 10px 10px 8px -1px;vertical-align:top; border-radius:5px; border: 0;width:215px"/>
     <button (click)="send();"
             style="background-color: #2D3451;color: white;width:70px;height: 40px;display:inline-block;margin: 10px 5px 5px 1px;border-radius:5px">

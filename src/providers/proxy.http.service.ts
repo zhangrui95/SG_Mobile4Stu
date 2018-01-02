@@ -51,6 +51,16 @@ export class ProxyHttpService {
     return this._post("/userstu/initPass.do",params)
   }
 
+  getScenesById(params){
+    return this._get("/phoneAppController/getScenesById.do",params)
+  }
+  getAnswerOfStuList(params){
+    return this._post("/phoneAppController/getAnswerOfStuList.do",params)
+  }
+  addStuAnswer(params){
+    return this._post("/phoneAppController/addStuAnswer.do",params)
+  }
+
   _post(url,params?:any){
     params.deviceType="pad"
     params.token=this.userData.userToken;

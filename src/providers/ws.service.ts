@@ -27,6 +27,7 @@ export class ServerSocket {
       this.inputStream = new QueueingSubject<string>()
     ).messages.share()
 
+    console.log('ws://192.168.0.52:8080/VisualizationMgt/websocket.do?token=' + this.userData.userToken + "&type=phone")
   }
 
   public send(message: string): void {

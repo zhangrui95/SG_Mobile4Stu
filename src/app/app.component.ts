@@ -21,6 +21,7 @@ import {UserData} from '../providers/user-data';
 import {UsersPage} from "../pages/users/users";
 import {IndexPage} from "../pages/index/index";
 import {LoginsPage} from "../pages/logins/logins";
+import {ServerSocket} from "../providers/ws.service";
 
 export interface PageInterface {
   title: string;
@@ -86,7 +87,8 @@ export class ConferenceApp {
               public confData: ConferenceData,
               public storage: Storage,
               public splashScreen: SplashScreen,
-              public toastCtrl: ToastController) {
+              public toastCtrl: ToastController,
+              public ws: ServerSocket) {
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
       if(hasLoggedIn){
         this.rootPage=IndexPage;
@@ -94,6 +96,7 @@ export class ConferenceApp {
         this.rootPage=LoginsPage;
       }
     });
+
     this.platformReady()
     // Check if the user has already seen the tutorial
     // this.storage.get('hasSeenTutorial')
