@@ -8,6 +8,8 @@ import {BaidutbPage} from "../baidutb/baidutb";
 import {WeiBoPage} from "../weibo/weibo";
 import {QQPage} from "../qq/qq";
 import {ServerSocket} from "../../providers/ws.service";
+import {ProxyHttpService} from "../../providers/proxy.http.service";
+import {UserData} from "../../providers/user-data";
 
 
 @IonicPage()
@@ -17,28 +19,22 @@ import {ServerSocket} from "../../providers/ws.service";
 })
 export class ClassroomPage {
   @ViewChild('scrollBox') private myScrollContainer: ElementRef;
-  items = [
-    {name:'事件起因',type: '0'},
-    {name:'第一次决策',type:'1'},
-    {name:'第一次场景推演',type:'2'},
-    {name:'第一次头脑风暴',type:'3'},
-    {name:'百度贴吧',type:'4'},
-    {name:'弹幕',type:'5'},
-    {name:'新浪微博',type:'6'},
-    {name:'QQ',type:'7'},
-    {name:'第二次决策',type:'1'},
-    {name:'弹幕',type:'5'},
-    {name:'新浪微博',type:'6'},
-    {name:'QQ',type:'7'},
-    {name:'第二次决策',type:'1'}
-    ]
+  items = [];
+  userId;
+  showBtn = true;
+  allocation = false;
+  groupList;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public ws:ServerSocket,
-              public toastCtrl:ToastController
+              public toastCtrl:ToastController,
+              public http: ProxyHttpService,
+              public userData:UserData,
+              public ws :ServerSocket
               ) {
+    this.userData.getUserID().then(value => this.userId=value);
     this.ws.connect();
   }
+  messagesSubscription;
   showToast(position: string, text: string) {
     let toast = this.toastCtrl.create({
       message: text,
@@ -47,12 +43,53 @@ export class ClassroomPage {
     });
     toast.present(toast);
   }
-  ionViewDidLoad() {
-    this.scrollToBottom();
+  ionViewDidEnter() {
+    // this.allocation = true;
+    this.getProcessOfStu();
+    // setInterval(()=>{
+    //   this.getPushFreeGroListForPhone();
+    // },2000);
+    setTimeout(()=>{
+        this.getPushFreeGroListForPhone();
+      },2000);
+    this.messagesSubscription=this.ws.messages.subscribe(msg=>{
+      if(msg !== null){
+        let action = JSON.parse(msg)['action'];
+        let list = JSON.parse(msg)['listGro'];
+        if(action !== "undefined" ){
+          if(action === "phone_process_update"){
+            this.getProcessOfStu();
+            this.scrollToBottom();
+          }else if(action === "phone_group"){
+            this.groupList = list;
+            this.allocation = true;
+          }else if(action === "phone_group_members_update"){
+
+          }
+        }
+      }
+    });
+  }
+  ionViewDidLeave(){
+    this.messagesSubscription.unsubscribe()
+  }
+  getPushFreeGroListForPhone(){
+    const params = {"sim_id":"18","GroupId":[{"id":"23",img:'assets/img/img1.png',text:'这是什么组1',"type":"fixed","limit":"999"},{"id":"2",img:'assets/img/dsr.png',text:'组二啊',"type":"fixed","limit":"120"},{"id":"09",img:'assets/img/dsr.png',text:'组三',"type":"fixed","limit":"253"}]}
+    this.http.getPushFreeGroListForPhone(params).subscribe(res => {
+      console.log(res)
+    });
+  }
+  getProcessOfStu(){
+    const params = {sim_id:18, u_id:this.userId};
+    this.http.getProcessOfStu(params).subscribe(res => {
+      console.log("res",res)
+      this.items = res['list'];
+    });
   }
 
   goGrouping(){
-    this.navCtrl.push(GroupingPage);
+    console.log(this.groupList);
+    this.navCtrl.push(GroupingPage,{groupList: this.groupList});
   }
 
   goPage(type){

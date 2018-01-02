@@ -51,6 +51,18 @@ export class ProxyHttpService {
     return this._post("/userstu/initPass.do",params)
   }
 
+  getProcessOfStu(params){
+    return this._get("/phoneAppController/getProcessOfStu.do",params)
+  }
+
+  getPushFreeGroListForPhone(params){
+    return this._post("/tabletController/getPushFreeGroListForPhone.do",params)
+  }
+
+  addfreeGroupOfStu(params){
+    return this._post("/phoneAppController/addfreeGroupOfStu.do",params)
+  }
+
   getScenesById(params){
     return this._get("/phoneAppController/getScenesById.do",params)
   }
