@@ -33,7 +33,7 @@ url;
 
   getappExercisesInfo() {
     this.param = {
-      Id: "'"+ this.navParams.data.Id+"'"
+      Id: this.navParams.data.Id
     }
     this.http.getappExercisesInfo(this.param).subscribe(res => {
       this.datas = res['List']
