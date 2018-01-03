@@ -8,7 +8,6 @@ import {SimulationPage} from "../simulation/simulation";
 import {UserData} from "../../providers/user-data";
 // import {GradePage} from "../grade/grade";
 import {StatisticsPage} from "../statistics/statistics";
-import {GradePage} from "../grade/grade";
 import {ProxyHttpService} from "../../providers/proxy.http.service";
 
 @IonicPage()
