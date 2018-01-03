@@ -8,6 +8,8 @@ import {SimulationPage} from "../simulation/simulation";
 import {UserData} from "../../providers/user-data";
 // import {GradePage} from "../grade/grade";
 import {StatisticsPage} from "../statistics/statistics";
+import {GradePage} from "../grade/grade";
+import {ProxyHttpService} from "../../providers/proxy.http.service";
 
 @IonicPage()
 @Component({
@@ -56,9 +58,10 @@ export class IndexPage {
   }
 
   constructor(public ionicApp: IonicApp, public navCtrl: NavController, public barcodeScanner: BarcodeScanner, public navParams: NavParams, public keyboard: Keyboard, public toastCtrl: ToastController,
-              public platform: Platform, public userData:UserData) {
+              public platform: Platform, public userData:UserData,
+              public http: ProxyHttpService,) {
     this.registerBackEvent = this.platform.registerBackButtonAction(() => {
-
+      this.userData.getUserID().then(value => this.userId=value)
       this.exitApp()
     }, 10)
   }
@@ -68,7 +71,7 @@ export class IndexPage {
   }
 
   getUser() {
-    this.navCtrl.push(UsersPage, {userId: this.userId, name: this.name, phone: this.phone, imagepath: this.imagepath});
+    this.navCtrl.push(UsersPage);
   }
   showToast(position: string, text: string) {
     let toast = this.toastCtrl.create({
@@ -83,13 +86,20 @@ export class IndexPage {
       // Success! Barcode data is here
       this.showToast('bottom',barcodeData.text+"")
       if(!barcodeData.cancelled){
-
         if (barcodeData.text.indexOf('4dec1f9e20f86b62335ba913ae29fa0d')!=-1 ) {
           let data=JSON.parse(barcodeData.text)
           this.showToast('bottom',data)
-          this.navCtrl.push(ClassroomPage, {data:data});
+          const params = {"cla_id":data.cla_id,"cour_id":data.cour_id,"sim_id":data.sim_id,"u_id":this.userId}
+          this.http.addClassPractice(params).subscribe(res => {
+            console.log(res)
+            if(res['code'] == 0){
+              this.navCtrl.push(ClassroomPage, {data:data});
+            }else{
+              this.showToast('bottom', res['msg']);
+            }
+          });
         } else{
-          this.showToast('bottom',"扫描到的二维码有误，请重新尝试")
+          this.showToast('bottom',"扫描到的二维码有误，请重新尝试");
         }
       }
 

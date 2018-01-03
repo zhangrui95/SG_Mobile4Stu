@@ -79,6 +79,15 @@ export class ProxyHttpService {
     return this._post("/statistical/appExercisesInfo.do",params)
   }
 
+  getGroupsList(params){
+    return this._get("/phoneAppController/getGroupsList.do",params)
+  }
+
+  addClassPractice(params){
+    return this._post("/phoneAppController/addClassPractice.do",params)
+  }
+
+
   _post(url,params?:any){
     params.deviceType="pad"
     params.token=this.userData.userToken;
