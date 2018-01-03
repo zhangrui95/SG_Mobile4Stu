@@ -72,6 +72,12 @@ export class ProxyHttpService {
   addStuAnswer(params){
     return this._post("/phoneAppController/addStuAnswer.do",params)
   }
+  getappExercisesList(params){
+    return this._get("/statistical/appExercisesList.do",params)
+  }
+  getappExercisesInfo(params){
+    return this._post("/statistical/appExercisesInfo.do",params)
+  }
 
   _post(url,params?:any){
     params.deviceType="pad"

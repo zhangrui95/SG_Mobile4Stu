@@ -59,6 +59,9 @@ import { QQPage } from '../pages/qq/qq';
 import {BottomPage} from "../pages/bottom/bottom";
 import {ServerSocket} from "../providers/ws.service";
 import {SceneListPage} from "../pages/scene-list/scene-list";
+import {StatisticsPage} from "../pages/statistics/statistics";
+import {DetailsPage} from "../pages/details/details";
+import {CommentPage} from "../pages/comment/comment";
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -99,7 +102,10 @@ import {SceneListPage} from "../pages/scene-list/scene-list";
     GradePage,
     WeiBoPage,
     QQPage,
-    SceneListPage
+    SceneListPage,
+    StatisticsPage,
+    DetailsPage,
+    CommentPage
   ],
   imports: [
     BrowserModule,
@@ -142,6 +148,9 @@ import {SceneListPage} from "../pages/scene-list/scene-list";
         { component: WeiBoPage, name: 'WeiBoPage', segment: 'weibo' },
         { component: QQPage, name: 'QQPage', segment: 'qq' },
         { component: SceneListPage, name: 'SceneListPage', segment: 'scene-list' },
+        { component: StatisticsPage, name: 'StatisticsPage', segment: 'statistics' },
+        { component: DetailsPage, name: 'DetailsPage', segment: 'details' },
+        { component: CommentPage, name: 'CommentPage', segment: 'comment' },
       ]
     }),
     IonicStorageModule.forRoot()
@@ -186,7 +195,10 @@ import {SceneListPage} from "../pages/scene-list/scene-list";
     GradePage,
     WeiBoPage,
     QQPage,
-    SceneListPage
+    SceneListPage,
+    StatisticsPage,
+    DetailsPage,
+    CommentPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },

@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>统计分析</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="Flags" (ionChange)="getList()">
+      <ion-segment-button value="1">
+        模拟演练
+      </ion-segment-button>
+      <ion-segment-button value="0">
+        课堂演练
+      </ion-segment-button>
+      <ion-segment-button value="all">
+        全部
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item *ngFor="let data of datas">
+    <img style="float:left;" src="{{url+data.p_image}}" width="80" height="80">
+    <div style="float:left;padding-left:20px;">
+      <label>{{data.p_name}}</label><br>
+      <label style="float:left;padding-top:18px;">{{data.exercisetypes}}</label>
+    </div>
+    <div style="float:right;padding-right:11px;">
+      <h1 style="padding-left:27px;">{{data.t_score}}</h1><br>
+      <label style="margin-top: -6px;display: flex;">{{data.jointime}}</label>
+    </div>
+    <div style="margin-top: 10px;margin-left: 135px;float: left;">
+      <button (click)="goDetails(data)">查看详情</button>
+      <button (click)="goComment(data)">查看评语</button>
+    </div>
+  </ion-item>
+  <!--<div [ngSwitch]="Flags">-->
+    <!--<ion-list *ngSwitchCase="1">-->
+    <!--</ion-list>-->
+    <!--<ion-list *ngSwitchCase="0">-->
+    <!--</ion-list>-->
+    <!--<ion-list *ngSwitchCase="'all'">-->
+    <!--</ion-list>-->
+  <!--</div>-->
+</ion-content>
