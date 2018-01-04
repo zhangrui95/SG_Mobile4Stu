@@ -29,7 +29,15 @@ export class ServerSocket {
       ).messages.share()
     }
   }
+  public reconnect() {
 
+    if (this.userData.userToken) {
+      this.messages = websocketConnect(
+        'ws://192.168.0.52:8080/VisualizationMgt/websocket.do?token=' + this.userData.userToken + "&type=phone",
+        this.inputStream = new QueueingSubject<string>()
+      ).messages.share()
+    }
+  }
   public send(message: string): void {
     // If the websocket is not connected then the QueueingSubject will ensure
     // that messages are queued and delivered when the websocket reconnects.
