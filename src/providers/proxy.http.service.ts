@@ -63,6 +63,22 @@ export class ProxyHttpService {
     return this._post("/phoneAppController/addfreeGroupOfStu.do",params)
   }
 
+  getScenesById(params){
+    return this._get("/phoneAppController/getScenesById.do",params)
+  }
+  getAnswerOfStuList(params){
+    return this._post("/phoneAppController/getAnswerOfStuList.do",params)
+  }
+  addStuAnswer(params){
+    return this._post("/phoneAppController/addStuAnswer.do",params)
+  }
+  getappExercisesList(params){
+    return this._get("/statistical/appExercisesList.do",params)
+  }
+  getappExercisesInfo(params){
+    return this._post("/statistical/appExercisesInfo.do",params)
+  }
+
   getGroupsList(params){
     return this._get("/phoneAppController/getGroupsList.do",params)
   }
@@ -73,7 +89,7 @@ export class ProxyHttpService {
 
 
   _post(url,params?:any){
-    params.deviceType="phone"
+    params.deviceType="pad"
     params.token=this.userData.userToken;
     console.log(JSON.stringify(params))
     return this.http.post(this.BASE_URL + url, JSON.stringify(params))

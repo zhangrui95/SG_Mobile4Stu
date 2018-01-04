@@ -6,7 +6,8 @@ import {RecordsPage} from "../records/records";
 import {BarcodeScanner} from "@ionic-native/barcode-scanner";
 import {SimulationPage} from "../simulation/simulation";
 import {UserData} from "../../providers/user-data";
-import {GradePage} from "../grade/grade";
+// import {GradePage} from "../grade/grade";
+import {StatisticsPage} from "../statistics/statistics";
 import {ProxyHttpService} from "../../providers/proxy.http.service";
 
 @IonicPage()
@@ -117,8 +118,10 @@ export class IndexPage {
     this.navCtrl.push(SimulationPage);
   }
 
-  getGrade(){
-    this.navCtrl.push(GradePage);
+
+
+  getStatistics(){
+    this.navCtrl.push(StatisticsPage);
   }
 
 }

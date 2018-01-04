@@ -1,19 +1,26 @@
 <ion-header>
-
   <ion-navbar color="dark">
-    <ion-title>课堂演练</ion-title>
+    <ion-title>决策</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 <ion-content padding>
-  <div>{{issue}}</div>
-  <form class="form-box">
-    <label *ngFor="let item of options" (change)="getForm(item)">
-      <input type="radio" name="choice" /><span class="option">{{item.option}}</span><span class="word">{{item.text}}</span>
-    </label>
-  </form>
+  <div *ngFor="let data of datas">
+    <div *ngIf="data.name=='select'">
+      <div>{{data.data.text}}</div>
+      <div *ngFor="let item of data.data.selectData">
+        <input type="radio" name="choice" (change)="getForm(item)"/>
+        <span >{{item}}</span>
+      </div>
+      <!-- <form class="form-box">
+         <label *ngFor="let item of data.data.selectData" >&lt;!&ndash;(change)="getForm(item)"&ndash;&gt;
+           <input type="radio" name="choice"/><span
+           class="word">{{item}}</span>
+         </label>
+       </form>-->
+    </div>
+  </div>
   <div padding class="mar-btn">
-    <button ion-button type="submit" block (click)="vote()">确认投票</button>
+    <button ion-button type="submit" block (click)="send()">确认投票</button>
   </div>
 </ion-content>

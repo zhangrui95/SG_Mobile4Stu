@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>{{name}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div *ngFor="let data of datas" style="padding-left: 18%;padding-top: 25px;">
+    <div style="">
+      <label style="margin-top: 33px;display: flex;float: left;padding-right: 40px;">项目名称</label>
+      <img style="" src="{{url+data.p_image}}" width="80" height="80"><br>
+      <label style="margin-left: 95px;margin-top: 10px;display: flex;">{{data.p_name}}</label>
+    </div>
+    <div style="padding-top: 25px;">
+      <label style="padding-right: 35px;">综合评分</label>
+      <label>{{data.t_score}}</label><br>
+    </div>
+    <div style="padding-top: 25px;">
+      <label style="padding-right: 35px;">教师评语</label>
+      <label>{{data.t_comments}}</label><br>
+    </div>
+  </div>
+</ion-content>

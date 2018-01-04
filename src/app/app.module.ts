@@ -58,6 +58,10 @@ import { WeiBoPage } from '../pages/weibo/weibo';
 import { QQPage } from '../pages/qq/qq';
 import {BottomPage} from "../pages/bottom/bottom";
 import {ServerSocket} from "../providers/ws.service";
+import {SceneListPage} from "../pages/scene-list/scene-list";
+import {StatisticsPage} from "../pages/statistics/statistics";
+import {DetailsPage} from "../pages/details/details";
+import {CommentPage} from "../pages/comment/comment";
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -97,7 +101,11 @@ import {ServerSocket} from "../providers/ws.service";
     FindPasswordPage,
     GradePage,
     WeiBoPage,
-    QQPage
+    QQPage,
+    SceneListPage,
+    StatisticsPage,
+    DetailsPage,
+    CommentPage
   ],
   imports: [
     BrowserModule,
@@ -139,6 +147,10 @@ import {ServerSocket} from "../providers/ws.service";
         { component: GradePage, name: 'GradePage', segment: 'grade' },
         { component: WeiBoPage, name: 'WeiBoPage', segment: 'weibo' },
         { component: QQPage, name: 'QQPage', segment: 'qq' },
+        { component: SceneListPage, name: 'SceneListPage', segment: 'scene-list' },
+        { component: StatisticsPage, name: 'StatisticsPage', segment: 'statistics' },
+        { component: DetailsPage, name: 'DetailsPage', segment: 'details' },
+        { component: CommentPage, name: 'CommentPage', segment: 'comment' },
       ]
     }),
     IonicStorageModule.forRoot()
@@ -182,7 +194,11 @@ import {ServerSocket} from "../providers/ws.service";
     FindPasswordPage,
     GradePage,
     WeiBoPage,
-    QQPage
+    QQPage,
+    SceneListPage,
+    StatisticsPage,
+    DetailsPage,
+    CommentPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
@@ -192,12 +208,18 @@ import {ServerSocket} from "../providers/ws.service";
     InAppBrowser,
     Camera,
     Base64,
+    BaidutbPage,
     BarcodeScanner,
     ImagePicker,
     SplashScreen,
     WeiBoPage,
     ServerSocket,
-    QQPage
+    QQPage,
+    DecisionPage,
+    BaidutbPage,
+    TounaofbPage,
+    DanmuPage,
+    SceneListPage
   ]
 })
 export class AppModule { }
