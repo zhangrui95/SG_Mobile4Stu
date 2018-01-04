@@ -7,6 +7,7 @@ import {ProxyHttpService} from "../../providers/proxy.http.service";
 import {IndexPage} from "../index/index";
 import {UserData} from "../../providers/user-data";
 import {FindPasswordPage} from "../find-password/find-password";
+import {ServerSocket} from "../../providers/ws.service";
 
 @Component({
   selector: 'page-logins',
@@ -50,6 +51,7 @@ export class LoginsPage {
               public platform: Platform,
               public navParams: NavParams,
               public keyboard:Keyboard,
+              public ws :ServerSocket,
               public loadingCtrl: LoadingController) {
 
     this.registerBackEvent = this.platform.registerBackButtonAction(() => {
@@ -81,6 +83,7 @@ export class LoginsPage {
       this.http.login(params).subscribe(res => {
         if (res['code'] == 0) {
           loading.dismiss();
+          this.ws.reconnect();
           this.navCtrl.push(IndexPage, {
             userid: '',
             name: res['username'],

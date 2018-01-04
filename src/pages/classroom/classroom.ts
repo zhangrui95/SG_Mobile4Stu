@@ -38,22 +38,16 @@ export class ClassroomPage {
     this.ws.connect();
   }
   messagesSubscription;
-  showToast(position: string, text: string) {
-    let toast = this.toastCtrl.create({
-      message: text,
-      duration: 2000,
-      position: position
-    });
-    toast.present(toast);
-  }
   ionViewDidEnter() {
     this.getProcessOfStu();
     setTimeout(()=>{
         this.getPushFreeGroListForPhone();
-      },2000);
+      },1000);
     this.messagesSubscription=this.ws.messages.subscribe(msg=>{
       if(msg !== null){
         let action = JSON.parse(msg)['action'];
+        let msgs = JSON.parse(msg)['msg'];
+        console.log('action',action);
         if(action !== "undefined" ){
           if(action === "phone_process_update"){
             this.getProcessOfStu();
@@ -61,6 +55,8 @@ export class ClassroomPage {
           }else if(action === "phone_group"){
             this.getProcessOfStu();
             this.allocation = true;
+          }else if(action === "phone_call"){
+            this.showToast('bottom', msgs);
           }
         }
       }
@@ -120,4 +116,15 @@ export class ClassroomPage {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
     } catch(err) { }
   }
+
+  showToast(position: string, text: string) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 2000000,
+      position: position
+    });
+
+    toast.present(toast);
+  }
+
 }

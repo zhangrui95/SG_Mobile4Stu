@@ -6,6 +6,13 @@ $text-input-md-show-focus-highlight:false !default;
   height: 1px;
   background-color: transparent;
 }
+@media screen and (min-width: 700px) {
+  .ion-page{
+    max-width: 700px;
+    left: 50%!important;
+    margin-left: -350px;
+  }
+}
 .bg{
   width: 100%;
   position: absolute;
