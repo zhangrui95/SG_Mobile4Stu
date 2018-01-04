@@ -14,8 +14,9 @@
       </p>
       <ion-item>
         <ion-icon ios="ios-lock" md="md-lock"></ion-icon>
-        <ion-input class="input-bg" placeholder="密码" [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
+        <ion-input class="input-bg" placeholder="密码" [(ngModel)]="login.password" name="password" type="{{type}}" #password="ngModel" required>
         </ion-input>
+        <button class="yzm-btn" style="border: 0;" ion-button item-end (click)="showText()"><img src="{{Imgsrc}}"/></button>
       </ion-item>
       <p class="danger-text" ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
         密码不能为空

@@ -17,6 +17,9 @@ export class LoginsPage {
   registerBackButton
   login: UserOptions = {username: '', password: ''};
   submitted = false;
+  Imgsrc = 'assets/img/xmm.png';
+  showEye = false;
+  type = 'password';
   exitApp() {
     if(this.keyboard.isOpen()){
       this.keyboard.close()
@@ -112,5 +115,18 @@ export class LoginsPage {
 
     toast.present(toast);
   }
+
+  showText(){
+    if(!this.showEye){
+      this.Imgsrc = 'assets/img/eye-no.png';
+      this.showEye = true;
+      this.type = 'text';
+    }else{
+      this.Imgsrc = 'assets/img/xmm.png';
+      this.showEye = false;
+      this.type = 'password';
+    }
+  }
+
 
 }
