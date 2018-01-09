@@ -83,6 +83,10 @@ export class ProxyHttpService {
     return this._get("/phoneAppController/getGroupsList.do",params)
   }
 
+  getIsExistEndCour(params){
+    return this._get("/phoneAppController/getIsExistEndCour.do",params)
+  }
+
   addClassPractice(params){
     return this._post("/phoneAppController/addClassPractice.do",params)
   }

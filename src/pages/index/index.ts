@@ -22,6 +22,8 @@ export class IndexPage {
   imagepath;
   private registerBackEvent: Function
   registerBackButton
+  btnShow = false;
+  simId;
 
 
   exitApp() {
@@ -65,8 +67,14 @@ export class IndexPage {
     }, 10)
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad IndexPage');
+  ionViewDidEnter() {
+    const params = {}
+    this.http.getIsExistEndCour(params).subscribe(res => {
+      if(res['list'].length != 0){
+        this.simId = res['list'].sim_id;
+        this.btnShow = true;
+      }
+    })
   }
 
   getUser() {
@@ -92,7 +100,7 @@ export class IndexPage {
           this.http.addClassPractice(params).subscribe(res => {
             console.log(res)
             if(res['code'] == 0){
-              this.navCtrl.push(ClassroomPage, {data:data});
+              this.navCtrl.push(ClassroomPage, {sim_id:data.sim_id});
             }else{
               this.showToast('bottom', res['msg']);
             }
@@ -108,6 +116,10 @@ export class IndexPage {
       this.showToast('bottom',"扫描到的二维码有误，请重新尝试")
     });
 
+  }
+
+  goClassroom(){
+    this.navCtrl.push(ClassroomPage, {sim_id: this.simId});
   }
 
   getRecords() {
