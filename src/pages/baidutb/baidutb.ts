@@ -79,7 +79,7 @@ export class BaidutbPage {
       this.data_list = JSON.parse(res['list'][0]['s_data'])['componentList']
       this.data_list[0].name = "tieba"
 
-      this.data_list[0]['data']['fillData'].title = '事件名称'
+      this.data_list[0]['data']['fillData'].title = '贴吧圣诞舞会'
       this.data_list[0]['data']['fillData'].fillName = '大神';
       this.data_list[0]['data']['fillData'].fillImg = this.src;
       // this.src1 = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + this.src1);

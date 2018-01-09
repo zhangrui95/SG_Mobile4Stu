@@ -6,55 +6,31 @@
 
 
 <ion-content>
-
-  <div class="top-div" style="position:fixed;width: 100%;">全部微博(42330)</div>
-  <div style="margin: 30px 1% 30% 1%">
-    <div *ngFor="let data of datas">
-      <div class="box1" *ngIf="data.name=='weibo'">
-        <div class="hea-div"><img class="head-image" [src]="data.data.fillData.fillImg"></div>
-        <div class="wb-name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.data.fillData.fillName}}
-          <span class="right-div">》</span>
-          <br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">37分钟前 &nbsp;&nbsp;来自专业版微博平台</span>
+  <!--<div style="margin: 30px 1% 30% 1%">-->
+    <div ion-fixed *ngFor="let data of datas">
+      <div *ngIf="data.name=='weibo'">
+        <div style="background-color: white;border-radius: 0.5em;height:47px;width:47px;margin: 25px 0px 5px 25px; display:inline-block;">
+          <img src="../../assets/img/xlwb.png" style="margin: 4px 0px 0px 5px;width: 37px;height: 40px;"/>
         </div>
-
-
-        <br/>
-        <div class="zw">
-          {{data.data.fillData.content}}
-        </div>
-        <div class="zw">
-          <img class="head-img2" [src]="videoimg">
-        </div>
-        <hr/>
-
-        <div class="box2">
-          <span>1300</span>
-          <span>2万</span>
-          <span>8000</span>
-        </div>
+        <h3 style="margin: -40px 0px 0px 90px;color: #e8e8e8">
+          {{data.data.fillData.title}}
+        </h3>
+        <span style="color: #e8e8e8;font-size: initial;margin: 20px 25px 0px 25px;float: left;">{{data.data.fillData.content}}</span>
+        <hr style="border-top: 2px solid #1aa7b8;float: left;margin-top: 20px;width: 100%;"/>
       </div>
-
-
     </div>
-    <div style="background-color: #EFEFEF;height: 15px;margin-left: -5%;"></div>
-
     <div *ngFor="let item of items;let n=index">
-      <div>
-        <div class="hea-div"><img style=" height: 50px;width: 50px;" [src]="item.ImagePath"></div>
-        <div class="wb-name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.UserName}}
-          <span class="right-div"></span>
-          <br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">第{{n+1}}楼 | {{item.createtime}}</span>
+      <div style="margin-left: 20px;">
+       <img style=" height: 50px;width: 50px;float: left;margin-top: 20px;" [src]="item.ImagePath">
+        <div style="float: left;margin: 15px 0px 0px 15px;">
+          <span style="color:white">{{item.UserName}}</span>
+          <br/><span style="color:#d8d8d8">第{{n+1}}楼 | {{item.createtime}}</span>
         </div>
+        <span style="margin: 65px 0px 0px -175px;float: left;color: #d8d8d8;">{{item.answer}}</span>
       </div>
-      <!--<img src="{{item.nr_src}}" style="padding-left: 1%;padding-right: 4%;">-->
-      <div>
-        <p>{{item.answer}}</p>
-      </div>
-      <div style="background-color: #EFEFEF;height: 15px;margin-left: -5%;"></div>
+      <hr style="border-top: 1px dashed #929292;width: 100%;margin: 30px 0px 10px 0px;float: left;" />
     </div>
-  </div>
+  <!--</div>-->
   <div *ngIf="isShow">
     <div
       style="background-color: #000;position:fixed;left: 30%;top: 38%;height: 20%;width: 40%;opacity: 0.6;border-radius: 5px; "></div>
@@ -64,7 +40,7 @@
       <label style="color: white;margin-left: 5px"> 正在收录语音,保持长按</label>
     </div>
   </div>
-  <div style="position:fixed;bottom: 0px;background-color: #EFEFEF;width: 100%;">
+  <div style="position:fixed;bottom: 0px;width: 100%;border-top: 1px solid #1aa7b8;">
     <img src="{{src}}" height="38" width="52"
          style="display:inline-block;margin: 0px 10px -14px 10px;" (touchstart)="mousedownd();"
          (touchend)="mouseup();"/>

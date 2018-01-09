@@ -5,32 +5,48 @@
 </ion-header>
 
 <ion-content class="cards-bg social-cards">
-  <div style="margin: 0px 0px 40px 3%">
-    <div style="padding-top: 20px;padding-left: 5%;padding-right: 5%;padding-bottom: 30px;">
-      <div *ngFor="let data of datas">
-        <div *ngIf="data.name=='bullet'">
-          <label style="margin-bottom: 20px;display: inline-block;font-size: medium">
-            {{data.data.fillData.content}}
-          </label>
-          <!--<img src="assets/img/speakers/mouse.jpg"/>-->
+  <div ion-fixed style="padding-top: 20px;padding-left: 5%;padding-right: 5%;padding-bottom: 30px;">
+    <div *ngFor="let data of datas">
+      <div *ngIf="data.name=='bullet'">
+        <div>
+          <div style="padding-left: 1%;padding-top: 15px;float: left;">
+            <img style=" height: 50px;width: 50px;" [src]="data.data.fillData.fillImg">
+          </div>
+          <div
+            style="padding-top: 15px;align-self:center;line-height: 20px;color: white;margin-left: 15px;float: left;">
+            <span style="font-size: large;">{{data.data.fillData.fillName}}</span>
+            <br/>
+            <span style="margin-top: 10px;float: left;">第1楼 | 今天14:10</span>
+          </div>
+        </div>
+        <!--<img src="{{item.nr_src}}">-->
+        <div
+          style="background-color: black;background: rgba(0,0,0,0.5);border-radius: 0.3em;margin: 10px 0px 0px 0px;width: 100%;height: auto;float: left">
+          <span style="color: #d8d8d8;margin: 10px 15px 10px 15px;float: left;">{{data.data.fillData.content}}</span>
+        </div>
+        <div style="float: left;margin-top: 10px;width: 100%">
+          <img src="assets/img/speakers/mouse.jpg" style="width: 90px;height: 90px;margin-right: 8%;"/>
+          <img src="assets/img/speakers/lion.jpg" style="width: 90px;height: 90px;margin-right: 8%;"/>
+          <img src="assets/img/speakers/eagle.jpg" style="width: 90px;height: 90px"/>
+        </div>
+        <div style="float: left;width: 100%;margin-top: 20px;">
+          <span style="color: #d8d8d8">2018人回复了该帖</span>
+          <hr style="border-top: 1px solid #929292;">
         </div>
       </div>
+      <!--<img src="assets/img/speakers/mouse.jpg"/>-->
     </div>
-    <div style="background-color: #EFEFEF;height: 15px;margin-left: -5%;"></div>
-    <div *ngFor="let item of items;let n=index">
-      <div >
-        <div style="padding-left: 1%;padding-top: 15px;float: left;"><img style=" height: 50px;width: 50px;" [src]="item.ImagePath"></div>
-        <div style="padding-top: 15px;align-self:center;line-height: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.UserName}}
-          <span class="right-div"></span>
-          <br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">第{{n+1}}楼 | {{item.createtime}}</span>
-        </div>
+  </div>
+  <div *ngFor="let item of items;let n=index">
+    <div style="margin-left: 20px;float: left;width: 100%">
+      <img style=" height: 50px;width: 50px;float: left;margin-top: 20px;" [src]="item.ImagePath">
+      <div style="float: left;margin: 15px 0px 0px 15px;">
+        <span style="color:white">{{item.UserName}}</span>
+        <br/><span style="color:#d8d8d8;margin-top: 5px;display: inline-block;">第{{n+1}}楼 | {{item.createtime}}</span>
+
       </div>
-      <!--<img src="{{item.nr_src}}">-->
-      <div>
-        <p>{{item.answer}}</p>
-      </div>
-      <div style="background-color: #EFEFEF;height: 15px;margin-left: -5%;"></div>
+      <hr style="border-top: 1px dashed #929292;width: 73%;margin: 10px 0px 10px 15px;display: inline-block;" />
+      <span style="margin: 0px 45px 20px 65px;float: left;color: #d8d8d8;">{{item.answer}}</span>
     </div>
   </div>
   <div *ngIf="isShow">

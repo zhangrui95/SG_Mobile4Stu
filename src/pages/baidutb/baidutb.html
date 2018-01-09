@@ -1,58 +1,39 @@
 <ion-header>
   <ion-navbar color="dark">
-    <ion-title>课堂演练</ion-title>
+    <ion-title>百度贴吧</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="cards-bg social-cards">
-  <div style="background-color: #242A42;padding-top: 5px;padding-left: 18px;position:fixed;width: 100%;z-index: 1">
-    <img src="assets/img/tuceng-28x2.png" height="30" width="30"/>&nbsp;&nbsp;
-    <h3 style="color: #A8B3CB;vertical-align:top;margin-top:1px;display:inline-block;font-weight: 300">百度贴吧</h3>
-    <img src="assets/img/tuceng-30x2.png" height="26" width="28"
-         style="float:right;display:inline-block;margin:2px 15px 0px 0px"/>
-    <img src="assets/img/tuceng-29x2.png" height="28" width="24"
-         style="float:right;display:inline-block;margin:2px 25px 0px 0px"/>
-  </div>
-  <div style="margin: 0px 0px 40px 3%">
-    <div *ngFor="let data of datas">
-      <div *ngIf="data.name=='tieba'">
-        <h2 style="font-weight: 400;margin: 55px 0px 6px 5px">
+  <div ion-fixed>
+    <div  *ngFor="let data of datas">
+      <div *ngIf="data.name=='tieba'" >
+        <div style="background-color: white;border-radius: 0.5em;height:47px;width:47px;margin: 25px 0px 5px 25px; display:inline-block;">
+          <img src="../../assets/img/bdtb.png" style="margin: 4px 0px 0px 5px;width: 37px;height: 40px;"/>
+        </div>
+        <h3 style="margin: -40px 0px 0px 90px;color: #e8e8e8">
           {{data.data.fillData.title}}
-        </h2>
-        <div>
-          <div class="hea-div"><img style=" height: 50px;width: 50px;" [src]="data.data.fillData.fillImg"></div>
-          <div class="wb-name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.data.fillData.fillName}}
-            <span class="right-div"></span>
-            <br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--<span class="font1">第{{n+1}}楼 | {{item.createtime}}</span>-->
-          </div>
-        </div>
-        <!--<img src="{{item.nr_src}}" style="padding-left: 1%;padding-right: 4%;">-->
-        <div>
-          <p>{{data.data.fillData.content}}</p>
-        </div>
-        <div style="background-color: #EFEFEF;height: 15px;margin-left: -5%;"></div>
+        </h3>
+        <span style="color: #e8e8e8;font-size: initial;margin: 20px 25px 0px 25px;float: left;">{{data.data.fillData.content}}</span>
+        <hr style="border-top: 2px solid #1aa7b8;float: left;margin: 20px 0px 0px -12px;width: 415px;"/>
       </div>
-    </div>
-    <!--<div *ngIf="items.componentList">-->
-    <!--{{name}}-->
-    <!--</div>-->
-    <div *ngFor="let item of items;let n=index">
-      <div>
-        <div class="hea-div"><img style=" height: 50px;width: 50px;" [src]="item.ImagePath"></div>
-        <div class="wb-name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.UserName}}
-          <span class="right-div"></span>
-          <br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">第{{n+1}}楼 | {{item.createtime}}</span>
-        </div>
-      </div>
-      <!--<img src="{{item.nr_src}}" style="padding-left: 1%;padding-right: 4%;">-->
-      <div>
-        <p>{{item.answer}}</p>
-      </div>
-      <div style="background-color: #EFEFEF;height: 15px;margin-left: -5%;"></div>
     </div>
   </div>
+
+    <div *ngIf="items.componentList">
+    {{name}}
+    </div>
+    <div *ngFor="let item of items;let n=index">
+      <div style="margin-left: 20px;">
+        <img style=" height: 50px;width: 50px;float: left;margin-top: 20px;" [src]="item.ImagePath">
+        <div style="float: left;margin: 15px 0px 0px 15px;">
+          <span style="color:white">{{item.UserName}}</span>
+          <br/><span style="color:#d8d8d8">第{{n+1}}楼 | {{item.createtime}}</span>
+        </div>
+        <span style="margin: 65px 0px 0px -175px;float: left;color: #d8d8d8;">{{item.answer}}</span>
+      </div>
+      <hr style="border-top: 1px dashed #929292;width: 100%;margin: 30px 0px 10px 0px;float: left;" />
+    </div>
   <div *ngIf="isShow">
     <div
       style="background-color: #000;position:fixed;left: 30%;top: 38%;height: 20%;width: 40%;opacity: 0.6;border-radius: 5px; "></div>
