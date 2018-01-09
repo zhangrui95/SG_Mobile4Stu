@@ -12,40 +12,43 @@
     <div class="or-word float-l">STUDENT END SELECTION MODULE</div>
     <div class="xian float-l"></div>
   </div>
-  <div>
-    <ion-card (click)="getClassRoom()">
-      <img class="img-left" src="assets/img/kt.png"/>
-      <div class="til-name-box">
-        <p>课堂演练</p>
-        <p>Classroom rehearsal</p>
-      </div>
-    </ion-card>
-    <ion-card (click)="getSimulation()">
-      <img class="img-left" src="assets/img/yal.png"/>
-      <div class="til-name-box">
-        <p>模拟演练</p>
-        <p>Simulated drill</p>
-      </div>
-    </ion-card>
-    <ion-card (click)="getRecords()">
-      <img class="img-left" src="assets/img/jl.png"/>
-      <div class="til-name-box">
-        <p>演练记录</p>
-        <p>Rehearsal record</p>
-      </div>
-    </ion-card>
-    <ion-card (click)="getStatistics()">
-      <img class="img-left" src="assets/img/sjfx.png"/>
-      <div class="til-name-box">
-        <p>数据分析</p>
-        <p>Data analysis</p>
-      </div>
-    </ion-card>
-  </div>
-  <div class="index-news-box">
+  <div style="overflow: hidden;">
+    <div>
+      <ion-card (click)="getClassRoom()">
+        <img class="img-left" src="assets/img/kt.png"/>
+        <div class="til-name-box">
+          <p>课堂演练</p>
+          <p>Classroom rehearsal</p>
+        </div>
+      </ion-card>
+      <ion-card (click)="getSimulation()">
+        <img class="img-left" src="assets/img/yal.png"/>
+        <div class="til-name-box">
+          <p>模拟演练</p>
+          <p>Simulated drill</p>
+        </div>
+      </ion-card>
+      <ion-card (click)="getRecords()">
+        <img class="img-left" src="assets/img/jl.png"/>
+        <div class="til-name-box">
+          <p>演练记录</p>
+          <p>Rehearsal record</p>
+        </div>
+      </ion-card>
+      <ion-card (click)="getStatistics()">
+        <img class="img-left" src="assets/img/sjfx.png"/>
+        <div class="til-name-box">
+          <p>数据分析</p>
+          <p>Data analysis</p>
+        </div>
+      </ion-card>
+    </div>
+    <div class="index-news-box">
       <div>Virtual Simulation</div>
       <div>1+N虚拟仿真实验室</div>
       <div>2017年教育部最新发布的4号文件中指出计划在2017-2020年开展示范性虚拟仿真实验教学项目建设等相关事宜，根据文件解读，构思了基于1+N模式的虚拟仿真实验室整体解决方案，旨在为高校虚拟仿真实验室建设提供有力支持。</div>
+    </div>
   </div>
+  <button class="btton-box btn-index" *ngIf="btnShow" (click)="goClassroom()" ion-button type="submit" block style="background: #1aa7b8;">返回演练</button>
   <page-bottom></page-bottom>
 </ion-content>

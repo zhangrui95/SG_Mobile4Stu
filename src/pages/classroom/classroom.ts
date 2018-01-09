@@ -33,7 +33,7 @@ export class ClassroomPage {
               public userData:UserData,
               public ws :ServerSocket
               ) {
-    // this.sim_id = this.navParams.get('data').sim_id;
+    // this.sim_id = this.navParams.get('sim_id');
     this.userData.getUserID().then(value => this.userId=value);
     this.ws.connect();
   }
