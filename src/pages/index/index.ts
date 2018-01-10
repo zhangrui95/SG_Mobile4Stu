@@ -67,7 +67,7 @@ export class IndexPage {
     }, 10)
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     const params = {}
     this.http.getIsExistEndCour(params).subscribe(res => {
       if(res['list'].length != 0){

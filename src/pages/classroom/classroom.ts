@@ -26,6 +26,7 @@ export class ClassroomPage {
   allocation = false;
   groOfStu;
   sim_id;
+  indexNs = [];
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public toastCtrl:ToastController,
@@ -74,7 +75,19 @@ export class ClassroomPage {
   getProcessOfStu(){
     const params = {sim_id:18, u_id:this.userId};
     this.http.getProcessOfStu(params).subscribe(res => {
+      // for(let i in res['list']){
+      //   res['list'][0].ns = '';
+      //   res['list'][i].ns = [{"n_id":"1.1","n_name":"sdfsdfs"},{"n_id":"1.2","n_name":"sdfsdfd"}];
+      // }
       this.items = res['list'];
+      console.log(this.items);
+      for(let n in this.items){
+        if(res['list'][n].ns === ''){
+          this.indexNs.push(false);
+        }else{
+          this.indexNs.push(true);
+        }
+      }
       this.groOfStu = res['groOfStu'];
       if(res['groOfStu'] === ''){
         this.GroupNews = false;
@@ -120,7 +133,7 @@ export class ClassroomPage {
   showToast(position: string, text: string) {
     let toast = this.toastCtrl.create({
       message: text,
-      duration: 2000000,
+      duration: 2000,
       position: position
     });
 
