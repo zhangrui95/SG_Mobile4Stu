@@ -66,7 +66,7 @@ export class TounaofbPage {
 
       this.data_list[0]['data']['fillData'].title = '事件名称'
       this.data_list[0]['data']['fillData'].fillName = '大神';
-      this.data_list[0]['data']['fillData'].fillImg = this.src;
+      this.data_list[0]['data']['fillData'].fillImg = 'assets/img/img1.png';
       // this.src1 = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + this.src1);
 
       this.data_list[0]['data']['fillData'].content = '事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情'

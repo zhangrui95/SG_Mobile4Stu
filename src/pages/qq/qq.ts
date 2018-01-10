@@ -60,18 +60,25 @@ export class QQPage {
   getScenesById() {
     this.param = {
       n_id: 3
-    }
+    };
     this.http.getScenesById(this.param).subscribe(res => {
-      // for (var i =0;i<JSON.parse(res['list'][0]['s_data'])['componentList'].length;i++){
-      //   JSON.parse(res['list'][0]['s_data'])['componentList'][''].ImagePath=this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL+res['list'][i].ImagePath);
-      // }
       this.data_list = JSON.parse(res['list'][0]['s_data'])['componentList']
-      if (this.data_list[0]['fillData'] != null) {
+      this.data_list[0].name = "qq"
 
-        this.data_list[0]['fillData']['fillImg'] = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + this.datas[0]['fillData']['fillImg']);
-      }
+      this.data_list[0]['data']['fillData'].title = '贴吧圣诞舞会'
+      this.data_list[0]['data']['fillData'].fillName = '大神';
+      this.data_list[0]['data']['fillData'].fillImg = this.src;
+      // this.src1 = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + this.src1);
+
+      this.data_list[0]['data']['fillData'].content = '事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情'
+      // if (this.data_list[0]['fillData'] != null) {
+      //   this.data_list[0]['fillData']['fillImg'] = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + this.datas[0]['fillData']['fillImg']);
+      // }
+      // else{
+      //   console.log('-----------------------------------------------')
+      //   // this.data_list[0]['fillData']['title'] ='事件名称'
+      // }
       this.datas = this.data_list
-      // this.items=JSON.parse(res['list'][0]['s_data'])['componentList']
     });
   }
 

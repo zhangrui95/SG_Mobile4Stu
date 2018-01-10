@@ -1,4 +1,4 @@
-page-baidutb {
+page-tounaofb {
   .border-left{
     border-left: 1px solid #404040;
   }
@@ -14,5 +14,9 @@ page-baidutb {
     line-height: 20px;
 
     //float: right;
+  }
+  .scroll-content{
+    margin-top:390px !important;
+    margin-bottom: 65px;
   }
 }
