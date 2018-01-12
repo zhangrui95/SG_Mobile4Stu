@@ -91,7 +91,6 @@ export class ClassroomPage {
       this.groOfStu = res['groOfStu'];
       if(res['groOfStu'] === ''){
         this.GroupNews = false;
-        this.allocation = true;
       }else{
         this.GroupNews = true;
         this.allocation = false;
