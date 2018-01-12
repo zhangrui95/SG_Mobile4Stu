@@ -121,7 +121,6 @@ export class UsersPage {
 
   imgAdd(data){
     const params = {img: data, imgpath:"" , userId: this.userId}
-
     let loading = this.loadingCtrl.create({
       content: '上传中...'
     });

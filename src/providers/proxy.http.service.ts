@@ -93,7 +93,7 @@ export class ProxyHttpService {
 
 
   _post(url,params?:any){
-    params.deviceType="pad"
+    params.deviceType="phone"
     params.token=this.userData.userToken;
     console.log(JSON.stringify(params))
     return this.http.post(this.BASE_URL + url, JSON.stringify(params))

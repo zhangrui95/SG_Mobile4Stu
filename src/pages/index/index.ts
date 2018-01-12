@@ -59,10 +59,11 @@ export class IndexPage {
   }
 
   constructor(public ionicApp: IonicApp, public navCtrl: NavController, public barcodeScanner: BarcodeScanner, public navParams: NavParams, public keyboard: Keyboard, public toastCtrl: ToastController,
-              public platform: Platform, public userData:UserData,
+              public platform: Platform, public userData: UserData,
               public http: ProxyHttpService,) {
+    this.userData.getUserID().then(value => this.userId = value)
     this.registerBackEvent = this.platform.registerBackButtonAction(() => {
-      this.userData.getUserID().then(value => this.userId=value)
+
       this.exitApp()
     }, 10)
   }
@@ -70,7 +71,7 @@ export class IndexPage {
   ionViewWillEnter() {
     const params = {}
     this.http.getIsExistEndCour(params).subscribe(res => {
-      if(res['list'].length != 0){
+      if (res['list'].length != 0) {
         this.simId = res['list'].sim_id;
         this.btnShow = true;
       }
@@ -80,6 +81,7 @@ export class IndexPage {
   getUser() {
     this.navCtrl.push(UsersPage);
   }
+
   showToast(position: string, text: string) {
     let toast = this.toastCtrl.create({
       message: text,
@@ -88,37 +90,43 @@ export class IndexPage {
     });
     toast.present(toast);
   }
+
   getClassRoom() {
-    this.barcodeScanner.scan({resultDisplayDuration:0}).then((barcodeData) => {
+    this.barcodeScanner.scan({resultDisplayDuration: 0}).then((barcodeData) => {
       // Success! Barcode data is here
-      this.showToast('bottom',barcodeData.text+"")
-      if(!barcodeData.cancelled){
-        if (barcodeData.text.indexOf('4dec1f9e20f86b62335ba913ae29fa0d')!=-1 ) {
-          let data=JSON.parse(barcodeData.text)
-          this.showToast('bottom',data)
-          const params = {"cla_id":data.cla_id,"cour_id":data.cour_id,"sim_id":data.sim_id,"u_id":this.userId}
+
+      if (!barcodeData.cancelled) {
+        if (barcodeData.text.indexOf('4dec1f9e20f86b62335ba913ae29fa0d') != -1) {
+          let data = JSON.parse(barcodeData.text)
+          console.log("uid======>"+this.userId)
+          const params = {"cla_id": data.cla_id, "cour_id": data.cour_id, "sim_id": data.sim_id, "u_id": this.userId+""}
+
           this.http.addClassPractice(params).subscribe(res => {
-            console.log(res)
-            if(res['code'] == 0){
-              this.navCtrl.push(ClassroomPage, {sim_id:data.sim_id});
-            }else{
-              this.showToast('bottom', res['msg']);
+
+              console.log(res['code'])
+              if (res['code'] == 0) {
+                this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
+              } else {
+                // this.showToast('bottom', res['msg']);
+              }
+            }, error => {
+              console.log(error.message);
             }
-          });
-        } else{
-          this.showToast('bottom',"扫描到的二维码有误，请重新尝试");
+          );
+        } else {
+          this.showToast('bottom', "扫描到的二维码有误，请重新尝试");
         }
       }
 
     }, (err) => {
       // An error occurred
       console.log(err)
-      this.showToast('bottom',"扫描到的二维码有误，请重新尝试")
+      this.showToast('bottom', "扫描到的二维码有误，请重新尝试")
     });
 
   }
 
-  goClassroom(){
+  goClassroom() {
     this.navCtrl.push(ClassroomPage, {sim_id: this.simId});
   }
 
@@ -126,13 +134,12 @@ export class IndexPage {
     this.navCtrl.push(RecordsPage);
   }
 
-  getSimulation(){
+  getSimulation() {
     this.navCtrl.push(SimulationPage);
   }
 
 
-
-  getStatistics(){
+  getStatistics() {
     this.navCtrl.push(StatisticsPage);
   }
 
