@@ -34,16 +34,16 @@ export class ClassroomPage {
               public userData:UserData,
               public ws :ServerSocket
               ) {
-    // this.sim_id = this.navParams.get('sim_id');
+    this.sim_id = this.navParams.get('sim_id');
     this.userData.getUserID().then(value => this.userId=value);
     this.ws.connect();
   }
   messagesSubscription;
   ionViewDidEnter() {
     this.getProcessOfStu();
-    setTimeout(()=>{
-        this.getPushFreeGroListForPhone();
-      },1000);
+    // setTimeout(()=>{
+    //     this.getPushFreeGroListForPhone();
+    //   },1000);
     this.messagesSubscription=this.ws.messages.subscribe(msg=>{
       if(msg !== null){
         let action = JSON.parse(msg)['action'];
@@ -66,21 +66,21 @@ export class ClassroomPage {
   ionViewDidLeave(){
     this.messagesSubscription.unsubscribe()
   }
-  getPushFreeGroListForPhone(){
-    const params = {'sim_id':18,"GroupId":[{"id":"2",img:'assets/img/img1.png',text:'这是什么组',"type":"fixed","limit":"999"},{"id":"3",img:'assets/img/img1.png',text:'你好',"type":"fixed","limit":"123"},{"id":"4",img:'assets/img/img1.png',text:'胜多负少',"type":"fixed","limit":"200"},{"id":"5",img:'assets/img/img1.png',text:'少放点撒地方',"type":"fixed","limit":"123"},{"id":"6",img:'assets/img/img1.png',text:'佛挡杀佛地方是',"type":"fixed","limit":"123"}]}
-    this.http.getPushFreeGroListForPhone(params).subscribe(res => {
-      console.log(res)
-    });
-  }
+  // getPushFreeGroListForPhone(){
+  //   const params = {'sim_id':this.sim_id}
+  //   this.http.getPushFreeGroListForPhone(params).subscribe(res => {
+  //     console.log(res)
+  //   });
+  // }
   getProcessOfStu(){
-    const params = {sim_id:18, u_id:this.userId};
+    const params = {sim_id:this.sim_id, u_id:this.userId};
     this.http.getProcessOfStu(params).subscribe(res => {
       // for(let i in res['list']){
       //   res['list'][0].ns = '';
       //   res['list'][i].ns = [{"n_id":"1.1","n_name":"sdfsdfs"},{"n_id":"1.2","n_name":"sdfsdfd"}];
       // }
       this.items = res['list'];
-      console.log(this.items);
+      console.log(res);
       for(let n in this.items){
         if(res['list'][n].ns === ''){
           this.indexNs.push(false);
@@ -100,7 +100,7 @@ export class ClassroomPage {
   }
 
   goGrouping(){
-    this.navCtrl.push(GroupingPage,{sim_id: "18"});
+    this.navCtrl.push(GroupingPage,{sim_id: this.sim_id});
   }
 
   goPage(type){

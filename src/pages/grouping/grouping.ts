@@ -29,9 +29,9 @@ export class GroupingPage {
   }
   messagesSubscription;
   ionViewDidEnter() {
-    setTimeout(()=>{
-      this.getPushFreeGroListForPhone();
-    },2000);
+    // setTimeout(()=>{
+    //   this.getPushFreeGroListForPhone();
+    // },2000);
     this.getGroupsList();
     this.messagesSubscription = this.ws.messages.subscribe(msg=>{
       if(msg !== null){
@@ -43,18 +43,17 @@ export class GroupingPage {
       }
     })
   }
-  getPushFreeGroListForPhone(){
-    const params = {'sim_id':18,"GroupId":[{"id":"2",img:'assets/img/img1.png',text:'这是什么组',"type":"fixed","limit":"999"},{"id":"3",img:'assets/img/img1.png',text:'你好',"type":"fixed","limit":"123"},{"id":"4",img:'assets/img/img1.png',text:'胜多负少',"type":"fixed","limit":"200"},{"id":"5",img:'assets/img/img1.png',text:'少放点撒地方',"type":"fixed","limit":"123"},{"id":"6",img:'assets/img/img1.png',text:'佛挡杀佛地方是',"type":"fixed","limit":"123"}]}
-    this.http.getPushFreeGroListForPhone(params).subscribe(res => {
-      console.log(res)
-    });
-  }
+  // getPushFreeGroListForPhone(){
+  //   const params = {'sim_id':18}
+  //   this.http.getPushFreeGroListForPhone(params).subscribe(res => {
+  //     console.log(res)
+  //   });
+  // }
   ionViewDidLeave(){
     this.messagesSubscription.unsubscribe();
   }
   getGroupsList(){
     const params = {sim_id: this.sim_id}
-    console.log(this.sim_id)
     this.http.getGroupsList(params).subscribe(res => {
       console.log(res)
       this.list = res['listGro'];
@@ -73,7 +72,7 @@ export class GroupingPage {
         {
           text: '确定',
           handler: () => {
-            const params = {sim_id:18, u_id:this.userId, g_id:item.g_id, limit: item.g_limit};
+            const params = {sim_id:this.sim_id, u_id:this.userId, g_id:item.g_id, limit: item.g_limit};
             console.log(params)
             this.http.addfreeGroupOfStu(params).subscribe(res => {
               console.log(res)
