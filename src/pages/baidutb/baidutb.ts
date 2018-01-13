@@ -1,5 +1,5 @@
 ///<reference path="../../../node_modules/ionic-angular/tap-click/tap-click.d.ts"/>
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Subscription} from "rxjs/Subscription";
 import {ServerSocket} from "../../providers/ws.service";
@@ -21,9 +21,10 @@ import {UserData} from "../../providers/user-data";
 })
 
 
-export class BaidutbPage{
-
-  items ;
+export class BaidutbPage {
+  @ViewChild('ioncontent')
+  ioncontent
+  items;
   param: any;
   title;
   isShow = false;
@@ -37,7 +38,6 @@ export class BaidutbPage{
   g_id
   n_id
   s_data
-
 
 
   mousedownd() {
@@ -54,6 +54,7 @@ export class BaidutbPage{
   //   this.getData();
   // }
   private socketSubscription: Subscription
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public userData: UserData,
@@ -63,10 +64,10 @@ export class BaidutbPage{
     this.ws.connect()
     this.userData.getUserID().then(value => this.userId = value)
     // this.getScenesById();
-    this.n_id=this.navParams.data.n_id
-    this.g_id=this.navParams.data.g_id
-    this.s_data=this.navParams.data.s_data
-    this.sim_id=this.navParams.data.sim_id
+    this.n_id = this.navParams.data.n_id
+    this.g_id = this.navParams.data.g_id
+    this.s_data = this.navParams.data.s_data
+    this.sim_id = this.navParams.data.sim_id
     this.getAnswerOfStuList();
 
   }
@@ -86,14 +87,17 @@ export class BaidutbPage{
         res['list'][i].ImagePath = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + res['list'][i].ImagePath);
       }
       this.items = res['list']
+      setTimeout(()=>{
 
+        this.ioncontent.scrollToBottom(500);
+      },1000)
     });
   }
 
   send() {
     this.param = {
       sim_id: this.sim_id,
-      g_id:  this.g_id,
+      g_id: this.g_id,
       u_id: this.userId,
       answer: this.inputvalue,
       n_id: this.n_id
@@ -101,22 +105,24 @@ export class BaidutbPage{
 
 
     this.http.addStuAnswer(this.param).subscribe(res => {
-     console.log(res)
+      console.log(res)
       this.inputvalue = '';
 
 
     });
   }
+
   common
   result
+
   ionViewDidLoad() {
     // JSON.parse()
 
-    this.result=JSON.parse(this.s_data[0].s_data)
-    this.common=this.result['componentList'][0].data.fillData;
+    this.result = JSON.parse(this.s_data[0].s_data)
+    this.common = this.result['componentList'][0].data.fillData;
 
-    this.title=this.common.title;
-    this.content=this.common.content;
+    this.title = this.common.title;
+    this.content = this.common.content;
 
     if (this.ws.messages) {
 
@@ -125,6 +131,11 @@ export class BaidutbPage{
           if (JSON.parse(message)['action'] == 'phone_scene_answers_update') {
 
             this.items = JSON.parse(message)['list']
+            setTimeout(()=>{
+
+              this.ioncontent.scrollToBottom(500);
+            },1000)
+
           }
         }
 
