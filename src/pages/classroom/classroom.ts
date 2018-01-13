@@ -1,15 +1,10 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {GroupingPage} from "../grouping/grouping";
-import {DecisionPage} from "../decision/decision";
-import {TounaofbPage} from "../tounaofb/tounaofb";
-import {DanmuPage} from "../danmu/danmu";
-import {BaidutbPage} from "../baidutb/baidutb";
-import {WeiBoPage} from "../weibo/weibo";
-import {QQPage} from "../qq/qq";
 import {ServerSocket} from "../../providers/ws.service";
 import {ProxyHttpService} from "../../providers/proxy.http.service";
 import {UserData} from "../../providers/user-data";
+import {SceneListPage} from "../scene-list/scene-list";
 
 
 @IonicPage()
@@ -102,26 +97,9 @@ export class ClassroomPage {
     this.navCtrl.push(GroupingPage,{sim_id: this.sim_id});
   }
 
-  goPage(type){
-    console.log(type)
-    if(type == '1'){
-      this.navCtrl.push(DecisionPage)
-    }
-    if(type == '3'){
-      this.navCtrl.push(TounaofbPage)
-    }
-    if(type == '4'){
-      this.navCtrl.push(BaidutbPage)
-    }
-    if(type == '5'){
-      this.navCtrl.push(DanmuPage)
-    }
-    if(type == '6'){
-      this.navCtrl.push(WeiBoPage)
-    }
-    if(type == '7'){
-      this.navCtrl.push(QQPage)
-    }
+  goPage(n_id){
+    console.log('n_id:'+n_id)
+      this.navCtrl.push(SceneListPage,{n_id: n_id})
   }
   scrollToBottom(): void {
     try {

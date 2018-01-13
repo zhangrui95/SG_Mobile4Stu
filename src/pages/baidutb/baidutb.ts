@@ -77,14 +77,14 @@ export class BaidutbPage {
     }
     this.http.getScenesById(this.param).subscribe(res => {
       this.data_list = JSON.parse(res['list'][0]['s_data'])['componentList']
-      this.data_list[0].name = "tieba"
+      this.data_list[0].name = "SG_tieba"
 
       this.data_list[0]['data']['fillData'].title = '贴吧圣诞舞会'
       this.data_list[0]['data']['fillData'].fillName = '大神';
       this.data_list[0]['data']['fillData'].fillImg = this.src;
       // this.src1 = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + this.src1);
 
-      this.data_list[0]['data']['fillData'].content = '事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情'
+      this.data_list[0]['data']['fillData'].content = '贴吧圣诞舞蹈大会开始征集了！贴吧圣诞舞蹈大会开始征集了！贴吧圣诞舞蹈大会开始征集了！贴吧圣诞舞蹈大会开始征集了'
       // if (this.data_list[0]['fillData'] != null) {
       //   this.data_list[0]['fillData']['fillImg'] = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + this.datas[0]['fillData']['fillImg']);
       // }

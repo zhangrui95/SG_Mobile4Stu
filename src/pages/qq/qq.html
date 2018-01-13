@@ -8,7 +8,7 @@
 <ion-content>
   <div ion-fixed>
     <div  *ngFor="let data of datas">
-      <div *ngIf="data.name=='qq'" >
+      <div *ngIf="data.name=='SG_qq'" >
         <div style="background-color: white;border-radius: 0.5em;height:47px;width:47px;margin: 25px 0px 5px 25px; display:inline-block;">
           <img src="../../assets/img/qqun.png" style="margin: 4px 0px 0px 5px;width: 37px;height: 40px;"/>
         </div>
@@ -30,52 +30,7 @@
         style="background-color: black;background: rgba(0,0,0,0.5);border-radius: 1em;margin: 10px 0px 30px 15px;width: 75%;height: auto;float: left">
         <span style="color: white;margin: 10px 10px 10px 15px;float: left;">{{item.answer}}</span>
       </div>
-    <!--</div>-->
-    <!--<div *ngIf="item.UserName=='士兵002'">-->
-      <!--<div >-->
-        <!--<img class="head-image-2" style="float: right;margin-right: 20px;margin-top: 30px;width: 40px;height: 40px"-->
-             <!--[src]="item.ImagePath">-->
-        <!--<span style="color: white;margin-right: 15px;float: right;margin-top: 30px;">{{item.UserName}}</span>-->
-      <!--</div>-->
-      <!--<div-->
-        <!--style="background-color: black;background: rgba(0,0,0,0.5);border-radius: 1em;margin: 10px 10px 0px 0px;width: 80%;height: auto;float: right">-->
-        <!--<span style="color: white;margin: 10px 10px 10px 15px;float: left;">{{item.answer}}</span>-->
-      <!--</div>-->
-    <!--</div>-->
   </div>
-
-
-
-  <!--<div *ngFor="let item of items">-->
-  <!--<div *ngIf="item.name!='阿呆'" style="float: left">-->
-  <!--<div style="">-->
-  <!--<img src="{{item.src}}" style="margin:10px 0px 0px 85px;width: 80px;height: 80px"/>-->
-  <!--<h3 style="color:white; margin:-70px 0px 25px 175px">{{item.name}}</h3>-->
-  <!--</div>-->
-  <!--<div-->
-  <!--style="background-color: black;background: rgba(0,0,0,0.5);border-radius: 1em;margin: -5px 0px 0px 170px;width: 43%;height: auto;float: left">-->
-  <!--<h5 style="color:#F5F5F5;margin: 15px 25px 15px 25px;display: inline-block;">{{item.nr}}</h5>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--<div *ngIf="item.name=='阿呆'" style="float: right">-->
-  <!--<div style="">-->
-  <!--<img src="{{item.src}}" style="margin:10px 125px 0px 0px;width: 80px;height: 80px;float: right;"/>-->
-  <!--<h3 style="color:white; margin:25px 8px 25px 0px;float: right">{{item.name}}</h3>-->
-  <!--</div>-->
-  <!--<div>-->
-  <!--<div-->
-  <!--style="background-color: black;background: rgba(0,0,0,0.5);float: right;border-radius: 1em;margin: 70px -50px 0px 0px;width: 43%;height: auto;">-->
-  <!--<h5 style="color:#d8d8d8;margin: 15px 25px 15px 25px;display: inline-block;">{{item.nr}}</h5>-->
-  <!--</div>-->
-  <!--<div-->
-  <!--style="background-color: #1aa7b8;border-radius: 2em;margin: 10px 370px 0px 0px;width: 27%;background: rgba(26, 167, 184, 0.5);float: right;">-->
-  <!--<h5 style="color:white;margin: 7px 0px 7px 15px;display: inline-block;">-->
-  <!--15秒之内可撤销此消息&nbsp;&nbsp;|&nbsp;&nbsp;<a style="color:white ">撤销</a>-->
-  <!--</h5>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
   <div *ngIf="isShow">
     <div
       style="background-color: #000;position:fixed;left: 30%;top: 38%;height: 20%;width: 40%;opacity: 0.6;border-radius: 5px; "></div>
@@ -85,7 +40,7 @@
       <label style="color: white;margin-left: 5px"> 正在收录语音,保持长按</label>
     </div>
   </div>
-  <div style="position:fixed;bottom: 0px;background-color: #EFEFEF;width: 100%;">
+  <div style="position:fixed;bottom: 0px;width: 100%;border-top: 1px solid #1aa7b8;">
     <img src="{{src}}" height="38" width="52"
          style="display:inline-block;margin: 0px 10px -14px 10px;" (touchstart)="mousedownd();"
          (touchend)="mouseup();"/>

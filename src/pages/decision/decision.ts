@@ -48,7 +48,7 @@ export class DecisionPage {
     }
     this.http.getScenesById(this.param).subscribe(res => {
       this.data_list = JSON.parse(res['list'][0]['s_data'])['componentList']
-      this.data_list[0].name = "select"
+      this.data_list[0].name = "SG_select"
 
       this.data_list[0]['data'].text = '若你作为辉发乳业（集团）股份有限公司的决策者，关注到网贴后该如何决策？'
       this.data_list[0]['data']['selectData'] = [

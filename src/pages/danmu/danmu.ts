@@ -62,14 +62,14 @@ export class DanmuPage {
     }
     this.http.getScenesById(this.param).subscribe(res => {
       this.data_list = JSON.parse(res['list'][0]['s_data'])['componentList']
-      this.data_list[0].name = "bullet"
+      this.data_list[0].name = "SG_bullet"
 
       this.data_list[0]['data']['fillData'].title = '事件名称'
       this.data_list[0]['data']['fillData'].fillName = '大神';
       this.data_list[0]['data']['fillData'].fillImg = 'assets/img/img1.png';
       // this.src1 = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + this.src1);
 
-      this.data_list[0]['data']['fillData'].content = '事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情事件详情'
+      this.data_list[0]['data']['fillData'].content = '贴吧圣诞舞蹈大会开始征集了！贴吧圣诞舞蹈大会开始征集了！贴吧圣诞舞蹈大会开始征集了！贴吧圣诞舞蹈大会开始征集了'
       // if (this.data_list[0]['fillData'] != null) {
       //   this.data_list[0]['fillData']['fillImg'] = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + this.datas[0]['fillData']['fillImg']);
       // }
