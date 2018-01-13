@@ -16,9 +16,9 @@
         <hr style="border-top: 2px solid #1aa7b8;float: left;margin: 20px 0px 0px -12px;width: 415px;"/>
       </div>
 
-    <div *ngIf="items.componentList">
-    {{name}}
-    </div>
+    <!--<div *ngIf="items.componentList">-->
+    <!--{{name}}-->
+    <!--</div>-->
     <div *ngFor="let item of items;let n=index">
       <div style="margin-left: 20px;">
         <img style=" height: 50px;width: 50px;float: left;margin-top: 20px;" [src]="item.ImagePath">
@@ -44,7 +44,7 @@
          style="display:inline-block;margin: 0px 10px -14px 10px;" (touchstart)="mousedownd();"
          (touchend)="mouseup();"/>
     <!--<input  style="height:40px;display:inline-block;margin: 10px 10px 8px -1px;vertical-align:top; border-radius:5px; border: 0;width:215px" [(ngModel)]="value" type="text"></input>-->
-    <input type="text" [(ngModel)]="value"
+    <input type="text" [(ngModel)]="inputvalue"
            style="height:40px;display:inline-block;margin: 10px 10px 8px -1px;vertical-align:top; border-radius:5px; border: 0;width:215px" />
     <button (click)="send();"
             style="background-color: #2D3451;color: white;width:70px;height: 40px;display:inline-block;margin: 10px 5px 5px 1px;border-radius:5px">

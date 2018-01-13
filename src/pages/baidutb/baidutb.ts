@@ -1,5 +1,5 @@
 ///<reference path="../../../node_modules/ionic-angular/tap-click/tap-click.d.ts"/>
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Subscription} from "rxjs/Subscription";
 import {ServerSocket} from "../../providers/ws.service";
@@ -22,35 +22,30 @@ import {UserData} from "../../providers/user-data";
 
 
 export class BaidutbPage implements OnInit{
-  gender;
 
   items ;
   param: any;
-  title: '';
-  src1: any
+  title;
   isShow = false;
-  datas: any;
   data_list: any;
-  value: '';
+  inputvalue;
   src = 'assets/img/juxing-10.png';
   userId;
-  n_id;
-  g_id;
+
   content;
   sim_id;
-
-  @Input()
-  s_data:any=new Object()
+  g_id
+  n_id
+  s_data
+  // @Input()
+  // s_data:any=new Object()
+  // @Input()
+  // g_id:any=new Object()
+  // @Input()
+  // n_id:any=new Object()
 
   ngOnInit() {
-    console.log("===============grouping====================>")
-    console.log(this.s_data.s_data.componentList[0].data.fillData)
-    // JSON.parse()
-    this.items=this.s_data.s_data.componentList[0].data.fillData;
-    this.title=this.items.title;
-    this.content=this.items.content;
-    this.n_id=this.s_data.n_id;
-    this.g_id=this.s_data.g_id;
+
   }
 
   mousedownd() {
@@ -76,10 +71,13 @@ export class BaidutbPage implements OnInit{
     this.ws.connect()
     this.userData.getUserID().then(value => this.userId = value)
     // this.getScenesById();
-    this.userData.getSimId().then(value=>{
-      this.sim_id=value
-    })
+    this.n_id=this.navParams.data.n_id
+    this.g_id=this.navParams.data.g_id
+    this.s_data=this.navParams.data.s_data
+    this.sim_id=this.navParams.data.sim_id
     this.getAnswerOfStuList();
+
+
   }
 
 
@@ -90,12 +88,12 @@ export class BaidutbPage implements OnInit{
       g_id: this.g_id,
       sim_id: this.sim_id
     };
+
     this.http.getAnswerOfStuList(this.param).subscribe(res => {
 
       for (var i = 0; i < res['list'].length; i++) {
         res['list'][i].ImagePath = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + res['list'][i].ImagePath);
       }
-
       this.items = res['list']
 
     });
@@ -106,38 +104,38 @@ export class BaidutbPage implements OnInit{
       sim_id: this.sim_id,
       g_id:  this.g_id,
       u_id: this.userId,
-      answer: this.value,
+      answer: this.inputvalue,
       n_id: this.n_id
     };
-    console.log('------addanswer------')
-    console.log( JSON.stringify(this.param));
+
 
     this.http.addStuAnswer(this.param).subscribe(res => {
-      console.log('------addanswer------')
-      console.log(res)
-      // console.log('received message from server666: ', res['code']);
-      // this.value='';
-      // if (res['code'] == 0) {
-      //
-      // }
+     console.log(res)
+      this.inputvalue = '';
+
 
     });
   }
-
+  common
+  result
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BaidutbPage');
-  }
+    // JSON.parse()
 
-  ionViewDidEnter() {
+    this.result=JSON.parse(this.s_data[0].s_data)
+    this.common=this.result['componentList'][0].data.fillData;
+
+    this.title=this.common.title;
+    this.content=this.common.content;
+    // this.n_id=this.s_data.n_id;
+    // this.g_id=this.s_data.g_id;
     if (this.ws.messages) {
       // setInterval(()=>{
       //   this.getAnswerOfStuList();
       // },2000);
-      this.socketSubscription = this.ws.messages.subscribe((message: string) => {
-        console.log('received message from server11111:' + message);
+      this.socketSubscription = this.ws.messages.subscribe(message => {
         if (JSON.parse(message)['action'] != null) {
           if (JSON.parse(message)['action'] == 'phone_scene_answers_update') {
-            this.value = '';
+
             this.items = JSON.parse(message)['list']
           }
         }
@@ -146,6 +144,7 @@ export class BaidutbPage implements OnInit{
       })
     }
   }
+
 
   ionViewDidLeave() {
     if (this.socketSubscription)
