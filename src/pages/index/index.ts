@@ -127,6 +127,27 @@ export class IndexPage {
       console.log(err)
       this.showToast('bottom', "扫描到的二维码有误，请重新尝试")
     });
+    let data={
+      cla_id:'15',
+      cour_id:'24',
+      sim_id:'',
+      p_id:'92'
+    }
+    const params = {"cla_id": data.cla_id, "cour_id": data.cour_id, "sim_id": data.sim_id, "u_id": this.userId+""}
+    this.http.addClassPractice(params).subscribe(res => {
+
+        console.log(res['code'])
+        if (res['code'] == 0) {
+          this.userData.setSimId( data.sim_id)
+          this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
+        } else {
+          // this.showToast('bottom', res['msg']);
+        }
+      }, error => {
+        console.log(error.message);
+      }
+    );
+
 
   }
 
