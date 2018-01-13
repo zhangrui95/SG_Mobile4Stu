@@ -35,8 +35,9 @@ export class SceneListPage {
       n_id: this.n_id
     }
     this.http.getScenesById(this.param).subscribe(res => {
-      console.log('list:' + res['list'][0]['s_data'])
-      this.s_data = res['list'][0]['s_data'];
+      console.log('----------------------------------------------list:' + res['list'][0]['s_data'])
+      // this.s_data = res['list'][0]['s_data'];
+      this.s_data = res['list'];
       this.data_list = JSON.parse(res['list'][0]['s_data'])['componentList']
       for (let component of this.data_list) {
         if (component.name == "SG_tieba" || component.name == "SG_bullet" || component.name == "SG_weibo" || component.name == "SG_brain" || component.name == "SG_select" || component.name == "SG_qq") {

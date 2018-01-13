@@ -6,19 +6,15 @@
 
 <ion-content class="cards-bg social-cards">
   <div ion-fixed>
-    <div  *ngFor="let data of datas">
-      <div *ngIf="data.name=='SG_tieba'" >
         <div style="background-color: white;border-radius: 0.5em;height:47px;width:47px;margin: 25px 0px 5px 25px; display:inline-block;">
           <img src="../../assets/img/bdtb.png" style="margin: 4px 0px 0px 5px;width: 37px;height: 40px;"/>
         </div>
         <h3 style="margin: -40px 0px 0px 90px;color: #e8e8e8">
-          {{data.data.fillData.title}}
+          {{title}}
         </h3>
-        <span style="color: #e8e8e8;font-size: initial;margin: 20px 25px 0px 25px;float: left;">{{data.data.fillData.content}}</span>
+        <span style="color: #e8e8e8;font-size: initial;margin: 20px 25px 0px 25px;float: left;">{{content}}</span>
         <hr style="border-top: 2px solid #1aa7b8;float: left;margin: 20px 0px 0px -12px;width: 415px;"/>
       </div>
-    </div>
-  </div>
 
     <div *ngIf="items.componentList">
     {{name}}

@@ -1,5 +1,5 @@
 ///<reference path="../../../node_modules/ionic-angular/tap-click/tap-click.d.ts"/>
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Subscription} from "rxjs/Subscription";
 import {ServerSocket} from "../../providers/ws.service";
@@ -21,12 +21,12 @@ import {UserData} from "../../providers/user-data";
 })
 
 
-export class BaidutbPage {
+export class BaidutbPage implements OnInit{
   gender;
 
-  items = [];
+  items ;
   param: any;
-  // name: '';
+  title: '';
   src1: any
   isShow = false;
   datas: any;
@@ -34,8 +34,24 @@ export class BaidutbPage {
   value: '';
   src = 'assets/img/juxing-10.png';
   userId;
+  n_id;
+  g_id;
+  content;
+  sim_id;
+
   @Input()
-  s_data=new Object()
+  s_data:any=new Object()
+
+  ngOnInit() {
+    console.log("grouping====================>")
+    console.log(this.s_data.s_data.componentList[0].data.fillData)
+    this.items=this.s_data.s_data.componentList[0].data.fillData;
+    this.title=this.items.title;
+    this.content=this.items.content;
+    this.n_id=this.s_data.n_id;
+    this.g_id=this.s_data.g_id;
+  }
+
   mousedownd() {
     this.isShow = true
     this.src = 'assets/img/yuyin-3.png';
@@ -59,49 +75,19 @@ export class BaidutbPage {
               public sanitizer: DomSanitizer) {
     this.ws.connect()
     this.userData.getUserID().then(value => this.userId = value)
-    this.getScenesById();
+    // this.getScenesById();
     this.getAnswerOfStuList();
-    // this.socketSubscription = this.ws.messages.subscribe((message: string) => {
-    //   console.log('received message from server11111: ', message);
-    //   // this. OnDestroy();
-    //   // const JSONComponentList = JSON.parse(message)['list'][0]['s_data'];
-    //   // this.componentList = JSON.parse(JSONComponentList).componentList;
-    // })
-
-    // this.socketSubscription.unsubscribe();
   }
 
-
-  getScenesById() {
-    this.param = {
-      n_id: 3
-    }
-    this.http.getScenesById(this.param).subscribe(res => {
-      this.data_list = JSON.parse(res['list'][0]['s_data'])['componentList']
-      this.data_list[0].name = "SG_tieba"
-
-      this.data_list[0]['data']['fillData'].title = '贴吧圣诞舞会'
-      this.data_list[0]['data']['fillData'].fillName = '大神';
-      this.data_list[0]['data']['fillData'].fillImg = this.src;
-      // this.src1 = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + this.src1);
-
-      this.data_list[0]['data']['fillData'].content = '贴吧圣诞舞蹈大会开始征集了！贴吧圣诞舞蹈大会开始征集了！贴吧圣诞舞蹈大会开始征集了！贴吧圣诞舞蹈大会开始征集了'
-      // if (this.data_list[0]['fillData'] != null) {
-      //   this.data_list[0]['fillData']['fillImg'] = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + this.datas[0]['fillData']['fillImg']);
-      // }
-      // else{
-      //   console.log('-----------------------------------------------')
-      //   // this.data_list[0]['fillData']['title'] ='事件名称'
-      // }
-      this.datas = this.data_list
-    });
-  }
 
   getAnswerOfStuList() {
+    this.userData.getSimId().then(value => {
+      this.sim_id = value;
+    });
     this.param = {
-      n_id: 1,
-      g_id: 2,
-      sim_id: 18
+      n_id: this.n_id,
+      g_id: this.g_id,
+      sim_id: this.sim_id
     };
     this.http.getAnswerOfStuList(this.param).subscribe(res => {
 

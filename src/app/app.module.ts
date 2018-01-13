@@ -106,7 +106,8 @@ import {GroupIndexPage} from "../pages/group-index/group-index";
     SceneListPage,
     StatisticsPage,
     DetailsPage,
-    CommentPage
+    CommentPage,
+    GroupIndexPage
   ],
   imports: [
     BrowserModule,
@@ -153,6 +154,8 @@ import {GroupIndexPage} from "../pages/group-index/group-index";
         { component: StatisticsPage, name: 'StatisticsPage', segment: 'statistics' },
         { component: DetailsPage, name: 'DetailsPage', segment: 'details' },
         { component: CommentPage, name: 'CommentPage', segment: 'comment' },
+        { component: GroupIndexPage, name: 'GroupIndexPage', segment: 'group-index' }
+
       ]
     }),
     IonicStorageModule.forRoot()
@@ -201,7 +204,8 @@ import {GroupIndexPage} from "../pages/group-index/group-index";
     SceneListPage,
     StatisticsPage,
     DetailsPage,
-    CommentPage
+    CommentPage,
+    GroupIndexPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
