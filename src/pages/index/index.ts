@@ -95,60 +95,40 @@ export class IndexPage {
   }
 
   getClassRoom() {
-    // this.barcodeScanner.scan({resultDisplayDuration: 0}).then((barcodeData) => {
-    //   // Success! Barcode data is here
-    //
-    //   if (!barcodeData.cancelled) {
-    //     if (barcodeData.text.indexOf('4dec1f9e20f86b62335ba913ae29fa0d') != -1) {
-    //       let data = JSON.parse(barcodeData.text)
-    //       console.log("uid======>"+this.userId)
-    //       const params = {"cla_id": data.cla_id, "cour_id": data.cour_id, "sim_id": data.sim_id, "u_id": this.userId+""}
-    //
-    //       this.http.addClassPractice(params).subscribe(res => {
-    //
-    //           console.log(res['code'])
-    //           if (res['code'] == 0) {
-    //             this.userData.setSimId( data.sim_id)
-    //             this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
-    //           } else {
-    //             // this.showToast('bottom', res['msg']);
-    //           }
-    //         }, error => {
-    //           console.log(error.message);
-    //         }
-    //       );
-    //     } else {
-    //       this.showToast('bottom', "扫描到的二维码有误，请重新尝试");
-    //     }
-    //   }
-    //
-    // }, (err) => {
-    //   // An error occurred
-    //   console.log(err)
-    //   this.showToast('bottom', "扫描到的二维码有误，请重新尝试")
-    // });
-    let data={
-      cla_id:'15',
-      cour_id:'24',
-      sim_id:'135',
-      p_id:'92'
-    }
-    const params = {"cla_id": data.cla_id, "cour_id": data.cour_id, "sim_id": data.sim_id, "u_id": this.userId+""}
-    this.http.addClassPractice(params).subscribe(res => {
+    this.barcodeScanner.scan({resultDisplayDuration: 0}).then((barcodeData) => {
+      // Success! Barcode data is here
 
-console.log(res)
-        this.userData.setSimId( data.sim_id)
-      this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
-        // if (res['code'] == 0) {
-        //   this.userData.setSimId( data.sim_id)
-        //   this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
-        // } else {
-        //   // this.showToast('bottom', res['msg']);
-        // }
-      }, error => {
-        console.log(error.message);
+      if (!barcodeData.cancelled) {
+        if (barcodeData.text.indexOf('4dec1f9e20f86b62335ba913ae29fa0d') != -1) {
+          let data = JSON.parse(barcodeData.text)
+          console.log("uid======>"+this.userId)
+          const params = {"cla_id": data.cla_id, "cour_id": data.cour_id, "sim_id": data.sim_id, "u_id": this.userId+""}
+
+          this.http.addClassPractice(params).subscribe(res => {
+
+              console.log(res['code'])
+              if (res['code'] == 0) {
+                this.userData.setSimId( data.sim_id)
+                this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
+              } else {
+                // this.showToast('bottom', res['msg']);
+              }
+            }, error => {
+              console.log(error.message);
+            }
+          );
+        } else {
+          this.showToast('bottom', "扫描到的二维码有误，请重新尝试");
+        }
       }
-    );
+
+    }, (err) => {
+      // An error occurred
+      console.log(err)
+      this.showToast('bottom', "扫描到的二维码有误，请重新尝试")
+    });
+
+
 
 
   }

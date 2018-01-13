@@ -19,7 +19,7 @@ export class SceneListPage {
   value: '';
   src = 'assets/img/juxing-10.png';
   userId;
-  name;
+  name='default';
   n_id;
   s_data;
 
@@ -40,14 +40,16 @@ export class SceneListPage {
       this.s_data = res['list'];
       this.data_list = JSON.parse(res['list'][0]['s_data'])['componentList']
       for (let component of this.data_list) {
+        console.log('----------------------------------------------list:' )
+        console.log(component)
         if (component.name == "SG_tieba" || component.name == "SG_bullet" || component.name == "SG_weibo" || component.name == "SG_brain" || component.name == "SG_select" || component.name == "SG_qq") {
-          this.name = component.name
+          console.log(component.name)
+         this.name = component.name
         }
       }
 
 
-      this.name = this.data_list.name;
-
+      console.log('----------------------------------------------list:' + this.name )
       // this.data_list.name = "SG_tieba"
       // this.data_list[0]['data']['fillData'].title = '事件名称'
       // this.data_list[0]['data']['fillData'].fillName = '大神';

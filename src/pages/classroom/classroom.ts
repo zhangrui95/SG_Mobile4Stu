@@ -47,6 +47,7 @@ export class ClassroomPage {
     //     this.getPushFreeGroListForPhone();
     //   },1000);
     this.messagesSubscription=this.ws.messages.subscribe(msg=>{
+      console.log('+++++++++++++++++++++++++++++++++++++++++');
       console.log(msg);
       //[{"action":"phone_process_upadte","n_name":"开始","n_id":"1111"}] {"action":"phone_process_upadte"}
       if(msg !== null){

@@ -43,8 +43,9 @@ export class BaidutbPage implements OnInit{
   s_data:any=new Object()
 
   ngOnInit() {
-    console.log("grouping====================>")
+    console.log("===============grouping====================>")
     console.log(this.s_data.s_data.componentList[0].data.fillData)
+    // JSON.parse()
     this.items=this.s_data.s_data.componentList[0].data.fillData;
     this.title=this.items.title;
     this.content=this.items.content;
@@ -66,7 +67,6 @@ export class BaidutbPage implements OnInit{
   //   this.getData();
   // }
   private socketSubscription: Subscription
-
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public userData: UserData,
@@ -76,14 +76,15 @@ export class BaidutbPage implements OnInit{
     this.ws.connect()
     this.userData.getUserID().then(value => this.userId = value)
     // this.getScenesById();
+    this.userData.getSimId().then(value=>{
+      this.sim_id=value
+    })
     this.getAnswerOfStuList();
   }
 
 
   getAnswerOfStuList() {
-    this.userData.getSimId().then(value => {
-      this.sim_id = value;
-    });
+
     this.param = {
       n_id: this.n_id,
       g_id: this.g_id,
@@ -102,13 +103,14 @@ export class BaidutbPage implements OnInit{
 
   send() {
     this.param = {
-      sim_id: 18,
-      g_id: 2,
+      sim_id: this.sim_id,
+      g_id:  this.g_id,
       u_id: this.userId,
       answer: this.value,
-      n_id: 1
+      n_id: this.n_id
     };
-    console.log('received message from server123: ', this.userId);
+    console.log('------addanswer------')
+    console.log( JSON.stringify(this.param));
 
     this.http.addStuAnswer(this.param).subscribe(res => {
       console.log('------addanswer------')
