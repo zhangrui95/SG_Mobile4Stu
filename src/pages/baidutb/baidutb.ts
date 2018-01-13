@@ -1,5 +1,5 @@
 ///<reference path="../../../node_modules/ionic-angular/tap-click/tap-click.d.ts"/>
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Subscription} from "rxjs/Subscription";
 import {ServerSocket} from "../../providers/ws.service";
@@ -21,7 +21,7 @@ import {UserData} from "../../providers/user-data";
 })
 
 
-export class BaidutbPage implements OnInit{
+export class BaidutbPage{
 
   items ;
   param: any;
