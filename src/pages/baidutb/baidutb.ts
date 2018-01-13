@@ -37,16 +37,8 @@ export class BaidutbPage implements OnInit{
   g_id
   n_id
   s_data
-  // @Input()
-  // s_data:any=new Object()
-  // @Input()
-  // g_id:any=new Object()
-  // @Input()
-  // n_id:any=new Object()
 
-  ngOnInit() {
 
-  }
 
   mousedownd() {
     this.isShow = true
@@ -76,7 +68,6 @@ export class BaidutbPage implements OnInit{
     this.s_data=this.navParams.data.s_data
     this.sim_id=this.navParams.data.sim_id
     this.getAnswerOfStuList();
-
 
   }
 
@@ -126,12 +117,9 @@ export class BaidutbPage implements OnInit{
 
     this.title=this.common.title;
     this.content=this.common.content;
-    // this.n_id=this.s_data.n_id;
-    // this.g_id=this.s_data.g_id;
+
     if (this.ws.messages) {
-      // setInterval(()=>{
-      //   this.getAnswerOfStuList();
-      // },2000);
+
       this.socketSubscription = this.ws.messages.subscribe(message => {
         if (JSON.parse(message)['action'] != null) {
           if (JSON.parse(message)['action'] == 'phone_scene_answers_update') {
@@ -139,8 +127,7 @@ export class BaidutbPage implements OnInit{
             this.items = JSON.parse(message)['list']
           }
         }
-        // const JSONComponentList = JSON.parse(message)['list'][0]['s_data'];
-        // this.componentList = JSON.parse(JSONComponentList).componentList;
+
       })
     }
   }
