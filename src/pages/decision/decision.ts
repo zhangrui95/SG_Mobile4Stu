@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {UsersPage} from "../users/users";
 import {ProxyHttpService} from "../../providers/proxy.http.service";
@@ -25,7 +25,8 @@ export class DecisionPage {
   //   {id:'2',option:'C', text:'公开调查帖子内容的真实性'}
   // ]
   value;
-
+  @Input()
+  s_data=new Object()
   constructor(public navCtrl: NavController, public navParams: NavParams,public userData: UserData, public http: ProxyHttpService) {
     this.getScenesById();
   }

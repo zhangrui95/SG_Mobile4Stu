@@ -23,7 +23,7 @@ export class GroupingPage {
               public toastCtrl: ToastController,
               public ws :ServerSocket
               ) {
-    this.sim_id = this.navParams.get('sim_id');
+    this.userData.getSimId().then(value =>  this.sim_id=value);
     this.userData.getUserID().then(value => this.userId=value);
     this.ws.connect();
   }
@@ -78,7 +78,8 @@ export class GroupingPage {
               console.log(res)
               if(res['code'] == 0){
                 this.showToast('bottom', res['msg']);
-                window.history.back();
+                  // window.history.back();
+                this.navCtrl.pop()
               }else{
                 this.showToast('bottom', res['msg']);
               }

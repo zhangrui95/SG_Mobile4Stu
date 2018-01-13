@@ -62,6 +62,7 @@ import {SceneListPage} from "../pages/scene-list/scene-list";
 import {StatisticsPage} from "../pages/statistics/statistics";
 import {DetailsPage} from "../pages/details/details";
 import {CommentPage} from "../pages/comment/comment";
+import {GroupIndexPage} from "../pages/group-index/group-index";
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -120,6 +121,7 @@ import {CommentPage} from "../pages/comment/comment";
         { component: SpeakerDetailPage, name: 'SpeakerDetail', segment: 'speakerDetail/:speakerId' },
         { component: MapPage, name: 'Map', segment: 'map' },
         { component: AboutPage, name: 'About', segment: 'about' },
+        { component: GroupIndexPage, name: 'GroupIndexPage', segment: 'pageindex' },
         { component: TutorialPage, name: 'Tutorial', segment: 'tutorial' },
         { component: SupportPage, name: 'SupportPage', segment: 'support' },
         { component: LoginPage, name: 'LoginPage', segment: 'login' },
@@ -169,6 +171,7 @@ import {CommentPage} from "../pages/comment/comment";
     SignupPage,
     SpeakerDetailPage,
     SpeakerListPage,
+    GroupIndexPage,
     TabsPage,
     TutorialPage,
     SupportPage,

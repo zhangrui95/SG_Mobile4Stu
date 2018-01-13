@@ -1,0 +1,30 @@
+<!--<div class="center" >-->
+  <!--<div class="img-box">-->
+    <!--<img src=""/>-->
+  <!--</div>-->
+  <!--<div class="tile-img">-->
+    <!--2017食品汞中毒事件-->
+  <!--</div>-->
+  <!--<div class="words">-->
+    <!--kjdhfsa  jdsaljf fdsafh fjj fdsk  fkdsaklfjj fkks lllldsa dsao.-->
+    <!--kjdhfsa  jdsaljf fdsafh fjj fdsk  fkdsaklfjj fkks lllldsa dsao.-->
+    <!--kjdhfsa  jdsaljf fdsafh fjj fdsk  fkdsaklfjj fkks lllldsa dsao.-->
+    <!--kjdhfsa  jdsaljf fdsafh fjj fdsk  fkdsaklfjj fkks lllldsa dsao.-->
+  <!--</div>-->
+<!--</div>-->
+<div class="center" *ngFor="let items of datas">
+  <div class="img-box">
+    <div *ngIf="items.data.name=='img'">
+      <img src="{{src}}"/>
+    </div>
+    <div *ngIf="items.data.name=='video'">
+      <!--<v src=""/>-->
+    </div>
+  </div>
+  <div class="tile-img">
+    <span *ngIf="items.data.name=='txt'">{{text}}</span>
+  </div>
+  <div class="words">
+    <span *ngIf="items.data.name=='txt'">{{text}}</span>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 ///<reference path="../../../node_modules/ionic-angular/tap-click/tap-click.d.ts"/>
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Subscription} from "rxjs/Subscription";
 import {ServerSocket} from "../../providers/ws.service";
@@ -34,7 +34,8 @@ export class BaidutbPage {
   value: '';
   src = 'assets/img/juxing-10.png';
   userId;
-
+  @Input()
+  s_data=new Object()
   mousedownd() {
     this.isShow = true
     this.src = 'assets/img/yuyin-3.png';

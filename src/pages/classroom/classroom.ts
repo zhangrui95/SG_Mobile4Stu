@@ -29,20 +29,31 @@ export class ClassroomPage {
               public userData:UserData,
               public ws :ServerSocket
               ) {
-    this.sim_id = this.navParams.get('sim_id');
-    this.userData.getUserID().then(value => this.userId=value);
+
     this.ws.connect();
   }
   messagesSubscription;
   ionViewDidEnter() {
-    this.getProcessOfStu();
+    this.userData.getSimId().then(value => {
+      this.sim_id=value;
+      this.userData.getUserID().then(value =>{
+        this.userId=value;
+        this.getProcessOfStu();
+      } );
+    } );
+
+
     // setTimeout(()=>{
     //     this.getPushFreeGroListForPhone();
     //   },1000);
     this.messagesSubscription=this.ws.messages.subscribe(msg=>{
+      console.log(msg);
+      //[{"action":"phone_process_upadte","n_name":"开始","n_id":"1111"}] {"action":"phone_process_upadte"}
       if(msg !== null){
+
         let action = JSON.parse(msg)['action'];
         let msgs = JSON.parse(msg)['msg'];
+        console.log( JSON.parse(msg)['action']);
         console.log('action',action);
         if(action !== "undefined" ){
           if(action === "phone_process_update"){
@@ -69,13 +80,16 @@ export class ClassroomPage {
   // }
   getProcessOfStu(){
     const params = {sim_id:this.sim_id, u_id:this.userId};
+    console.log("*-*-*-*-*-*-*-*-*-*");
+    console.log(JSON.stringify(params));
     this.http.getProcessOfStu(params).subscribe(res => {
       // for(let i in res['list']){
       //   res['list'][0].ns = '';
       //   res['list'][i].ns = [{"n_id":"1.1","n_name":"sdfsdfs"},{"n_id":"1.2","n_name":"sdfsdfd"}];
       // }
       this.items = res['list'];
-      console.log(res);
+      console.log("*-*-*-*-*-*-*-*-*-*"+JSON.stringify(res));
+      console.log(JSON.stringify(res));
       for(let n in this.items){
         if(res['list'][n].ns === ''){
           this.indexNs.push(false);
