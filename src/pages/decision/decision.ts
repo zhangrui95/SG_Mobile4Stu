@@ -36,9 +36,11 @@ export class DecisionPage {
     this.n_id=this.navParams.data.n_id
     this.g_id=this.navParams.data.g_id
     this.s_data=this.navParams.data.s_data
-    this.select = this.s_data.componentList[0].data.selectData;
+    console.log(this.s_data)
+    // this.select = this.s_data.componentList[0].data.selectData;
     this.sim_id=this.navParams.data.sim_id
     this.title = this.navParams.data.text;
+
   }
 
   getForm(item) {
@@ -63,16 +65,16 @@ export class DecisionPage {
       n_id: this.n_id
     };
     console.log(this.selectvalue)
-
-    this.http.addStuAnswer(this.param).subscribe(res => {
-      console.log('------addanswer------')
-      console.log(res)
-      // console.log('received message from server666: ', res['code']);
-      // this.value='';
-      // if (res['code'] == 0) {
-      //
-      // }
-
-    });
+    if (this.selectvalue != '') {
+      this.http.addStuAnswer(this.param).subscribe(res => {
+        console.log('------addanswer------')
+        console.log(res)
+        // console.log('received message from server666: ', res['code']);
+        // this.value='';
+        // if (res['code'] == 0) {
+        //
+        // }
+      });
+    }
   }
 }

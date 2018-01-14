@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 import {
   IonicPage, NavController, NavParams
 } from 'ionic-angular';
@@ -13,14 +13,7 @@ import {Subscription} from "rxjs/Subscription";
   selector: 'page-weibo',
   templateUrl: 'weibo.html',
 })
-export class WeiBoPage implements  AfterViewInit{
-  @ViewChild('topBox') topBox: ElementRef;
-  @ViewChild('list') list: ElementRef;
-  @ViewChild('show') show: ElementRef;
-  @ViewChild('hide') hide: ElementRef;
-  @ViewChild('nr') nr: ElementRef;
-  @ViewChild('show_hide') show_hide: ElementRef;
-  @ViewChild('hr_hid') hr_hid: ElementRef;
+export class WeiBoPage{
 
   @ViewChild('ioncontent')
   ioncontent
@@ -99,13 +92,14 @@ export class WeiBoPage implements  AfterViewInit{
       n_id: this.n_id
     };
 
+    if (this.inputvalue != '') {
+      this.http.addStuAnswer(this.param).subscribe(res => {
+        console.log(res)
+        this.inputvalue = '';
 
-    this.http.addStuAnswer(this.param).subscribe(res => {
-      console.log(res)
-      this.inputvalue = '';
 
-
-    });
+      });
+    }
   }
   common
   result
@@ -115,11 +109,11 @@ export class WeiBoPage implements  AfterViewInit{
     this.result=JSON.parse(this.s_data[0].s_data)
     this.common=this.result['componentList'][0].data.fillData;
 
-    // this.title=this.common.title;
-    // this.content=this.common.content;
+    this.title=this.common.title;
+    this.content=this.common.content;
 
-    this.title='范德萨的发生非法违法文文';
-    this.content='范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文';
+    // this.title='范德萨的发生非法违法文文';
+    // this.content='范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文';
 
     if (this.ws.messages) {
 
@@ -150,27 +144,4 @@ export class WeiBoPage implements  AfterViewInit{
       this.socketSubscription.unsubscribe();
   }
 
-  ngAfterViewInit() {
-    this.p_height();
-  }
-
-  p_height(){
-    const height = this.topBox.nativeElement.offsetHeight;
-    this.list.nativeElement.style.marginTop = height + 'px';
-    // this.list.nativeElement.parentElement.style.marginTop = height + 'px';
-    // this.list.nativeElement.parentElement.style.marginBottom = '65px';
-  }
-
-  show_div(){
-    this.hide.nativeElement.style.display = 'block';
-    this.show.nativeElement.style.display = 'none';
-    this.nr.nativeElement.style.display = 'block';
-    this.p_height();
-  }
-  hide_div(){
-    this.show.nativeElement.style.display = 'block';
-    this.hide.nativeElement.style.display = 'none';
-    this.nr.nativeElement.style.display = '-webkit-box';
-    this.p_height();
-  }
 }

@@ -7,7 +7,7 @@
 
 <ion-content #ioncontent>
   <!--<div style="margin: 30px 1% 30% 1%">-->
-  <div #topBox ion-fixed>
+  <div ion-fixed>
     <div
       style="background-color: white;border-radius: 0.5em;height:47px;width:47px;margin: 25px 0px 5px 25px; display:inline-block;">
       <img src="assets/img/xlwb.png" style="margin: 4px 0px 0px 5px;width: 37px;height: 40px;"/>
@@ -16,21 +16,10 @@
       {{title}}
     </h3>
     <!--<span style="color: #e8e8e8;font-size: initial;margin: 20px 25px 0px 25px;float: left;">{{content}}</span>-->
-    <p #nr class="p_content">
+    <p class="p_content">
       {{content}}</p>
-    <div #show_hide>
-      <div #show class="ss">
-        <img src="assets/img/z_mo.png"/>
-        <span (click)="show_div()">全部展开</span>
-      </div>
-      <div #hide class="ss" style="display: none">
-        <img src="assets/img/z_mo.png" style="transform:rotate(-180deg)"/>
-        <span (click)="hide_div()">收起</span>
-      </div>
-    </div>
     <hr style="border-top: 2px solid #1aa7b8;float: left;margin: 20px 0px 0px 0px;width: 415px;"/>
   </div>
-  <div #list>
     <div *ngFor="let item of items;let n=index">
       <div style="margin-left: 20px;">
         <img style=" height: 50px;width: 50px;float: left;margin-top: 20px;" [src]="item.ImagePath">
@@ -42,7 +31,6 @@
       </div>
       <hr style="border-top: 1px dashed #929292;width: 100%;margin: 30px 0px 10px 0px;float: left;"/>
     </div>
-  </div>
   <!--</div>-->
   <div *ngIf="isShow">
     <div

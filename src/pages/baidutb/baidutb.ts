@@ -78,11 +78,10 @@ export class BaidutbPage  {
               public sanitizer: DomSanitizer) {
     this.ws.connect()
     this.userData.getUserID().then(value => this.userId = value)
-    // this.getScenesById();
-    // this.n_id = this.navParams.data.n_id
-    // this.g_id = this.navParams.data.g_id
-    // this.s_data = this.navParams.data.s_data
-    // this.sim_id = this.navParams.data.sim_id
+    this.n_id = this.navParams.data.n_id
+    this.g_id = this.navParams.data.g_id
+    this.s_data = this.navParams.data.s_data
+    this.sim_id = this.navParams.data.sim_id
     this.getAnswerOfStuList();
 
   }
@@ -96,28 +95,12 @@ export class BaidutbPage  {
       sim_id: this.sim_id
     };
 
-
-    // this.items=[
-    //   {ImagePath:'',
-    //     UserName:'dksa',
-    //     answer:'asdsdfafsaf'
-    //   },
-    //   {ImagePath:'',
-    //     UserName:'dksa',
-    //     answer:'asdsdfafsaf'
-    //   },
-    //   {ImagePath:'',
-    //     UserName:'dksa',
-    //     answer:'asdsdfafsaf'
-    //   }
-    // ]
-
     this.http.getAnswerOfStuList(this.param).subscribe(res => {
 
       for (var i = 0; i < res['list'].length; i++) {
         res['list'][i].ImagePath = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + res['list'][i].ImagePath);
       }
-      // this.items = res['list']
+      this.items = res['list']
 
 
       setTimeout(() => {
@@ -185,29 +168,4 @@ export class BaidutbPage  {
     if (this.socketSubscription)
       this.socketSubscription.unsubscribe();
   }
-
-  // ngAfterViewInit() {
-  //   this.p_height();
-  // }
-  //
-  // p_height() {
-  //   const height = this.topBox.nativeElement.offsetHeight;
-  //   this.list.nativeElement.style.marginTop = height + 'px';
-  //   // this.list.nativeElement.parentElement.style.marginTop = height + 'px';
-  //   // this.list.nativeElement.parentElement.style.marginBottom = '65px';
-  // }
-  //
-  // show_div() {
-  //   this.hide.nativeElement.style.display = 'block';
-  //   this.show.nativeElement.style.display = 'none';
-  //   this.nr.nativeElement.style.display = 'block';
-  //   this.p_height();
-  // }
-  //
-  // hide_div() {
-  //   this.show.nativeElement.style.display = 'block';
-  //   this.hide.nativeElement.style.display = 'none';
-  //   this.nr.nativeElement.style.display = '-webkit-box';
-  //   this.p_height();
-  // }
 }
