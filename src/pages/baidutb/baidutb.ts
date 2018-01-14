@@ -1,5 +1,5 @@
 ///<reference path="../../../node_modules/ionic-angular/tap-click/tap-click.d.ts"/>
-import {Component, ViewChild} from '@angular/core';
+// import {Component, ViewChild} from '@angular/core';
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Subscription} from "rxjs/Subscription";
@@ -22,12 +22,16 @@ import {UserData} from "../../providers/user-data";
 })
 
 
-export class BaidutbPage {
+// export class BaidutbPage {
+//   @ViewChild('ioncontent')
+//   ioncontent
+//   items;
+// export class BaidutbPage{
+export class BaidutbPage implements  AfterViewInit{
   @ViewChild('ioncontent')
   ioncontent
   items;
-// export class BaidutbPage{
-export class BaidutbPage implements  AfterViewInit{
+
   @ViewChild('topBox') topBox: ElementRef;
   @ViewChild('list') list: ElementRef;
   @ViewChild('show') show: ElementRef;
@@ -35,7 +39,7 @@ export class BaidutbPage implements  AfterViewInit{
   @ViewChild('nr') nr: ElementRef;
   @ViewChild('show_hide') show_hide: ElementRef;
   @ViewChild('hr_hid') hr_hid: ElementRef;
-  items ;
+
   param: any;
   title;
   isShow = false;
@@ -142,8 +146,9 @@ export class BaidutbPage implements  AfterViewInit{
     if (this.ws.messages) {
 
       this.socketSubscription = this.ws.messages.subscribe(message => {
-        if (JSON.parse(message)['action'] != null) {
-          if (JSON.parse(message)['action'] == 'phone_scene_answers_update') {
+        let action=JSON.parse(message)['action'];
+        if (action != null) {
+          if (action == 'phone_scene_answers_update') {
 
             this.items = JSON.parse(message)['list']
             setTimeout(()=>{

@@ -1,5 +1,5 @@
 ///<reference path="../../../node_modules/ionic-angular/tap-click/tap-click.d.ts"/>
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {DomSanitizer} from "@angular/platform-browser";
 import {Subscription} from "rxjs/Subscription";
@@ -21,6 +21,9 @@ import {UserData} from "../../providers/user-data";
 })
 
 export class TounaofbPage {
+  @ViewChild('ioncontent')
+  ioncontent
+
   gender;
   items = [];
   param: any;
@@ -118,10 +121,16 @@ export class TounaofbPage {
     if (this.ws.messages) {
 
       this.socketSubscription = this.ws.messages.subscribe(message => {
-        if (JSON.parse(message)['action'] != null) {
-          if (JSON.parse(message)['action'] == 'phone_scene_answers_update') {
+        let action=JSON.parse(message)['action'];
+        if (action != null) {
+          if (action == 'phone_scene_answers_update') {
 
             this.items = JSON.parse(message)['list']
+            setTimeout(()=>{
+
+              this.ioncontent.scrollToBottom(500);
+            },1000)
+
             this.userData.setAction(action);
           }
         }

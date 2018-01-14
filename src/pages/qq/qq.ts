@@ -21,6 +21,9 @@ export class QQPage implements  AfterViewInit{
   @ViewChild('nr') nr: ElementRef;
   @ViewChild('show_hide') show_hide: ElementRef;
   @ViewChild('hr_hid') hr_hid: ElementRef;
+
+  @ViewChild('ioncontent')
+  ioncontent
   items ;
   param: any;
   title;
@@ -121,10 +124,16 @@ export class QQPage implements  AfterViewInit{
     if (this.ws.messages) {
 
       this.socketSubscription = this.ws.messages.subscribe(message => {
-        if (JSON.parse(message)['action'] != null) {
-          if (JSON.parse(message)['action'] == 'phone_scene_answers_update') {
+        let action=JSON.parse(message)['action'];
+        if (action != null) {
+          if (action == 'phone_scene_answers_update') {
 
             this.items = JSON.parse(message)['list']
+            setTimeout(()=>{
+
+              this.ioncontent.scrollToBottom(500);
+            },1000)
+
             this.userData.setAction(action);
           }
         }
