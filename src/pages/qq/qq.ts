@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {
   IonicPage, NavController, NavParams, ToastController
 } from 'ionic-angular';
@@ -28,7 +28,8 @@ export class QQPage {
   videoimg = "assets/img/video.png";
 
   src = 'assets/img/juxing-10.png';
-
+  @Input()
+  s_data=new Object()
   mousedownd() {
     this.isShow = true
     this.src = 'assets/img/yuyin-3.png';

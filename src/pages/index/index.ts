@@ -9,6 +9,7 @@ import {UserData} from "../../providers/user-data";
 // import {GradePage} from "../grade/grade";
 import {StatisticsPage} from "../statistics/statistics";
 import {ProxyHttpService} from "../../providers/proxy.http.service";
+import {ServerSocket} from "../../providers/ws.service";
 
 @IonicPage()
 @Component({
@@ -58,7 +59,7 @@ export class IndexPage {
     }
   }
 
-  constructor(public ionicApp: IonicApp, public navCtrl: NavController, public barcodeScanner: BarcodeScanner, public navParams: NavParams, public keyboard: Keyboard, public toastCtrl: ToastController,
+  constructor(public ws:ServerSocket,public ionicApp: IonicApp, public navCtrl: NavController, public barcodeScanner: BarcodeScanner, public navParams: NavParams, public keyboard: Keyboard, public toastCtrl: ToastController,
               public platform: Platform, public userData: UserData,
               public http: ProxyHttpService,) {
     this.userData.getUserID().then(value => this.userId = value)
@@ -67,12 +68,14 @@ export class IndexPage {
       this.exitApp()
     }, 10)
   }
-
   ionViewWillEnter() {
     const params = {}
+
     this.http.getIsExistEndCour(params).subscribe(res => {
       if (res['list'].length != 0) {
-        this.simId = res['list'].sim_id;
+        console.log("+-+---+-+-+-++--+-+-++--+-+"+JSON.stringify(res))
+        this.simId = res['list'][0].sim_id;
+        this.userData.setSimId(this.simId)
         this.btnShow = true;
       }
     })
@@ -105,6 +108,7 @@ export class IndexPage {
 
               console.log(res['code'])
               if (res['code'] == 0) {
+                this.userData.setSimId( data.sim_id)
                 this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
               } else {
                 // this.showToast('bottom', res['msg']);
@@ -123,6 +127,9 @@ export class IndexPage {
       console.log(err)
       this.showToast('bottom', "扫描到的二维码有误，请重新尝试")
     });
+
+
+
 
   }
 

@@ -102,6 +102,17 @@ export class UserData {
       return value;
     });
   };
+
+  setSimId(url: string): void {
+    this.storage.set('simid', url);
+  };
+  getSimId(): Promise<string> {
+    return this.storage.get('simid').then((value) => {
+      return value;
+    });
+  };
+
+
   getUserPhone(): Promise<string> {
     return this.storage.get('phone').then((value) => {
       return value;
