@@ -74,6 +74,7 @@ export class DecisionPage {
     };
     if (this.selectvalue != '') {
       this.http.addStuAnswer(this.param).subscribe(res => {
+        this.navCtrl.pop();
         console.log('------addanswer------')
         console.log(res)
         // console.log('received message from server666: ', res['code']);

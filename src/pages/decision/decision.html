@@ -9,7 +9,7 @@
       <span style="font-size:large; margin-bottom:20px; display:inline-block;">{{title}}</span>
       <div *ngFor="let item of common;let n = index">
         <input type="radio" name="choice" (change)="getForm(options[n].option)"/>
-        <span style="font-size:medium;margin-bottom:20px; display:inline-block;">{{options[n].option +'、'+item.value}}</span>
+        <span style="font-size:medium;margin-bottom:20px; display:inline-block;">{{item.value}}</span>
       </div>
       <!-- <form class="form-box">
          <label *ngFor="let item of data.data.selectData" >&lt;!&ndash;(change)="getForm(item)"&ndash;&gt;
