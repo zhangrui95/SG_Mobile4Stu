@@ -3,7 +3,7 @@ page-baidutb {
     border-left: 1px solid #404040;
   }
   .scroll-content{
-    margin-top:180px !important;
+    margin-top:220px !important;
     margin-bottom: 65px;
   }
   .p_content {
@@ -11,11 +11,13 @@ page-baidutb {
     font-size: initial;
     margin: 20px 25px 0px 25px;
     float: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
+    //overflow: hidden;
+    //text-overflow: ellipsis;
+    //display: -webkit-box;
+    //-webkit-line-clamp: 3;
+    //-webkit-box-orient: vertical;
+    height: 65px;
+    overflow-y: scroll;
   }
   .ss {
     float: right;

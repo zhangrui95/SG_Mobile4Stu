@@ -96,13 +96,12 @@ export class DanmuPage {
       n_id: this.n_id
     };
 
-
-    this.http.addStuAnswer(this.param).subscribe(res => {
-      console.log(res)
-      this.inputvalue = '';
-
-
-    });
+    if (this.inputvalue != '') {
+      this.http.addStuAnswer(this.param).subscribe(res => {
+        console.log(res)
+        this.inputvalue = '';
+      });
+    }
   }
   common
   result
