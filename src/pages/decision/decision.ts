@@ -22,6 +22,9 @@ export class DecisionPage {
   s_data
   select
   title
+  result
+  common
+  common_data
   data_list: any;
   // data_list: any;
   // issue = '若你作为辉发乳业（集团）股份有限公司的决策者，关注到网贴后该如何决策？';
@@ -35,11 +38,20 @@ export class DecisionPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,public userData: UserData, public http: ProxyHttpService) {
     this.n_id=this.navParams.data.n_id
     this.g_id=this.navParams.data.g_id
-    this.s_data=this.navParams.data.s_data
-    console.log(this.s_data)
+    this.s_data = this.navParams.data.s_data
+
+    this.result = JSON.parse(this.s_data[0].s_data)
+    // this.common_data = this.result['componentList'][0].data.fillData;
+    this.common = this.result['componentList'][0].data.selectData;
+    this.title = this.result['componentList'][0].data.text;
+
+    // console.log('-------------s_data=============')
+    // console.log(this.s_data)
+    // this.s_data=this.navParams.data.s_data.componentList[0].data.selectData
+
     // this.select = this.s_data.componentList[0].data.selectData;
     this.sim_id=this.navParams.data.sim_id
-    this.title = this.navParams.data.text;
+    // this.title = this.navParams.data.text;
 
   }
 

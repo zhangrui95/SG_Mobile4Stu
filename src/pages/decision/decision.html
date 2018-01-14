@@ -5,10 +5,10 @@
 </ion-header>
 
 <ion-content padding>
-  <div *ngFor="let data of datas" style="margin:20px 5% 0px 5%;">
+  <div  style="margin:20px 5% 0px 5%;">
       <span style="font-size:large; margin-bottom:20px; display:inline-block;">{{title}}</span>
-      <div *ngFor="let item of select;let n = index">
-        <input type="radio" name="choice" (change)="getForm(item)"/>
+      <div *ngFor="let item of common;let n = index">
+        <input type="radio" name="choice" (change)="getForm(item.value)"/>
         <span style="font-size:medium;margin-bottom:20px; display:inline-block;">{{item.value}}</span>
       </div>
       <!-- <form class="form-box">

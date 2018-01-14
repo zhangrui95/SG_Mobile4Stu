@@ -21,6 +21,9 @@ src;
   s_data;
   sim_id;
 
+  result
+  common
+
   private socketSubscription: Subscription
 
   ngOnInit(): void {
@@ -44,7 +47,9 @@ src;
     let title;
     let content;
 
-    for (let com of  this.s_data.s_data.componentList) {
+    this.result = JSON.parse(this.s_data[0].s_data)
+    this.common = this.result['componentList'];
+    for (let com of  this.common ) {
       let name = com.name;
 
       if (name == 'txt') {

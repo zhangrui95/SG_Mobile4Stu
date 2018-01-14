@@ -116,6 +116,8 @@ export class ClassroomPage {
           this.indexNs.push(true);
         }
       }
+      console.log("123123123123123123")
+      console.log(this.g_id)
       this.groOfStu = res['groOfStu'];
       if (res['groOfStu'] === '') {
         this.GroupNews = false;
@@ -143,7 +145,7 @@ export class ClassroomPage {
           name = component.name
         }
       }
-
+      console.log(this.g_id)
       switch (name) {
         case "SG_tieba":
           this.navCtrl.push(BaidutbPage, {n_id: nid, g_id: this.g_id,s_data:s_data,sim_id: this.sim_id})

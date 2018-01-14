@@ -80,6 +80,7 @@ export class BaidutbPage  {
     this.userData.getUserID().then(value => this.userId = value)
     this.n_id = this.navParams.data.n_id
     this.g_id = this.navParams.data.g_id
+    console.log(this.g_id)
     this.s_data = this.navParams.data.s_data
     this.sim_id = this.navParams.data.sim_id
     this.getAnswerOfStuList();
@@ -118,7 +119,7 @@ export class BaidutbPage  {
       answer: this.inputvalue,
       n_id: this.n_id
     };
-
+console.log('g_id:'+this.param.g_id+'sim_id:'+this.param.sim_id+'n_id:'+this.param.n_id)
     if (this.inputvalue != '') {
       this.http.addStuAnswer(this.param).subscribe(res => {
         console.log(res)
