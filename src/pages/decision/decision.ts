@@ -40,6 +40,7 @@ export class DecisionPage {
   selectvalue;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public userData: UserData, public http: ProxyHttpService) {
+    this.userData.getUserID().then(value => this.userId = value)
     this.n_id=this.navParams.data.n_id
     this.g_id=this.navParams.data.g_id
     this.s_data = this.navParams.data.s_data
