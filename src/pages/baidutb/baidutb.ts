@@ -1,5 +1,5 @@
 ///<reference path="../../../node_modules/ionic-angular/tap-click/tap-click.d.ts"/>
-import {Component} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Subscription} from "rxjs/Subscription";
 import {ServerSocket} from "../../providers/ws.service";
@@ -20,9 +20,15 @@ import {UserData} from "../../providers/user-data";
   templateUrl: 'baidutb.html',
 })
 
-
-export class BaidutbPage{
-
+// export class BaidutbPage{
+export class BaidutbPage implements  AfterViewInit{
+  @ViewChild('topBox') topBox: ElementRef;
+  @ViewChild('list') list: ElementRef;
+  @ViewChild('show') show: ElementRef;
+  @ViewChild('hide') hide: ElementRef;
+  @ViewChild('nr') nr: ElementRef;
+  @ViewChild('show_hide') show_hide: ElementRef;
+  @ViewChild('hr_hid') hr_hid: ElementRef;
   items ;
   param: any;
   title;
@@ -68,7 +74,6 @@ export class BaidutbPage{
     this.s_data=this.navParams.data.s_data
     this.sim_id=this.navParams.data.sim_id
     this.getAnswerOfStuList();
-
   }
 
 
@@ -118,6 +123,9 @@ export class BaidutbPage{
     this.title=this.common.title;
     this.content=this.common.content;
 
+    // this.title='范德萨的发生非法违法文文';
+    // this.content='范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文';
+
     if (this.ws.messages) {
 
       this.socketSubscription = this.ws.messages.subscribe(message => {
@@ -125,9 +133,9 @@ export class BaidutbPage{
           if (JSON.parse(message)['action'] == 'phone_scene_answers_update') {
 
             this.items = JSON.parse(message)['list']
+            this.userData.setAction(action);
           }
         }
-
       })
     }
   }
@@ -138,4 +146,27 @@ export class BaidutbPage{
       this.socketSubscription.unsubscribe();
   }
 
+  ngAfterViewInit() {
+    this.p_height();
+  }
+
+  p_height(){
+    const height = this.topBox.nativeElement.offsetHeight;
+    this.list.nativeElement.style.marginTop = height + 'px';
+    // this.list.nativeElement.parentElement.style.marginTop = height + 'px';
+    // this.list.nativeElement.parentElement.style.marginBottom = '65px';
+  }
+
+  show_div(){
+    this.hide.nativeElement.style.display = 'block';
+    this.show.nativeElement.style.display = 'none';
+    this.nr.nativeElement.style.display = 'block';
+    this.p_height();
+  }
+  hide_div(){
+    this.show.nativeElement.style.display = 'block';
+    this.hide.nativeElement.style.display = 'none';
+    this.nr.nativeElement.style.display = '-webkit-box';
+    this.p_height();
+  }
 }

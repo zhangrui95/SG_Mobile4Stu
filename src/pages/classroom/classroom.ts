@@ -9,6 +9,8 @@ import {WeiBoPage} from "../weibo/weibo";
 import {DanmuPage} from "../danmu/danmu";
 import {TounaofbPage} from "../tounaofb/tounaofb";
 import {BaidutbPage} from "../baidutb/baidutb";
+import {QQPage} from "../qq/qq";
+import {DefaultPage} from "../default/default";
 
 
 @IonicPage()
@@ -151,8 +153,11 @@ export class ClassroomPage {
         case "SG_select":
           this.navCtrl.push(DecisionPage, {n_id: nid, g_id: this.g_id,s_data:s_data,sim_id: this.sim_id})
           break;
+        case "SG_QQ":
+          this.navCtrl.push(QQPage, {n_id: nid, g_id: this.g_id,s_data:s_data,sim_id: this.sim_id})
+          break;
         case "default":
-          this.navCtrl.push(TounaofbPage, {n_id: nid, g_id: this.g_id,s_data:s_data,sim_id: this.sim_id})
+          this.navCtrl.push(DefaultPage, {n_id: nid, g_id: this.g_id,s_data:s_data,sim_id: this.sim_id})
           break;
       }
     });

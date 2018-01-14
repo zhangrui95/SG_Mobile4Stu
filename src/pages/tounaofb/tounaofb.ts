@@ -1,5 +1,5 @@
 ///<reference path="../../../node_modules/ionic-angular/tap-click/tap-click.d.ts"/>
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {DomSanitizer} from "@angular/platform-browser";
 import {Subscription} from "rxjs/Subscription";
@@ -27,12 +27,18 @@ export class TounaofbPage {
   name: '';
   isShow = false;
   datas: any;
-  value: '';
+  inputvalue;
   data_list: any;
   userId;
+  content;
+  sim_id;
+  g_id
+  n_id
+  s_data
+  title;
+
   src = 'assets/img/juxing-10.png';
-  @Input()
-  s_data=new Object()
+
   mousedownd() {
     this.isShow = true
     this.src = 'assets/img/yuyin-3.png';
@@ -51,98 +57,83 @@ export class TounaofbPage {
               public ws: ServerSocket,
               public http: ProxyHttpService,
               public sanitizer: DomSanitizer) {
-    this.ws.connect();
+    this.ws.connect()
     this.userData.getUserID().then(value => this.userId = value)
-    this.getScenesById();
+    this.n_id=this.navParams.data.n_id
+    this.g_id=this.navParams.data.g_id
+    this.s_data=this.navParams.data.s_data
+    this.sim_id=this.navParams.data.sim_id
     this.getAnswerOfStuList();
-  }
-
-  getScenesById() {
-    this.param = {
-      n_id: 3
-    }
-    this.http.getScenesById(this.param).subscribe(res => {
-      this.data_list = JSON.parse(res['list'][0]['s_data'])['componentList']
-      this.data_list[0].name = "SG_brain"
-
-      this.data_list[0]['data']['fillData'].title = '事件名称'
-      this.data_list[0]['data']['fillData'].fillName = '大神';
-      this.data_list[0]['data']['fillData'].fillImg = 'assets/img/img1.png';
-      // this.src1 = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + this.src1);
-
-      this.data_list[0]['data']['fillData'].content = '贴吧圣诞舞蹈大会开始征集了！贴吧圣诞舞蹈大会开始征集了！贴吧圣诞舞蹈大会开始征集了！贴吧圣诞舞蹈大会开始征集了'
-      // if (this.data_list[0]['fillData'] != null) {
-      //   this.data_list[0]['fillData']['fillImg'] = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + this.datas[0]['fillData']['fillImg']);
-      // }
-      // else{
-      //   console.log('-----------------------------------------------')
-      //   // this.data_list[0]['fillData']['title'] ='事件名称'
-      // }
-      this.datas = this.data_list
-    });
   }
 
   getAnswerOfStuList() {
     this.param = {
-      n_id: 1,
-      g_id: 2,
-      sim_id: 18
-    }
+      n_id: this.n_id,
+      g_id: this.g_id,
+      sim_id: this.sim_id
+    };
+
     this.http.getAnswerOfStuList(this.param).subscribe(res => {
 
       for (var i = 0; i < res['list'].length; i++) {
         res['list'][i].ImagePath = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + res['list'][i].ImagePath);
       }
-
       this.items = res['list']
 
     });
-
-    // this.loading = false;
   }
+
 
   send() {
     this.param = {
-      sim_id: 18,
-      g_id: 2,
+      sim_id: this.sim_id,
+      g_id:  this.g_id,
       u_id: this.userId,
-      answer: this.value,
-      n_id: 1
+      answer: this.inputvalue,
+      n_id: this.n_id
     };
+
+
     this.http.addStuAnswer(this.param).subscribe(res => {
-      console.log('------addanswer------')
       console.log(res)
-      // console.log('received message from server666: ', res['code']);
-      // this.value='';
-      // if (res['code'] == 0) {
-      //
-      // }
+      this.inputvalue = '';
+
 
     });
   }
-
+  common
+  result
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BaidutbPage');
-  }
+    // JSON.parse()
 
-  ionViewDidEnter() {
+    this.result=JSON.parse(this.s_data[0].s_data)
+    this.common=this.result['componentList'][0].data.fillData;
+
+    // this.title=this.common.title;
+    // this.content=this.common.content;
+
+    this.title='范德萨的发生非法违法文文';
+    // this.content='范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文';
+
     if (this.ws.messages) {
-      // setInterval(()=>{
-      //   this.getAnswerOfStuList();
-      // },2000);
-      this.socketSubscription = this.ws.messages.subscribe((message: string) => {
-        console.log('received message from server11111:' + message);
+
+      this.socketSubscription = this.ws.messages.subscribe(message => {
         if (JSON.parse(message)['action'] != null) {
           if (JSON.parse(message)['action'] == 'phone_scene_answers_update') {
-            this.value = '';
+
             this.items = JSON.parse(message)['list']
+            this.userData.setAction(action);
           }
         }
-        // const JSONComponentList = JSON.parse(message)['list'][0]['s_data'];
-        // this.componentList = JSON.parse(JSONComponentList).componentList;
+
       })
     }
   }
+
+  // ionViewDidLoad() {
+  //   console.log('ionViewDidLoad BaidutbPage');
+  // }
+
 
   ionViewDidLeave() {
     if (this.socketSubscription)

@@ -5,12 +5,11 @@
 </ion-header>
 
 <ion-content padding>
-  <div *ngFor="let data of datas">
-    <div *ngIf="data.name=='SG_select'">
-      <div>{{data.data.text}}</div>
-      <div *ngFor="let item of data.data.selectData">
+  <div *ngFor="let data of datas" style="margin:20px 5% 0px 5%;">
+      <span style="font-size:large; margin-bottom:20px; display:inline-block;">{{title}}</span>
+      <div *ngFor="let item of select;let n = index">
         <input type="radio" name="choice" (change)="getForm(item)"/>
-        <span >{{item}}</span>
+        <span style="font-size:medium;margin-bottom:20px; display:inline-block;">{{item.value}}</span>
       </div>
       <!-- <form class="form-box">
          <label *ngFor="let item of data.data.selectData" >&lt;!&ndash;(change)="getForm(item)"&ndash;&gt;
@@ -19,7 +18,6 @@
          </label>
        </form>-->
     </div>
-  </div>
   <div padding class="mar-btn">
     <button ion-button type="submit" block (click)="send()">确认投票</button>
   </div>

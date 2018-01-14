@@ -6,23 +6,9 @@
 
 <ion-content class="cards-bg social-cards">
   <div ion-fixed style="padding-top: 20px;padding-left: 5%;padding-right: 5%;padding-bottom: 30px;">
-    <div *ngFor="let data of datas">
-      <div *ngIf="data.name=='SG_brain'">
-        <div>
-          <div style="padding-left: 1%;padding-top: 15px;float: left;">
-            <img style=" height: 50px;width: 50px;" [src]="data.data.fillData.fillImg">
-          </div>
-          <div
-            style="padding-top: 15px;align-self:center;line-height: 20px;color: white;margin-left: 15px;float: left;">
-            <span style="font-size: large;">{{data.data.fillData.fillName}}</span>
-            <br/>
-            <span style="margin-top: 10px;float: left;">第1楼 | 今天14:10</span>
-          </div>
-        </div>
-        <!--<img src="{{item.nr_src}}">-->
         <div
           style="background-color: black;background: rgba(0,0,0,0.5);border-radius: 0.3em;margin: 10px 0px 0px 0px;width: 100%;height: auto;float: left">
-          <span style="color: #d8d8d8;margin: 10px 15px 10px 15px;float: left;">{{data.data.fillData.content}}</span>
+          <span style="color: #d8d8d8;margin: 10px 15px 10px 15px;float: left;font-size: large;"> {{title}}</span>
         </div>
         <!--<div style="float: left;margin-top: 10px;width: 100%">-->
           <!--<img src="assets/img/speakers/mouse.jpg" style="width: 90px;height: 90px;margin-right: 8%;"/>-->
@@ -33,10 +19,8 @@
           <span style="color: #d8d8d8">2018人回复了该帖</span>
           <hr style="border-top: 1px solid #929292;">
         </div>
-      </div>
-      <!--<img src="assets/img/speakers/mouse.jpg"/>-->
     </div>
-  </div>
+  <!--</div>-->
   <div *ngFor="let item of items;let n=index">
     <div style="margin-left: 20px;float: left;width: 100%">
       <img style=" height: 50px;width: 50px;float: left;margin-top: 20px;" [src]="item.ImagePath">
@@ -58,12 +42,13 @@
       <label style="color: white;margin-left: 5px"> 正在收录语音,保持长按</label>
     </div>
   </div>
-  <div style="position:fixed;bottom: 0px;width: 100%;border-top: 1px solid #1aa7b8;">
+  <div style="position:fixed;bottom: 0px;width: 100%;border-top: 1px solid #1aa7b8;background-color: #6f6f6f;">
     <img src="{{src}}" height="38" width="52"
          style="display:inline-block;margin: 0px 10px -14px 10px;" (touchstart)="mousedownd();"
          (touchend)="mouseup();"/>
-    <input type="text" [(ngModel)]="value"
-           style="height:40px;display:inline-block;margin: 10px 10px 8px -1px;vertical-align:top; border-radius:5px; border: 0;width:215px"/>
+    <!--<input  style="height:40px;display:inline-block;margin: 10px 10px 8px -1px;vertical-align:top; border-radius:5px; border: 0;width:215px" [(ngModel)]="value" type="text"></input>-->
+    <input type="text" [(ngModel)]="inputvalue"
+           style="padding-left:10px;height:40px;display:inline-block;margin: 10px 10px 8px -1px;vertical-align:top; border-radius:5px; border: 0;width:215px"/>
     <button (click)="send();"
             style="background-color: #2D3451;color: white;width:70px;height: 40px;display:inline-block;margin: 10px 5px 5px 1px;border-radius:5px">
       发送

@@ -1,9 +1,34 @@
 page-baidutb {
-  .border-left{
+  .border-left {
     border-left: 1px solid #404040;
   }
   .scroll-content{
-    margin-top:215px !important;
+    margin-top:180px !important;
     margin-bottom: 65px;
+  }
+  .p_content {
+    color: #e8e8e8;
+    font-size: initial;
+    margin: 20px 25px 0px 25px;
+    float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+  .ss {
+    float: right;
+    margin: 10px 35px -10px 0px;
+  }
+  .ss span {
+    color: #f7d56f;
+    font-size: large;
+  }
+  .ss img {
+    width: 21px;
+    height: 21px;
+    float: left;
+    margin: 3px 5px 0px 0px;
   }
 }

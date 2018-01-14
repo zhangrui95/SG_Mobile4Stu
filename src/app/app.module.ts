@@ -63,6 +63,7 @@ import {StatisticsPage} from "../pages/statistics/statistics";
 import {DetailsPage} from "../pages/details/details";
 import {CommentPage} from "../pages/comment/comment";
 import {GroupIndexPage} from "../pages/group-index/group-index";
+import {DefaultPage} from "../pages/default/default";
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -107,7 +108,8 @@ import {GroupIndexPage} from "../pages/group-index/group-index";
     StatisticsPage,
     DetailsPage,
     CommentPage,
-    GroupIndexPage
+    GroupIndexPage,
+    DefaultPage
   ],
   imports: [
     BrowserModule,
@@ -154,8 +156,8 @@ import {GroupIndexPage} from "../pages/group-index/group-index";
         { component: StatisticsPage, name: 'StatisticsPage', segment: 'statistics' },
         { component: DetailsPage, name: 'DetailsPage', segment: 'details' },
         { component: CommentPage, name: 'CommentPage', segment: 'comment' },
-        { component: GroupIndexPage, name: 'GroupIndexPage', segment: 'group-index' }
-
+        { component: GroupIndexPage, name: 'GroupIndexPage', segment: 'group-index' },
+        { component: DefaultPage, name: 'DefaultPage', segment: 'default' }
       ]
     }),
     IonicStorageModule.forRoot()
@@ -205,7 +207,8 @@ import {GroupIndexPage} from "../pages/group-index/group-index";
     StatisticsPage,
     DetailsPage,
     CommentPage,
-    GroupIndexPage
+    GroupIndexPage,
+    DefaultPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
@@ -226,7 +229,8 @@ import {GroupIndexPage} from "../pages/group-index/group-index";
     BaidutbPage,
     TounaofbPage,
     DanmuPage,
-    SceneListPage
+    SceneListPage,
+    DefaultPage
   ]
 })
 export class AppModule { }

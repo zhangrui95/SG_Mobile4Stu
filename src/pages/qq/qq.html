@@ -6,22 +6,32 @@
 
 
 <ion-content>
-  <div ion-fixed>
-    <div  *ngFor="let data of datas">
-      <div *ngIf="data.name=='SG_qq'" >
-        <div style="background-color: white;border-radius: 0.5em;height:47px;width:47px;margin: 25px 0px 5px 25px; display:inline-block;">
-          <img src="../../assets/img/qqun.png" style="margin: 4px 0px 0px 5px;width: 37px;height: 40px;"/>
-        </div>
-        <h3 style="margin: -40px 0px 0px 90px;color: #e8e8e8">
-          {{data.data.fillData.title}}
-        </h3>
-        <span style="color: #e8e8e8;font-size: initial;margin: 20px 25px 0px 25px;float: left;">{{data.data.fillData.content}}</span>
-        <hr style="border-top: 2px solid #1aa7b8;float: left;margin: 20px 0px 0px 0px;width: 100%;"/>
+  <div #topBox ion-fixed>
+    <div
+      style="background-color: white;border-radius: 0.5em;height:47px;width:47px;margin: 25px 0px 5px 25px; display:inline-block;">
+      <img src="assets/img/qqun.png" style="margin: 4px 0px 0px 5px;width: 37px;height: 40px;"/>
+    </div>
+    <h3 style="margin: -40px 0px 0px 90px;color: #e8e8e8">
+      {{title}}
+    </h3>
+    <!--<span style="color: #e8e8e8;font-size: initial;margin: 20px 25px 0px 25px;float: left;">{{content}}</span>-->
+    <p #nr class="p_content">
+      {{content}}</p>
+    <div #show_hide>
+      <div #show class="ss">
+        <img src="assets/img/z_mo.png"/>
+        <span (click)="show_div()">全部展开</span>
+      </div>
+      <div #hide class="ss" style="display: none">
+        <img src="assets/img/z_mo.png" style="transform:rotate(-180deg)"/>
+        <span (click)="hide_div()">收起</span>
       </div>
     </div>
+    <hr style="border-top: 2px solid #1aa7b8;float: left;margin: 20px 0px 0px 0px;width: 415px;"/>
   </div>
-  <div *ngFor="let item of items;let n=index">
-    <!--<div *ngIf="item.UserName!='士兵002'" >-->
+  <div #list>
+    <div *ngFor="let item of items;let n=index">
+      <!--<div *ngIf="item.UserName!='士兵002'" >-->
       <div style="margin: 40px 0px 0px 25px;">
         <img style="width: 40px;height: 40px;float: left;" [src]="item.ImagePath">
         <span style="color: white;margin-left: 15px;float: left;width: 50%;">{{item.UserName}}</span>
@@ -30,6 +40,7 @@
         style="background-color: black;background: rgba(0,0,0,0.5);border-radius: 1em;margin: 10px 0px 30px 15px;width: 75%;height: auto;float: left">
         <span style="color: white;margin: 10px 10px 10px 15px;float: left;">{{item.answer}}</span>
       </div>
+    </div>
   </div>
   <div *ngIf="isShow">
     <div
@@ -40,12 +51,13 @@
       <label style="color: white;margin-left: 5px"> 正在收录语音,保持长按</label>
     </div>
   </div>
-  <div style="position:fixed;bottom: 0px;width: 100%;border-top: 1px solid #1aa7b8;">
+  <div style="position:fixed;bottom: 0px;width: 100%;border-top: 1px solid #1aa7b8;background-color: #6f6f6f;">
     <img src="{{src}}" height="38" width="52"
          style="display:inline-block;margin: 0px 10px -14px 10px;" (touchstart)="mousedownd();"
          (touchend)="mouseup();"/>
-    <input type="text" [(ngModel)]="value"
-           style="height:40px;display:inline-block;margin: 10px 10px 8px -1px;vertical-align:top; border-radius:5px; border: 0;width:215px"/>
+    <!--<input  style="height:40px;display:inline-block;margin: 10px 10px 8px -1px;vertical-align:top; border-radius:5px; border: 0;width:215px" [(ngModel)]="value" type="text"></input>-->
+    <input type="text" [(ngModel)]="inputvalue"
+           style="padding-left:10px;height:40px;display:inline-block;margin: 10px 10px 8px -1px;vertical-align:top; border-radius:5px; border: 0;width:215px"/>
     <button (click)="send();"
             style="background-color: #2D3451;color: white;width:70px;height: 40px;display:inline-block;margin: 10px 5px 5px 1px;border-radius:5px">
       发送

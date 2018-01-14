@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {UsersPage} from "../users/users";
 import {ProxyHttpService} from "../../providers/proxy.http.service";
@@ -16,6 +16,12 @@ export class DecisionPage {
   isShow = false;
   datas: any;
   userId;
+  sim_id;
+  g_id
+  n_id
+  s_data
+  select
+  title
   data_list: any;
   // data_list: any;
   // issue = '若你作为辉发乳业（集团）股份有限公司的决策者，关注到网贴后该如何决策？';
@@ -24,15 +30,19 @@ export class DecisionPage {
   //   {id:'1',option:'B', text:'私下联系发帖人，删除网帖，控制消息的网络传播渠道'},
   //   {id:'2',option:'C', text:'公开调查帖子内容的真实性'}
   // ]
-  value;
-  @Input()
-  s_data=new Object()
+  selectvalue;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,public userData: UserData, public http: ProxyHttpService) {
-    this.getScenesById();
+    this.n_id=this.navParams.data.n_id
+    this.g_id=this.navParams.data.g_id
+    this.s_data=this.navParams.data.s_data
+    this.select = this.s_data.componentList[0].data.selectData;
+    this.sim_id=this.navParams.data.sim_id
+    this.title = this.navParams.data.text;
   }
 
   getForm(item) {
-    this.value = item.toString();
+    this.selectvalue = item.toString();
   }
 
   getUser() {
@@ -43,36 +53,16 @@ export class DecisionPage {
   //   console.log(this.Id);
   // }
 
-  getScenesById() {
-    this.param = {
-      n_id: 3
-    }
-    this.http.getScenesById(this.param).subscribe(res => {
-      this.data_list = JSON.parse(res['list'][0]['s_data'])['componentList']
-      this.data_list[0].name = "SG_select"
 
-      this.data_list[0]['data'].text = '若你作为辉发乳业（集团）股份有限公司的决策者，关注到网贴后该如何决策？'
-      this.data_list[0]['data']['selectData'] = [
-        // {id: '0', option: 'A', text: '公开调查帖子内容的真实性'},
-        // {id: '1', option: 'B', text: '私下联系发帖人，删除网帖，控制消息的网络传播渠道'},
-        // {id: '2', option: 'C', text: '公开调查帖子内容的真实性'}
-        'A.公开调查帖子内容的真实性',
-        'B.私下联系发帖人，删除网帖，控制消息的网络传播渠道',
-        'C.公开调查帖子内容的真实性'
-      ]
-      this.datas = this.data_list
-    });
-  }
-
-  send () {
+  send() {
     this.param = {
-      sim_id: 18,
-      g_id: 2,
+      sim_id: this.sim_id,
+      g_id:  this.g_id,
       u_id: this.userId,
-      answer: this.value,
-      n_id: 1
+      answer: this.selectvalue,
+      n_id: this.n_id
     };
-    console.log(this.value)
+    console.log(this.selectvalue)
     this.http.addStuAnswer(this.param).subscribe(res => {
       console.log('------addanswer------')
       console.log(res)
