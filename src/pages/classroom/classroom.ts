@@ -178,6 +178,7 @@ export class ClassroomPage {
   }
 
   goPage(n_id) {
+
     this.getScenesById(n_id)
 
   }
