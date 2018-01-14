@@ -30,6 +30,7 @@ export class ClassroomPage {
   indexNs = [];
   g_id = "-1"
 
+  action;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public toastCtrl: ToastController,
@@ -38,6 +39,11 @@ export class ClassroomPage {
               public ws: ServerSocket) {
 
     this.ws.connect();
+    this.userData.getAction().then(value => this.action=value)
+    if(this.action === "phone_group"){
+      this.getProcessOfStu();
+      this.allocation = true;
+    }
   }
 
   messagesSubscription;
@@ -72,7 +78,8 @@ export class ClassroomPage {
           } else if (action === "phone_group") {
             this.getProcessOfStu();
             this.allocation = true;
-          } else if (action === "phone_call") {
+            this.userData.setAction(action);
+          } else if(action === "phone_call"){
             this.showToast('bottom', msgs);
           }
         }
