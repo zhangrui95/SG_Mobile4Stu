@@ -97,34 +97,34 @@ export class BaidutbPage  {
     };
 
 
-    this.items=[
-      {ImagePath:'',
-        UserName:'dksa',
-        answer:'asdsdfafsaf'
-      },
-      {ImagePath:'',
-        UserName:'dksa',
-        answer:'asdsdfafsaf'
-      },
-      {ImagePath:'',
-        UserName:'dksa',
-        answer:'asdsdfafsaf'
-      }
-    ]
-
-    // this.http.getAnswerOfStuList(this.param).subscribe(res => {
-    //
-    //   for (var i = 0; i < res['list'].length; i++) {
-    //     res['list'][i].ImagePath = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + res['list'][i].ImagePath);
+    // this.items=[
+    //   {ImagePath:'',
+    //     UserName:'dksa',
+    //     answer:'asdsdfafsaf'
+    //   },
+    //   {ImagePath:'',
+    //     UserName:'dksa',
+    //     answer:'asdsdfafsaf'
+    //   },
+    //   {ImagePath:'',
+    //     UserName:'dksa',
+    //     answer:'asdsdfafsaf'
     //   }
-    //   // this.items = res['list']
-    //
-    //
-    //   setTimeout(() => {
-    //
-    //     this.ioncontent.scrollToBottom(500);
-    //   }, 1000)
-    // });
+    // ]
+
+    this.http.getAnswerOfStuList(this.param).subscribe(res => {
+
+      for (var i = 0; i < res['list'].length; i++) {
+        res['list'][i].ImagePath = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + res['list'][i].ImagePath);
+      }
+      // this.items = res['list']
+
+
+      setTimeout(() => {
+
+        this.ioncontent.scrollToBottom(500);
+      }, 1000)
+    });
   }
 
   send() {
@@ -150,14 +150,14 @@ export class BaidutbPage  {
   ionViewDidLoad() {
     // JSON.parse()
 
-    // this.result = JSON.parse(this.s_data[0].s_data)
-    // this.common = this.result['componentList'][0].data.fillData;
+    this.result = JSON.parse(this.s_data[0].s_data)
+    this.common = this.result['componentList'][0].data.fillData;
 
-    // this.title = this.common.title;
-    // this.content = this.common.content;
+    this.title = this.common.title;
+    this.content = this.common.content;
 
-    this.title='范德萨的发生非法违法文文';
-    this.content='范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文';
+    // this.title='范德萨的发生非法违法文文';
+    // this.content='范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文';
 
     if (this.ws.messages) {
 

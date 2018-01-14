@@ -63,6 +63,7 @@ export class DecisionPage {
       n_id: this.n_id
     };
     console.log(this.selectvalue)
+
     this.http.addStuAnswer(this.param).subscribe(res => {
       console.log('------addanswer------')
       console.log(res)
