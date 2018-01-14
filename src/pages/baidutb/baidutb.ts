@@ -1,6 +1,6 @@
 ///<reference path="../../../node_modules/ionic-angular/tap-click/tap-click.d.ts"/>
 // import {Component, ViewChild} from '@angular/core';
-import {AfterViewInit, Component,  ViewChild} from '@angular/core';
+import { Component,  ViewChild} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Subscription} from "rxjs/Subscription";
 import {ServerSocket} from "../../providers/ws.service";
@@ -27,7 +27,7 @@ import {UserData} from "../../providers/user-data";
 //   ioncontent
 //   items;
 // export class BaidutbPage{
-export class BaidutbPage implements AfterViewInit {
+export class BaidutbPage  {
   @ViewChild('ioncontent')
   ioncontent
   items;
