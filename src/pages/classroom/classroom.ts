@@ -76,9 +76,8 @@ export class ClassroomPage {
           } else if (action === "phone_group") {
             this.getProcessOfStu();
             this.allocation = true;
-          } else if (action === "phone_call") {
             this.userData.setAction(action);
-          }else if(action === "phone_call"){
+          } else if(action === "phone_call"){
             this.showToast('bottom', msgs);
           }
         }
