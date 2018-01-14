@@ -72,6 +72,16 @@ export class UserData {
       return value;
     });
   };
+
+  setAction(action: string): void {
+    this.storage.set('action', action);
+  };
+
+  getAction(): Promise<string> {
+    return this.storage.get('action').then((value) => {
+      return value;
+    });
+  };
   setUsername(username: string): void {
     this.storage.set('username', username);
   };

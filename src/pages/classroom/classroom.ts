@@ -22,6 +22,7 @@ export class ClassroomPage {
   groOfStu;
   sim_id;
   indexNs = [];
+  action;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public toastCtrl:ToastController,
@@ -32,6 +33,11 @@ export class ClassroomPage {
     this.sim_id = this.navParams.get('sim_id');
     this.userData.getUserID().then(value => this.userId=value);
     this.ws.connect();
+    this.userData.getAction().then(value => this.action=value)
+    if(this.action === "phone_group"){
+      this.getProcessOfStu();
+      this.allocation = true;
+    }
   }
   messagesSubscription;
   ionViewDidEnter() {
@@ -51,6 +57,7 @@ export class ClassroomPage {
           }else if(action === "phone_group"){
             this.getProcessOfStu();
             this.allocation = true;
+            this.userData.setAction(action);
           }else if(action === "phone_call"){
             this.showToast('bottom', msgs);
           }
