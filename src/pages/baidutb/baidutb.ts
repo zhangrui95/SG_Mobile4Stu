@@ -1,6 +1,6 @@
 ///<reference path="../../../node_modules/ionic-angular/tap-click/tap-click.d.ts"/>
 // import {Component, ViewChild} from '@angular/core';
-import { Component,  ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Subscription} from "rxjs/Subscription";
 import {ServerSocket} from "../../providers/ws.service";
@@ -27,7 +27,7 @@ import {UserData} from "../../providers/user-data";
 //   ioncontent
 //   items;
 // export class BaidutbPage{
-export class BaidutbPage  {
+export class BaidutbPage {
   @ViewChild('ioncontent')
   ioncontent
   items;
@@ -119,7 +119,7 @@ export class BaidutbPage  {
       answer: this.inputvalue,
       n_id: this.n_id
     };
-console.log('g_id:'+this.param.g_id+'sim_id:'+this.param.sim_id+'n_id:'+this.param.n_id)
+    console.log('g_id:' + this.param.g_id + 'sim_id:' + this.param.sim_id + 'n_id:' + this.param.n_id)
     if (this.inputvalue != '') {
       this.http.addStuAnswer(this.param).subscribe(res => {
         console.log(res)
@@ -156,6 +156,8 @@ console.log('g_id:'+this.param.g_id+'sim_id:'+this.param.sim_id+'n_id:'+this.par
               this.ioncontent.scrollToBottom(500);
             }, 1000)
 
+
+          } else if (action === "phone_group") {
             this.userData.setAction(action);
           }
         }

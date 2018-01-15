@@ -129,6 +129,8 @@ export class WeiBoPage{
                 this.ioncontent.scrollToBottom(500);
               },1000)
 
+
+            }else if (action === "phone_group") {
               this.userData.setAction(action);
             }
           }
