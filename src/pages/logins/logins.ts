@@ -92,7 +92,8 @@ export class LoginsPage {
             userId: res['userId'],
             imagepath: res['imagepath']
           });
-          this.userData.login(res['username'],res['token'],res['userId'],res['imagepath'],res['phone'], this.login.username)
+          let ImagePath = 'http://192.168.0.52:8080' + res['imagepath'];
+          this.userData.login(res['username'],res['token'],res['userId'],ImagePath,res['phone'], this.login.username)
         } else {
           loading.dismiss();
           this.showToast('bottom', res['msg']);
