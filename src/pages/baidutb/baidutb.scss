@@ -3,16 +3,17 @@ page-baidutb {
     border-left: 1px solid #404040;
   }
   .scroll-content{
-    margin-top:220px !important;
+    margin-top:250px !important;
     margin-bottom: 65px;
   }
   .p_content {
     color: #e8e8e8;
-    font-size: initial;
     margin: 20px 25px 0px 25px;
     float: left;
-    height: 65px;
+    height: 95px;
+    line-height: 24px;
     overflow-y: scroll;
+    font-size: 18px;
   }
   .ss {
     float: right;
