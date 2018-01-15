@@ -79,7 +79,12 @@ export class TounaofbPage {
     this.http.getAnswerOfStuList(this.param).subscribe(res => {
 
       for (var i = 0; i < res['list'].length; i++) {
-        res['list'][i].ImagePath = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + res['list'][i].ImagePath);
+        let url=res['list'][i].ImagePath;
+        if(url==''||url.length==0){
+          res['list'][i].ImagePath = "assets/img/header.png";
+        }else{
+          res['list'][i].ImagePath=this.sanitizer.bypassSecurityTrustResourceUrl(this.http.getBaseurl() + url);
+        }
       }
       this.items = res['list']
 

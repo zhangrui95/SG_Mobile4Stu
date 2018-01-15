@@ -57,11 +57,11 @@ export class QQPage{
     this.ws.connect()
     this.userData.getUserID().then(value => this.userId = value)
     // this.getScenesById();
-    this.n_id=this.navParams.data.n_id
-    this.g_id=this.navParams.data.g_id
-    this.s_data=this.navParams.data.s_data
-    this.sim_id=this.navParams.data.sim_id
-    this.getAnswerOfStuList();
+    // this.n_id=this.navParams.data.n_id
+    // this.g_id=this.navParams.data.g_id
+    // this.s_data=this.navParams.data.s_data
+    // this.sim_id=this.navParams.data.sim_id
+    // this.getAnswerOfStuList();
   }
 
 
@@ -76,7 +76,12 @@ export class QQPage{
     this.http.getAnswerOfStuList(this.param).subscribe(res => {
 
       for (var i = 0; i < res['list'].length; i++) {
-        res['list'][i].ImagePath = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.BASE_URL + res['list'][i].ImagePath);
+        let url=res['list'][i].ImagePath;
+        if(url==''||url.length==0){
+          res['list'][i].ImagePath = "assets/img/header.png";
+        }else{
+          res['list'][i].ImagePath=this.sanitizer.bypassSecurityTrustResourceUrl(this.http.getBaseurl() + url);
+        }
       }
       this.items = res['list']
 
