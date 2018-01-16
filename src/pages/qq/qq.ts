@@ -127,7 +127,7 @@ export class QQPage{
         if (action != null) {
           if (action == 'phone_scene_answers_update') {
 
-            this.items = JSON.parse(message)['list']
+            this.items.push(JSON.parse(message)['list'])
             setTimeout(()=>{
 
               this.ioncontent.scrollToBottom(500);
