@@ -27,8 +27,11 @@
     <div style="margin-left: 20px;float: left;width: 100%">
       <img style=" height: 50px;width: 50px;float: left;margin-top: 20px;" [src]="item.ImagePath">
       <div class="time-pl-box">
-        <span style="color:white">{{item.UserName}}</span>
-        <br/><span style="color:#d8d8d8;margin-top: 5px;display: inline-block;">第{{n+1}}楼 | {{item.createtime}}</span>
+        <div style="color:white; margin-bottom:8px;">
+          <span style="font-size: large">{{item.UserName}}</span>
+          <span style="font-size: medium;padding-left: 10px">{{item.role_name}}</span>
+        </div>
+        <span style="color:#d8d8d8;margin-top: 5px;display: inline-block;">第{{n+1}}楼 | {{item.createtime}}</span>
 
       </div>
       <hr style="border-top: 1px dashed #929292;width: 73%;margin: 10px 0px 10px 15px;display: inline-block;" />

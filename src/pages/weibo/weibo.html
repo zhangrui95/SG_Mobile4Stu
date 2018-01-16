@@ -25,8 +25,11 @@
       <div style="margin-left: 20px;">
         <img style=" height: 50px;width: 50px;float: left;margin-top: 20px;" [src]="item.ImagePath">
         <div class="time-pl-box">
-          <span style="color:white">{{item.UserName}}</span>
-          <br/><span style="color:#d8d8d8">第{{n+1}}楼 | {{item.createtime}}</span>
+          <div style="color:white; margin-bottom:8px;">
+            <span style="font-size: large">{{item.UserName}}</span>
+            <span style="font-size: medium;padding-left: 10px">{{item.role_name}}</span>
+          </div>
+          <span style="color:#d8d8d8">第{{n+1}}楼 | {{item.createtime}}</span>
         </div>
         <span class="pl-span-word">{{item.answer}}</span>
       </div>
