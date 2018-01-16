@@ -5,23 +5,23 @@
 </ion-header>
 
 <ion-content class="cards-bg social-cards" #ioncontent>
-  <div ion-fixed style="padding-top: 20px;padding-left: 5%;padding-right: 5%;padding-bottom: 30px;">
-        <div
-          style="background-color: black;background: rgba(0,0,0,0.5);border-radius: 0.3em;margin: 10px 0px 0px 0px;width: 100%;height: auto;float: left">
+  <div style="padding-top: 20px;padding-left: 5%;padding-right: 5%;padding-bottom: 30px;">
+    <div
+      style="background-color: black;background: rgba(0,0,0,0.5);border-radius: 0.3em;margin: 10px 0px 0px 0px;width: 100%;height: auto;float: left">
           <span style="min-height: 25px;color: #d8d8d8;margin: 10px 15px 10px 15px;float: left;font-size: large;">
             {{title}}
           </span>
-        </div>
-        <!--<div style="float: left;margin-top: 10px;width: 100%">-->
-          <!--<img src="assets/img/speakers/mouse.jpg" style="width: 90px;height: 90px;margin-right: 8%;"/>-->
-          <!--<img src="assets/img/speakers/lion.jpg" style="width: 90px;height: 90px;margin-right: 8%;"/>-->
-          <!--<img src="assets/img/speakers/eagle.jpg" style="width: 90px;height: 90px"/>-->
-        <!--</div>-->
-        <div style="float: left;width: 100%;margin-top: 20px;">
-          <span style="color: #d8d8d8">2018人回复了该帖</span>
-          <hr style="border-top: 1px solid #929292;">
-        </div>
     </div>
+    <!--<div style="float: left;margin-top: 10px;width: 100%">-->
+    <!--<img src="assets/img/speakers/mouse.jpg" style="width: 90px;height: 90px;margin-right: 8%;"/>-->
+    <!--<img src="assets/img/speakers/lion.jpg" style="width: 90px;height: 90px;margin-right: 8%;"/>-->
+    <!--<img src="assets/img/speakers/eagle.jpg" style="width: 90px;height: 90px"/>-->
+    <!--</div>-->
+    <div style="float: left;width: 100%;margin-top: 20px;">
+      <span style="color: #d8d8d8">2018人回复了该帖</span>
+      <hr style="border-top: 1px solid #929292;">
+    </div>
+  </div>
   <!--</div>-->
   <div *ngFor="let item of items;let n=index" class="pl-box">
     <div style="margin-left: 20px;float: left;width: 100%">
