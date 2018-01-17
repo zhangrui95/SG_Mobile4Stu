@@ -83,15 +83,6 @@ export class WeiBoPage{
     };
 
     this.http.getAnswerOfStuList(this.param).subscribe(res => {
-
-      for (var i = 0; i < res['list'].length; i++) {
-        let url=res['list'][i].ImagePath;
-        if(url==''||url.length==0){
-          res['list'][i].ImagePath = "assets/img/header.png";
-        }else{
-          res['list'][i].ImagePath=this.sanitizer.bypassSecurityTrustResourceUrl(this.http.getBaseurl() + url);
-        }
-      }
       this.items = res['list']
 
     });
@@ -115,6 +106,11 @@ export class WeiBoPage{
       });
     }
   }
+
+  getFullPath(path){
+    return this.http.getBaseurl()+path
+  }
+
   common
   result
   ionViewDidLoad() {
@@ -139,21 +135,6 @@ export class WeiBoPage{
             if (action == 'phone_scene_answers_update') {
 
               let item = this.items.concat(JSON.parse(message)['list'])
-
-              console.log('---------------------------this.items.length----------------------'+this.items.length)
-              // console.log('-----------------this.items--------------'+JSON.stringify(this.items))
-              // console.log('-----------------this.items--------------'+this.items['UserName'])
-
-              for (var i = 0; i < item.length; i++) {
-                let url=item[i].imagePath;
-                // console.log('url:'+url)
-                if(url==''||url.length==0){
-                  item[i].imagePath = "assets/img/header.png";
-                }else{
-                  // res['list'][i].ImagePath=this.sanitizer.bypassSecurityTrustResourceUrl(this.http.getBaseurl() + url);
-                  item[i].imagePath=this.http.getBaseurl() + url;
-                }
-              }
               this.items=item
 
               setTimeout(()=>{

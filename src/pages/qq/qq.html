@@ -22,7 +22,7 @@
     <div class="pl-box" *ngFor="let item of items;let n=index">
       <!--<div *ngIf="item.UserName!='士兵002'" >-->
       <div class="time-pl-box">
-        <img style="width: 40px;height: 40px;float: left;" [src]="item.imagePath">
+        <img style="width: 40px;height: 40px;float: left;" [src]="item.imagePath?getFullPath(item.imagePath):'assets/img/header.png'">
         <div style="color:white; margin-bottom:8px;">
           <span style="font-size: large">{{item.userName}}</span>
           <span style="font-size: medium;padding-left: 10px">{{item.role_name}}</span>
