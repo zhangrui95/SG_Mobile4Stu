@@ -1,6 +1,6 @@
 ///<reference path="../../../node_modules/ionic-angular/tap-click/tap-click.d.ts"/>
 import {Component, ViewChild} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {DomSanitizer} from "@angular/platform-browser";
 import {Subscription} from "rxjs/Subscription";
 import {ServerSocket} from "../../providers/ws.service";
@@ -59,7 +59,8 @@ export class DanmuPage {
               public userData: UserData,
               public ws: ServerSocket,
               public http: ProxyHttpService,
-              public sanitizer: DomSanitizer) {
+              public sanitizer: DomSanitizer,
+              public toastCtrl: ToastController) {
     this.ws.connect()
     this.userData.getUserID().then(value => this.userId = value)
     this.n_id=this.navParams.data.n_id
@@ -67,6 +68,16 @@ export class DanmuPage {
     this.s_data=this.navParams.data.s_data
     this.sim_id=this.navParams.data.sim_id
     this.getAnswerOfStuList();
+  }
+
+  showToast(position: string, text: string) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 2000,
+      position: position
+    });
+
+    toast.present(toast);
   }
 
   getAnswerOfStuList() {
@@ -126,10 +137,28 @@ export class DanmuPage {
 
       this.socketSubscription = this.ws.messages.subscribe(message => {
         let action=JSON.parse(message)['action'];
+        let msgs = JSON.parse(message)['msg'];
+
         if (action != null) {
           if (action == 'phone_scene_answers_update') {
 
-            this.items.push(JSON.parse(message)['list'])
+            let item = this.items.concat(JSON.parse(message)['list'])
+
+            console.log('---------------------------this.items.length----------------------'+this.items.length)
+            // console.log('-----------------this.items--------------'+JSON.stringify(this.items))
+            // console.log('-----------------this.items--------------'+this.items['UserName'])
+
+            for (var i = 0; i < item.length; i++) {
+              let url=item[i].imagePath;
+              // console.log('url:'+url)
+              if(url==''||url.length==0){
+                item[i].imagePath = "assets/img/header.png";
+              }else{
+                // res['list'][i].ImagePath=this.sanitizer.bypassSecurityTrustResourceUrl(this.http.getBaseurl() + url);
+                item[i].imagePath=this.http.getBaseurl() + url;
+              }
+            }
+            this.items=item
             setTimeout(()=>{
 
               this.ioncontent.scrollToBottom(500);
@@ -140,6 +169,10 @@ export class DanmuPage {
           else if (action === "phone_group") {
             this.userData.setAction(action);
           }
+          if(action === "phone_call"){
+            this.showToast('bottom', msgs);
+          }
+
         }
 
       })
