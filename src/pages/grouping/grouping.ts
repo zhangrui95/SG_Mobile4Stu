@@ -90,7 +90,9 @@ export class GroupingPage {
     });
     confirm.present();
   }
-
+  getFullpath(path){
+    return this.http.getBaseurl()+path
+  }
   showToast(position: string, text: string) {
     let toast = this.toastCtrl.create({
       message: text,

@@ -95,6 +95,7 @@ export class BaidutbPage {
     this.g_id = this.navParams.data.g_id
     console.log(this.g_id)
     this.s_data = this.navParams.data.s_data
+
     this.sim_id = this.navParams.data.sim_id
     this.getAnswerOfStuList();
 
@@ -157,6 +158,9 @@ export class BaidutbPage {
 
             let item = this.items.concat(JSON.parse(message)['list'])
             this.items=item
+
+            console.log('==============---------------===================-----------')
+            console.log(this.items)
             setTimeout(() => {
 
               this.ioncontent.scrollToBottom(500);

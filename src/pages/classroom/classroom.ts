@@ -31,6 +31,7 @@ export class ClassroomPage {
   g_id = "-1"
 
   action;
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public toastCtrl: ToastController,
@@ -39,16 +40,20 @@ export class ClassroomPage {
               public ws: ServerSocket) {
 
     this.ws.connect();
-    this.userData.getAction().then(value => this.action=value)
-    if(this.action === "phone_group"){
-      this.getProcessOfStu();
-      this.allocation = true;
-    }
+
   }
 
   messagesSubscription;
 
   ionViewDidEnter() {
+    this.userData.getAction().then(value => {
+      this.action=value
+      if (this.action === "phone_group") {
+        this.getProcessOfStu();
+        this.allocation = true;
+      }
+    })
+
     this.userData.getSimId().then(value => {
       this.sim_id = value;
       this.userData.getUserID().then(value => {
@@ -79,7 +84,7 @@ export class ClassroomPage {
             this.getProcessOfStu();
             this.allocation = true;
             this.userData.setAction(action);
-          } else if(action === "phone_call"){
+          } else if (action === "phone_call") {
             this.showToast('bottom', msgs);
           }
         }
@@ -122,6 +127,7 @@ export class ClassroomPage {
       if (res['groOfStu'] === '') {
         this.GroupNews = false;
       } else {
+        this.userData.setAction('')
         this.g_id = this.groOfStu.g_id
         this.GroupNews = true;
         this.allocation = false;
@@ -148,25 +154,25 @@ export class ClassroomPage {
       console.log(this.g_id)
       switch (name) {
         case "SG_tieba":
-          this.navCtrl.push(BaidutbPage, {n_id: nid, g_id: this.g_id,s_data:s_data,sim_id: this.sim_id})
+          this.navCtrl.push(BaidutbPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
           break;
         case "SG_bullet":
-          this.navCtrl.push(DanmuPage, {n_id: nid, g_id: this.g_id,s_data:s_data,sim_id: this.sim_id})
+          this.navCtrl.push(DanmuPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
           break;
         case "SG_weibo":
-          this.navCtrl.push(WeiBoPage, {n_id: nid, g_id: this.g_id,s_data:s_data,sim_id: this.sim_id})
+          this.navCtrl.push(WeiBoPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
           break;
         case "SG_brain":
-          this.navCtrl.push(TounaofbPage, {n_id: nid, g_id: this.g_id,s_data:s_data,sim_id: this.sim_id})
+          this.navCtrl.push(TounaofbPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
           break;
         case "SG_select":
-          this.navCtrl.push(DecisionPage, {n_id: nid, g_id: this.g_id,s_data:s_data,sim_id: this.sim_id})
+          this.navCtrl.push(DecisionPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
           break;
         case "SG_QQ":
-          this.navCtrl.push(QQPage, {n_id: nid, g_id: this.g_id,s_data:s_data,sim_id: this.sim_id})
+          this.navCtrl.push(QQPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
           break;
         case "default":
-          this.navCtrl.push(DefaultPage, {n_id: nid, g_id: this.g_id,s_data:s_data,sim_id: this.sim_id})
+          this.navCtrl.push(DefaultPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
           break;
       }
     });

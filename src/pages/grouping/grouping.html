@@ -14,7 +14,7 @@
   <div class="group-list-box" *ngFor="let item of list;let i = index;">
     <div class="group-list">
       <div class="float-l head-icon">
-        <img src="{{item.g_image}}"/>
+        <img src="{{getFullpath(item.g_image)}}"/>
       </div>
       <div class="float-l group-name">{{item.g_name}}</div>
       <div class="float-l group-num">{{item.StuTotal}}/{{item.g_limit}}</div>
