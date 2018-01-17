@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {ServerSocket} from "../../providers/ws.service";
 import {Subscription} from "rxjs/Subscription";
+import {ProxyHttpService} from "../../providers/proxy.http.service";
 
 
 @IonicPage()
@@ -76,13 +77,16 @@ src;
     this.title=title;
     this.content=content;
   }
-
+  getFullPath(path){
+    return this.http.getBaseurl()+path
+  }
   ngOnDestroy() {
     if (this.socketSubscription)
       this.socketSubscription.unsubscribe();
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public ws: ServerSocket) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public ws: ServerSocket,
+              public http: ProxyHttpService) {
     this.n_id=this.navParams.data.n_id
     this.g_id=this.navParams.data.g_id
     this.s_data=this.navParams.data.s_data

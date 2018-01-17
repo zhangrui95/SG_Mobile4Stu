@@ -120,10 +120,10 @@ export class TounaofbPage {
     // JSON.parse()
 
     this.result=JSON.parse(this.s_data[0].s_data)
-    this.common=this.result['componentList'][0].data.fillData;
-
-    this.title=this.common.title;
-    this.content=this.common.content;
+    // this.common=this.result['componentList'][0].data.fillData;
+    //
+    // this.title=this.common.title;
+    // this.content=this.common.content;
 
     // this.title='范德萨的发生非法违法文文';
     // this.content='范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文';
