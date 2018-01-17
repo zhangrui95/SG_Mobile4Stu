@@ -12,11 +12,18 @@
 <!--kjdhfsa  jdsaljf fdsafh fjj fdsk  fkdsaklfjj fkks lllldsa dsao.-->
 <!--</div>-->
 <!--</div>-->
+
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>课堂演练</ion-title>
+  </ion-navbar>
+</ion-header>
+
 <ion-content padding>
 <div class="center">
   <div class="img-box" >
     <div *ngIf="name=='img'">
-      <img src="{{getFullPath(item.imagePath)}}"/>
+      <img src="{{getFullPath(src)}}"/>
       <!--<img src="{{items.data.src}}"
               style="width: {{items.style.width+'px'}};height:{{items.style.width+'px'}};left:{{items.style.x+'px'}};top:{{items.style.y+'px'}}"/>-->
       <!--<img src="../assets/img/add.png"-->
@@ -25,7 +32,7 @@
     <div *ngIf="name=='video'">
       <!--<v src=""/>-->
       <video>
-        <source src="{{getFullPath(item.imagePath)}}" type='video/mp4'>
+        <source src="{{getFullPath(src)}}" type='video/mp4'>
         <!--<source src="{{items.data.src}}" type='video/mp4'-->
                 <!--style="width: {{items.style.width+'px'}};height:{{items.style.width+'px'}};left:{{items.style.x+'px'}};top:{{items.style.y+'px'}}">-->
 
