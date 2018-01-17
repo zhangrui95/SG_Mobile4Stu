@@ -64,6 +64,13 @@ import {DetailsPage} from "../pages/details/details";
 import {CommentPage} from "../pages/comment/comment";
 import {GroupIndexPage} from "../pages/group-index/group-index";
 import {DefaultPage} from "../pages/default/default";
+import {GoldTounaofbPage} from "../pages/gold-tounaofb/gold-tounaofb";
+import {GoldDecisionPage} from "../pages/gold-decision/gold-decision";
+import {GoldWeatherPage} from "../pages/gold-weather/gold-weather";
+import {GoldMapPage} from "../pages/gold-map/gold-map";
+import {GoldTypePage} from "../pages/gold-type/gold-type";
+import {GoldOlderPage} from "../pages/gold-older/gold-older";
+import {GoldSupplyPage} from "../pages/gold-supply/gold-supply";
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -99,6 +106,13 @@ import {DefaultPage} from "../pages/default/default";
     BaidutbPage,
     FindPasswordPage,
     TounaofbPage,
+    GoldTounaofbPage,
+    GoldDecisionPage,
+    GoldWeatherPage,
+    GoldTypePage,
+    GoldOlderPage,
+    GoldSupplyPage,
+    GoldMapPage,
     DanmuPage,
     FindPasswordPage,
     GradePage,
@@ -148,6 +162,13 @@ import {DefaultPage} from "../pages/default/default";
         { component: SimulationPage, name: 'SimulationPage', segment: 'simulation' },
         { component: SimulationListPage, name: 'SimulationListPage', segment: 'simulationList' },
         { component: TounaofbPage, name: 'TounaofbPage', segment: 'tounaofb' },
+        { component: GoldTounaofbPage, name: 'GoldTounaofbPage', segment: 'GoldTounaofb' },
+        { component: GoldDecisionPage, name: 'GoldDecisionPage', segment: 'GoldDecision' },
+        { component: GoldWeatherPage, name: 'GoldWeatherPage', segment: 'GoldWeather' },
+        { component: GoldTypePage, name: 'GoldTypePage', segment: 'GoldType' },
+        { component: GoldOlderPage, name: 'GoldOlderPage', segment: 'GoldOlder' },
+        { component: GoldSupplyPage, name: 'GoldSupplyPage', segment: 'GoldSupply' },
+        { component: GoldMapPage, name: 'GoldMapPage', segment: 'GoldMap' },
         { component: DanmuPage, name: 'DanmuPage', segment: 'danmu' },
         { component: GradePage, name: 'GradePage', segment: 'grade' },
         { component: WeiBoPage, name: 'WeiBoPage', segment: 'weibo' },
@@ -208,7 +229,14 @@ import {DefaultPage} from "../pages/default/default";
     DetailsPage,
     CommentPage,
     GroupIndexPage,
-    DefaultPage
+    DefaultPage,
+    GoldTounaofbPage,
+    GoldDecisionPage,
+    GoldWeatherPage,
+    GoldMapPage,
+    GoldTypePage,
+    GoldOlderPage,
+    GoldSupplyPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },

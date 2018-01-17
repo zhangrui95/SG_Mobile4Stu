@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>老人</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div>{{issue}}</div>
+  <form class="form-box">
+    <label *ngFor="let item of options">
+      <input type="radio" name="choice" /><span class="option">{{item.option}}</span><span class="word">{{item.text}}</span>
+    </label>
+  </form>
+  <div padding class="mar-btn">
+    <button ion-button block>确  认</button>
+  </div>
+</ion-content>

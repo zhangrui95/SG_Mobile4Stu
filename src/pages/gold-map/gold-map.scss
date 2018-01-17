@@ -1,0 +1,52 @@
+page-gold-map {
+  .toolbar-title{
+    font-size: 18px;
+    font-weight: 100;
+  }
+}
+.map-box {
+  display: table;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+.map-img-box {
+  //width: 100%;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+.map-rotate{
+  animation:rotate-box 1000ms;
+  transform:rotate(90deg) scale(1.5);
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+@keyframes rotate-box
+{
+  from{
+    transform:rotate(0deg) scale(1);
+  }
+  to{
+    transform:rotate(90deg) scale(1.5);
+  }
+
+}
+.map-rotate-s{
+  animation:rotate-box-s 1000ms;
+  transform:rotate(0deg) scale(1);
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+@keyframes rotate-box-s
+{
+  from{
+    transform:rotate(90deg) scale(1.5);
+  }
+  to{
+    transform:rotate(0deg) scale(1);
+  }
+
+}
