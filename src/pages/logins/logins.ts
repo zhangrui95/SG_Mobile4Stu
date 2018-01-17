@@ -131,6 +131,4 @@ export class LoginsPage {
       this.type = 'password';
     }
   }
-
-
 }

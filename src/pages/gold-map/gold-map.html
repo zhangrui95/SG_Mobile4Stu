@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>地图</ion-title>
+    <img src="{{icon}}" class="head-img" (click)="scale()"/>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div class="map-box">
+    <div [ngClass]="{'map-img-box map-rotate':!rotate&&!boxRotate,'map-img-box map-rotate-s':rotate&&!boxRotate,'map-img-box':boxRotate}">
+      <img src="assets/img/smjj.jpg"/>
+    </div>
+  </div>
+</ion-content>

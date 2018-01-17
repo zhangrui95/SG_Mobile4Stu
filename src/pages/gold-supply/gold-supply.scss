@@ -1,0 +1,94 @@
+page-gold-supply {
+  .toolbar-title{
+    font-size: 18px;
+    font-weight: 100;
+  }
+  .index-news-box{
+    margin: 0;
+    float: none;
+    overflow: hidden;
+    background: transparent;
+    padding: 0;
+  }
+  .wen{
+    float: left;
+    width: 30px;
+    margin-top: 8px;
+  }
+  .wen-word-box{
+    color: #fff;
+    text-align: left;
+    font-size: 14px;
+    margin: 4px 10px;
+    div{
+      &:nth-child(1){
+        color: #ffdc73;
+      }
+    }
+  }
+  .group-name{
+    line-height: 38px;
+    color: #fff!important;
+    font-size: 16px;
+  }
+  .item > ion-icon, .item-inner > ion-icon{
+    min-height: 1.8rem;
+    font-size: 1.8rem;
+    line-height: 1;
+    color: #999998;
+  }
+  .item h2{
+    color: #fff;
+    font-size: 18px;
+    line-height: 30px;
+    height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .item p{
+    font-size: 14px;
+    color: #aaa;
+    height: 14px;
+    line-height: 16px;
+  }
+  .list-md .item-block .item-inner{
+    border-bottom: 0;
+  }
+  .item{
+    background: rgba(0,0,0,0.5);
+    margin: 10px 0;
+    border-radius: 7px!important;
+    border: 0;
+  }
+  .list-ios[inset] .item{
+    border: 0;
+  }
+  .list[inset]{
+    margin: 0;
+  }
+  .shop-num{
+    color: #fff;
+    margin-top: 10px;
+    img{
+      float: left;
+    }
+    span{
+      float: left;
+      width: 35px;
+      line-height: 28px;
+      text-align: center;
+    }
+  }
+  .mar-btn{
+    position: fixed;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    button{
+      height: 46px;
+      background: #1aa7b8;
+      width: 100%;
+    }
+  }
+}

@@ -29,7 +29,7 @@ export class IndexPage {
 
   exitApp() {
 
-    let activePortal = this.ionicApp._modalPortal.getActive() || this.ionicApp._toastPortal.getActive() || this.ionicApp._loadingPortal.getActive() || this.ionicApp._overlayPortal.getActive();
+    let activePortal = this.ionicApp._modalPortal.getActive() || this.ionicApp._loadingPortal.getActive() || this.ionicApp._overlayPortal.getActive();
     if (activePortal) {
       activePortal.dismiss().catch(() => {
       });
