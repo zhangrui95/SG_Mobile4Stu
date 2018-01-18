@@ -77,9 +77,9 @@ src;
     this.title=title;
     this.content=content;
   }
-  getFullPath(path){
-    return this.http.getBaseurl()+path
-  }
+  // getFullPath(path){
+  //   return this.http.getBaseurl()+path
+  // }
   ngOnDestroy() {
     if (this.socketSubscription)
       this.socketSubscription.unsubscribe();

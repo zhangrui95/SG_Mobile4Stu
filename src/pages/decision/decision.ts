@@ -50,6 +50,8 @@ export class DecisionPage {
 
     this.title = this.result['componentList'][0].data.text;
     this.sim_id=this.navParams.data.sim_id
+
+    this.getAnswerOfStuList();
   }
 
   getForm(item) {
@@ -64,6 +66,18 @@ export class DecisionPage {
   //   console.log(this.Id);
   // }
 
+  getAnswerOfStuList() {
+
+    this.param = {
+      n_id: this.n_id,
+      g_id: this.g_id,
+      sim_id: this.sim_id
+    };
+
+    this.http.getAnswerOfStuList(this.param).subscribe(res => {
+      this.items = res['list']
+    });
+  }
 
   send() {
     this.param = {

@@ -107,9 +107,21 @@ export class DanmuPage {
       this.http.addStuAnswer(this.param).subscribe(res => {
         console.log(res)
         this.inputvalue = '';
+        this.showSuccess('bottom', '评论成功');
       });
     }
   }
+
+  showSuccess(position: string, text: string) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 2000,
+      position: position
+    });
+
+    toast.present(toast);
+  }
+
   common
   result
   ionViewDidLoad() {
