@@ -116,6 +116,9 @@ export class IndexPage {
               }
             }, error => {
               console.log(error.message);
+            this.userData.setSimId( data.sim_id)
+            this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
+            this.userData.setAction('')
             }
           );
         } else {
