@@ -136,7 +136,9 @@ export class ClassroomPage {
   }
 
   action_name = "";
-
+  getFullPath(path){
+    return this.http.getBaseurl()+path
+  }
   getScenesById(nid) {
     let param = {
       n_id: nid

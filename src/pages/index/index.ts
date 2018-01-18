@@ -110,6 +110,7 @@ export class IndexPage {
               if (res['code'] == 0) {
                 this.userData.setSimId( data.sim_id)
                 this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
+                this.userData.setAction('')
               } else {
                 // this.showToast('bottom', res['msg']);
               }
