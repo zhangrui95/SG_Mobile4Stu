@@ -106,7 +106,7 @@ export class IndexPage {
 
           this.http.addClassPractice(params).subscribe(res => {
 
-              console.log(res['code'])
+              console.log(res)
               if (res['code'] == 0) {
                 this.userData.setSimId( data.sim_id)
                 this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
@@ -115,6 +115,8 @@ export class IndexPage {
               }
             }, error => {
               console.log(error.message);
+            this.userData.setSimId( data.sim_id)
+            this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
             }
           );
         } else {
