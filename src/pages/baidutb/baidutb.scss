@@ -8,13 +8,15 @@ page-baidutb {
   //}
   .p_content {
     color: #e8e8e8;
-    margin: 20px 25px 0px 25px;
+    margin: 20px 7% 0px;
     float: left;
     //height: 95px;
     line-height: 24px;
     //overflow-y: scroll;
     overflow-y: hidden;
     font-size: 18px;
+    width: 86%;
+
   }
   .ss {
     float: right;
@@ -30,4 +32,9 @@ page-baidutb {
     float: left;
     margin: 3px 5px 0px 0px;
   }
+  .toolbar-title{
+    font-size: 18px;
+    font-weight: 100;
+  }
+
 }

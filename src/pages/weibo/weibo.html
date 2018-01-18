@@ -21,6 +21,7 @@
     </p>
     <hr style="border-top: 2px solid #1aa7b8;float: left;margin: 20px 0px 0px 0px;width: 415px;"/>
   </div>
+  <div class="list-item-box-bd">
     <div class="pl-box" *ngFor="let item of items;let n=index">
       <div style="margin-left: 20px;">
         <img style=" height: 50px;width: 50px;float: left;margin-top: 20px;" [src]="item.imagePath?getFullPath(item.imagePath):'assets/img/header.png'">
@@ -35,6 +36,7 @@
       </div>
       <!--<hr style="border-top: 1px dashed #929292;width: 100%;margin: 30px 0px 10px 0px;float: left;"/>-->
     </div>
+  </div>
   <!--</div>-->
   <div *ngIf="isShow" style="background-color: rgba(0,0,0,0.5);position:fixed;left: 30%;top: 38%;height: 20%;width: 40%;border-radius: 5px; ">
     <img src="assets/img/yuyin-5.png" style="width: 50%;margin: 15px auto 10px;display: block;"/>

@@ -25,12 +25,14 @@
   <!--{{name}}-->
   <!--</div>-->
   <!--<div #list>-->
-    <div *ngFor="let item of items;let n=index">
+
+  <div class="list-item-box-bd">
+    <div class="pl-box" *ngFor="let item of items;let n=index">
       <div style="margin-left: 20px;">
         <img style=" height: 50px;width: 50px;float: left;margin-top: 20px;" [src]="item.imagePath?getFullPath(item.imagePath):'assets/img/header.png'">
         <div class="time-pl-box">
           <div style="color:white; margin-bottom:8px;">
-            <span style="font-size: large">{{item.UserName}}</span>
+            <span style="font-size: large">{{item.userName}}</span>
             <span style="font-size: medium;padding-left: 10px">{{item.role_name}}</span>
           </div>
           <span style="color:#d8d8d8">第{{n+1}}楼 | {{item.createtime}}</span>
@@ -38,6 +40,7 @@
         <span class="pl-span-word">{{item.answer}}</span>
       </div>
     </div>
+  </div>
   <!--</div>-->
   <div *ngIf="isShow" style="background-color: rgba(0,0,0,0.5);position:fixed;left: 30%;top: 38%;height: 20%;width: 40%;border-radius: 5px; ">
       <img src="assets/img/yuyin-5.png" style="width: 50%;margin: 15px auto 10px;display: block;"/>
