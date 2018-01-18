@@ -20,7 +20,7 @@
     <div *ngIf="showBtn" class="choice-btn" (click)="goGrouping()">选择角色</div>
   </div>
   <div class="index-news-box mar-bottom" *ngIf="GroupNews">
-    <img src="{{groOfStu.g_image}}" class="wen"/>
+    <img src="{{groOfStu.g_image?getFullPath(groOfStu.g_image):'assets/img/header.png'}}" class="wen"/>
     <div class="float-l wen-word-box">
       <div class="group-name">{{groOfStu.g_name}}</div>
     </div>
