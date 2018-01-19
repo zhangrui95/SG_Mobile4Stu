@@ -12,8 +12,9 @@
         <!--<span style="font-size:medium;margin-bottom:20px; display:inline-block;">{{item.value}}</span>-->
       <!--</div>-->
       <form class="form-box">
-         <label *ngFor="let item of common;let n = index" (change)="getForm(options[n].option)">
+         <label *ngFor="let item of common;let n = index;" (change)="getForm(options[n].option)">
             <input type="radio" name="choice"/>
+            <span class="option"></span>
             <span class="word">{{item.value}}</span>
          </label>
        </form>
