@@ -112,6 +112,15 @@ export class UserData {
     });
   };
 
+  setUposition(url: string): void {
+    this.storage.set('u_position', url);
+  };
+  getUposition(): Promise<string> {
+    return this.storage.get('u_position').then((value) => {
+      return value;
+    });
+  };
+
 
   getUserPhone(): Promise<string> {
     return this.storage.get('phone').then((value) => {

@@ -29,6 +29,7 @@ export class ClassroomPage {
   sim_id;
   indexNs = [];
   g_id = "-1"
+  group_u = false;
 
   action;
 
@@ -127,6 +128,10 @@ export class ClassroomPage {
       if (res['groOfStu'] === '') {
         this.GroupNews = false;
       } else {
+        if(res['groOfStu'].u_position == 1){
+          this.group_u = true;
+          this.userData.setUposition(res['groOfStu'].u_position);
+        }
         this.userData.setAction('')
         this.g_id = this.groOfStu.g_id
         this.GroupNews = true;
