@@ -27,15 +27,15 @@
   </div>
   <!--</div>-->
   <div class="list-item-box-bd">
-  <div *ngFor="let item of items;let n=index" class="pl-box">
+  <div *ngFor="let item of items;let n=index;" class="pl-box">
     <div style="margin-left: 20px;">
       <img style=" height: 50px;width: 50px;float: left;margin-top: 20px;" [src]="item.imagePath?getFullPath(item.imagePath):'assets/img/header.png'">
       <div class="time-pl-box">
         <div style="color:white; margin-bottom:8px;">
-          <span style="font-size: large">{{item.userName}}</span>
-          <span style="font-size: medium;padding-left: 10px">{{item.role_name}}</span>
+          <span style="font-size: 20px;">{{item.userName}}</span>
+          <span style="font-size: 16px;">{{item.role_name}}</span>
         </div>
-        <span style="color:#d8d8d8">第{{n+1}}楼 | {{item.createtime}}</span>
+        <div style="color:#fff;font-size: 14px;line-height: 14px;">第{{n+1}}楼 |{{item.createtime}}</div>
       </div>
       <span class="pl-span-word">{{item.answer}}</span>
     </div>
