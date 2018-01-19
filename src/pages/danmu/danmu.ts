@@ -39,7 +39,7 @@ export class DanmuPage {
   n_id
   s_data
   title;
-
+  videosrc={changingThisBreaksApplicationSecurity:''}
   src = 'assets/img/juxing-10.png';
 
   mousedownd() {
@@ -136,7 +136,7 @@ export class DanmuPage {
 
       if (name == 'video') {
         this.name=name;
-        this.src=com.data.src;
+        this.videosrc=com.data.src;
 
       }
       else {
