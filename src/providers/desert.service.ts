@@ -34,7 +34,6 @@ const EVENT_ASK = 111104
 const EVENT_RANDOM_IN_TOMBS = 111105
 const EVENT_DIGGING = 111106
 const STATUS_GET_LOST = 1111101
-const STATUS_GET_STAY_FOR_ASK = 1111102
 const STATUS_CAN_DIG_IN_MOUNTAIN = 1111103
 
 const totalDays = 18
@@ -75,9 +74,31 @@ const foodNotEnough = '食物消耗光了';
 const waterNotEnough = '水消耗光了';
 const tentNotEnough = '帐篷不够了';
 const compassNotEnough = '指南针不够了';
+const goldNotEnough = '金子不够了'
 
 @Injectable()
 export class DesertService {
+  public getPlace(name) {
+    if (name.startWith("村庄")) {
+      this.currState.place = PLACE_VILLIGE
+    }
+    if (name.startWith("营地")) {
+      this.currState.place = PLACE_START
+    }
+    if (name.startWith("王陵")) {
+      this.currState.place = PLACE_TOMBS
+    }
+    if (name.startWith("大山")) {
+      this.currState.place = PLACE_END
+    }
+    if (name.startWith("沙漠")) {
+      this.currState.place = PLACE_DESERT
+    }
+    if (name.startWith("绿洲")) {
+      this.currState.place = PLACE_OASIS
+    }
+  }
+
   public weathers = [
     {
       desert: WEATHER_SUNNY,
@@ -232,6 +253,7 @@ export class DesertService {
     [
       {
         position: '',
+        place: PLACE_START,
         events: [
           {
             e_name: '营地交易',
@@ -243,6 +265,7 @@ export class DesertService {
         ]
       }, {
       position: '',
+      place: PLACE_VILLIGE,
       events: [
         {
           e_name: '村庄交易',
@@ -251,6 +274,7 @@ export class DesertService {
       ]
     }, {
       position: '',
+      place: PLACE_VILLIGE,
       events: [
         {
           e_name: '村庄交易',
@@ -259,6 +283,7 @@ export class DesertService {
       ]
     }, {
       position: '',
+      place: PLACE_VILLIGE,
       events: [
         {
           e_name: '村庄交易',
@@ -267,6 +292,7 @@ export class DesertService {
       ]
     }, {
       position: '',
+      place: PLACE_VILLIGE,
       events: [
         {
           e_name: '村庄交易',
@@ -275,6 +301,7 @@ export class DesertService {
       ]
     }, {
       position: '',
+      place: PLACE_OASIS,
       events: [
         {
           e_name: '绿洲水源',
@@ -283,6 +310,7 @@ export class DesertService {
       ]
     }, {
       position: '',
+      place: PLACE_OASIS,
       events: [
         {
           e_name: '绿洲水源',
@@ -291,6 +319,7 @@ export class DesertService {
       ]
     }, {
       position: '',
+      place: PLACE_TOMBS,
       events: [
         {
           e_name: '王陵随机事件',
@@ -299,13 +328,11 @@ export class DesertService {
       ]
     }, {
       position: '',
+      place: PLACE_END,
       events: [
         {
           e_name: '大山掘金',
           type: EVENT_DIGGING
-        }, {
-          e_name: '神秘水源',
-          type: EVENT_WATER_FREE
         }
       ]
     }
@@ -316,7 +343,7 @@ export class DesertService {
     {title: '王陵天气', message: '王陵里的天气是相隔2天就会有2天高温或者沙尘暴的天气。', status: null},
     {title: '大山天气', message: '大山里的天气是相隔2天就会有1天的高温。', status: null},
     {title: '沙漠天气', message: '沙漠里高温或沙尘暴天气会出现在双数的日子里。', status: null},
-    {title: '大山的秘密', message: '在大山中有秘密的水源', status: STATUS_CAN_DIG_IN_MOUNTAIN}
+    {title: '大山的秘密', message: '在大山中有秘密的水源', status: {status_type: STATUS_CAN_DIG_IN_MOUNTAIN, status_duration: -1}}
 
   ]
 
@@ -479,15 +506,20 @@ export class DesertService {
         }
         break;
     }
-    return {isSuccess:isSuccess,msg:msg}
+    return {isSuccess: isSuccess, msg: msg}
   }
 
   setCurrState(state) {
     this.currState = state;
   }
 
+  getCurrState() {
+    return this.currState
+  }
+
   public currState = {
     position: 'A1',
+    place: 0,
     money: totalMoney,
     weight: totalWeight,
     food: 0,
@@ -509,23 +541,17 @@ export class DesertService {
     let tempWeight
     let tempPlaceFoodRatio;
     let tempPlaceWaterRatio;
-    for (let event of this.events) {
-      if (event.position == this.currState.position) {
-        for (let e of event.events) {
-          if (e.e_name == EVENT_TRADE) {
-            switch (e.type) {
-              case PLACE_START:
-                tempPlaceFoodRatio = 1
-                tempPlaceWaterRatio = 1;
-                break;
+    for (let e of this.currState.events) {
+      switch (e.type) {
+        case EVENT_TRADE:
+          tempPlaceFoodRatio = 1
+          tempPlaceWaterRatio = 1;
+          break;
 
-              case PLACE_VILLIGE:
-                tempPlaceFoodRatio = villigeFoodTradeRatio
-                tempPlaceWaterRatio = villigeWaterTradeRatio;
-                break;
-            }
-          }
-        }
+        case EVENT_TRADE_Villige:
+          tempPlaceFoodRatio = villigeFoodTradeRatio
+          tempPlaceWaterRatio = villigeWaterTradeRatio;
+          break;
       }
     }
     switch (type) {
@@ -639,6 +665,8 @@ export class DesertService {
   }
 
   public consume(type) {
+    let isSuccess = true;
+    let msg = ''
     let tempWater;
     let tempFood;
     let tempWaterRatio;
@@ -663,6 +691,11 @@ export class DesertService {
     }
     let reduceFood = baseFoodConsumePerDay * tempFoodRatio
     let reduceWater = baseWaterConsumePerDay * tempWaterRatio
+
+    if (this.isGetLost()) {
+      reduceWater = reduceWater * getLostWaterRatio
+      reduceFood = reduceFood * getLostFoodRatio
+    }
     this.reduce.water = reduceWater;
     this.reduce.food = reduceFood;
     tempFood = this.currState.food - reduceFood;
@@ -670,12 +703,16 @@ export class DesertService {
 
 
     if (tempFood <= 0) {
-
-      return false
+      this.currState.food = 0
+      this.currState.weight = this.currState.weight + ((reduceFood - this.currState.food) * foodUnitWeight)
+      isSuccess = false;
+      msg = foodNotEnough
     }
     if (tempWater <= 0) {
-
-      return false
+      this.currState.water = 0
+      this.currState.weight = this.currState.weight + ((reduceWater - this.currState.water) * waterUnitWeight)
+      isSuccess = false;
+      msg = waterNotEnough
     }
     this.currState.water = tempWater;
     this.currState.food = tempFood;
@@ -683,7 +720,7 @@ export class DesertService {
     this.currState.weight = this.currState.weight + (reduceWater * waterUnitWeight)
 
 
-    return true
+    return {isSuccess: isSuccess, msg: msg}
   }
 
   public useItem(item) {
@@ -718,12 +755,14 @@ export class DesertService {
 
   public throwItem(item, count) {
     let isSuccess = true;
+    let msg = "";
     switch (item) {
       case ITEM_COMPASS:
         if (this.currState.compass > count) {
           this.currState.weight = this.currState.weight + (compassUnitWeight * count)
           this.currState.compass = this.currState.compass - count
         } else {
+          msg = compassNotEnough
           isSuccess = false
         }
         break;
@@ -732,6 +771,7 @@ export class DesertService {
           this.currState.weight = this.currState.weight + (tentUnitWeight * count)
           this.currState.tent = this.currState.tent - count
         } else {
+          msg = tentNotEnough
           isSuccess = false
         }
         break;
@@ -740,6 +780,7 @@ export class DesertService {
           this.currState.weight = this.currState.weight + (foodUnitWeight * count)
           this.currState.food = this.currState.food - count
         } else {
+          msg = foodNotEnough
           isSuccess = false
         }
         break;
@@ -748,6 +789,7 @@ export class DesertService {
           this.currState.weight = this.currState.weight + (waterUnitWeight * count)
           this.currState.water = this.currState.water - count
         } else {
+          msg = waterNotEnough
           isSuccess = false
         }
         break;
@@ -756,10 +798,12 @@ export class DesertService {
           this.currState.weight = this.currState.weight + (goldUnitWeight * count)
           this.currState.gold = this.currState.gold - count
         } else {
+          msg = goldNotEnough
           isSuccess = false
         }
         break;
     }
+    return {isSuccess: isSuccess, msg: msg};
 
   }
 
@@ -769,8 +813,16 @@ export class DesertService {
 
   public getAnswer(i) {
     let item = this.messagesFromOlder[i]
-    if (item.status == STATUS_CAN_DIG_IN_MOUNTAIN) {
+    if (item.status.status_type == STATUS_CAN_DIG_IN_MOUNTAIN) {
       this.currState.status.push(item.status)
+      for (let e of this.events) {
+        if (e.place == PLACE_END) {
+          e.events.push({
+            e_name: '神秘水源',
+            type: EVENT_WATER_FREE
+          })
+        }
+      }
     }
     return item.message
 
@@ -778,6 +830,20 @@ export class DesertService {
 
   public setStatus(statu, durations) {
     this.currState.status.push({status_type: statu, status_duration: durations})
+  }
+
+  public setLostStatus() {
+    let flag = false;
+    for (let statu of this.currState.status) {
+      if (statu.status_type == STATUS_GET_LOST) {
+        statu.status_duration = lostKeepDays
+        flag = true
+      }
+    }
+    if (!flag) {
+      this.setStatus(STATUS_GET_LOST, lostKeepDays)
+    }
+
   }
 
   goSuccess() {
@@ -794,10 +860,29 @@ export class DesertService {
     }
   }
 
+  updateEvent() {
+    for (let event of this.events) {
+      if (event.position == this.currState.position) {
+        this.currState.events = event.events
+      }
+    }
+  }
+
+  updateStatus() {
+    for (let statu of this.currState.status) {
+      if (statu.status_duration > 0) {
+        statu.status_duration--
+      }
+
+    }
+  }
 
   public onNext(state) {
 
     this.currState = state;
+
+    this.updateEvent();
+    this.updateStatus();
 
     if (this.currState.days == totalDays) {
       this.goDead(this.currState.position)
@@ -839,20 +924,9 @@ export class DesertService {
     }
   }
 
-  public start() {
-    this.currState = {
-      position: 'A1',
-      money: totalMoney,
-      weight: totalWeight,
-      food: 0,
-      days: 0,
-      water: 0,
-      tent: 0,
-      compass: 0,
-      gold: 0,
-      status: [],
-      events: []
-    };
+  getResult() {
+    //todo 根据先后返回的结果 计算金价
+    console.log(moneyOfGoldPerUnit)
   }
 
   constructor(public http: HttpClient, public userData: UserData) {
