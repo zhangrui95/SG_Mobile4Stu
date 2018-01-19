@@ -104,6 +104,7 @@ export class IndexPage {
           console.log("uid======>"+this.userId)
           const params = {"cla_id": data.cla_id, "cour_id": data.cour_id, "sim_id": data.sim_id, "u_id": this.userId+""}
 
+          this.userData.setSimType(data.p_type);
           this.http.addClassPractice(params).subscribe(res => {
 
               console.log(res['code'])

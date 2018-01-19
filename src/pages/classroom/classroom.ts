@@ -130,8 +130,8 @@ export class ClassroomPage {
       } else {
         if(res['groOfStu'].u_position == 1){
           this.group_u = true;
-          this.userData.setUposition(res['groOfStu'].u_position);
         }
+        this.userData.setUposition(res['groOfStu'].u_position);
         this.userData.setAction('')
         this.g_id = this.groOfStu.g_id
         this.GroupNews = true;
