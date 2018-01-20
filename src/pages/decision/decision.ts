@@ -101,7 +101,10 @@ export class DecisionPage {
         // if (res['code'] == 0) {
         //
         // }
-      });
+      },error =>{
+        console.log(error)
+        this.navCtrl.pop();
+      } );
     }
   }
 
