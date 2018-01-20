@@ -26,6 +26,7 @@ export class PhonePage {
     countdown: 60,
     disable: true
   }
+  noClick = false;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public http: ProxyHttpService,
@@ -74,6 +75,7 @@ export class PhonePage {
       this.verifyCode.countdown = 60;
       this.verifyCode.verifyCodeTips = "获取验证码";
       this.verifyCode.disable = true;
+      this.noClick = false;
       return;
     } else {
       this.verifyCode.countdown--;
@@ -92,16 +94,23 @@ export class PhonePage {
       }else if(!this.pattern.test(this.newPhone)){
         this.showToast('bottom','新手机号输入不正确');
       }else{
-        const params = {phone:this.oldPhone,UserName:this.name,newPhone:this.newPhone,userid:this.userId.toString(),passWord:this.Password,VCode:''}
-        this.http.updatePhone(params).subscribe(res => {
-          if(res['code'] == 0){
-            this.settime();
-            this.verifyCode.disable = false;
-            this.showToast('bottom',res['msg']);
-          }else{
-            this.showToast('bottom',res['msg']);
-          }
-        });
+        if(this.noClick){
+          this.showToast('bottom', '不可重复获取');
+        }else{
+          this.noClick = true;
+          const params = {phone:this.oldPhone,UserName:this.name,newPhone:this.newPhone,userid:this.userId.toString(),passWord:this.Password,VCode:''}
+          this.http.updatePhone(params).subscribe(res => {
+            if(res['code'] == 0){
+              this.settime();
+              this.verifyCode.disable = false;
+              this.showToast('bottom',res['msg']);
+            }else{
+              this.showToast('bottom',res['msg']);
+              this.verifyCode.disable = true;
+              this.noClick = false;
+            }
+          });
+        }
       }
     }
   }
