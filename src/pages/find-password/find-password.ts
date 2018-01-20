@@ -24,6 +24,7 @@ export class FindPasswordPage {
     countdown: 60,
     disable: true
   }
+  noClick = false;
 
   constructor( public navCtrl: NavController,
                public http: ProxyHttpService,
@@ -39,6 +40,7 @@ export class FindPasswordPage {
       this.verifyCode.countdown = 60;
       this.verifyCode.verifyCodeTips = "获取验证码";
       this.verifyCode.disable = true;
+      this.noClick = false;
       return;
     } else {
       this.verifyCode.countdown--;
@@ -56,13 +58,23 @@ export class FindPasswordPage {
         if(this.find.phone == ''){
           this.showToast('bottom', '手机号不能为空');
         }else{
-          const params = {Phone:this.find.phone,LoginPwd:this.find.password,VCode:''};
-          console.log(params)
-          this.http.initPass(params).subscribe(res => {
-            console.log(res)
-            this.settime();
-            this.verifyCode.disable = false;
-          });
+          if(this.noClick){
+            this.showToast('bottom', '不可重复获取');
+          }else{
+            this.noClick = true;
+            const params = {Phone:this.find.phone,LoginPwd:this.find.password,VCode:''};
+            console.log(params)
+            this.http.initPass(params).subscribe(res => {
+              if(res['code'] == 0){
+                this.settime();
+                this.verifyCode.disable = false;
+              }else{
+                this.showToast('bottom', res['msg']);
+                this.verifyCode.disable = true;
+                this.noClick = false;
+              }
+            });
+          }
         }
     }
   }
