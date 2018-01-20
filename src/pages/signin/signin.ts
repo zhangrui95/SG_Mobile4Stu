@@ -26,6 +26,7 @@ export class SigninPage {
     countdown: 60,
     disable: true
   }
+  noClick = false;
 
   constructor( public navCtrl: NavController,
                public http: ProxyHttpService,
@@ -72,6 +73,7 @@ export class SigninPage {
       this.verifyCode.countdown = 60;
       this.verifyCode.verifyCodeTips = "获取验证码";
       this.verifyCode.disable = true;
+      this.noClick = false;
       return;
     } else {
       this.verifyCode.countdown--;
@@ -88,12 +90,23 @@ export class SigninPage {
       if(this.login.phone == ''){
         this.showToast('bottom', '手机号不能为空');
       }else{
-        const params = {LoginName:this.login.username, LoginPwd:this.login.password, RealName:this.login.RealName, Phone:this.login.phone, VCode:''}
-        this.http.register(params).subscribe(res => {
-          console.log(res)
-          this.settime();
-          this.verifyCode.disable = false;
-        });
+        if(this.noClick){
+          this.showToast('bottom', '不可重复获取');
+        }else{
+          this.noClick = true;
+          const params = {LoginName:this.login.username, LoginPwd:this.login.password, RealName:this.login.RealName, Phone:this.login.phone, VCode:''}
+          this.http.register(params).subscribe(res => {
+            if(res['code'] == 0){
+              console.log(res)
+              this.settime();
+              this.verifyCode.disable = false;
+            }else{
+              this.showToast('bottom', res['msg']);
+              this.verifyCode.disable = true;
+              this.noClick = false;
+            }
+          });
+        }
       }
     }
   }
