@@ -146,7 +146,9 @@ export class TounaofbPage {
         let msgs = JSON.parse(message)['msg'];
         if (action != null) {
           if (action == 'phone_scene_answers_update') {
-
+            if(this.n_id!=JSON.parse(message)['list'][0].n_id){
+              return ;
+            }
             let item = this.items.concat(JSON.parse(message)['list'])
             this.items=item
             setTimeout(()=>{
