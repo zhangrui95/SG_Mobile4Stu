@@ -111,6 +111,10 @@ export class TounaofbPage {
         this.inputvalue = '';
         this.showSuccess('bottom', '评论成功');
 
+      },error2 => {
+        console.log(error2)
+        this.inputvalue = '';
+
       });
     }
   }
