@@ -16,11 +16,252 @@ page-gold-tounaofb {
     padding-top: 15px;
     align-self:center;
     line-height: 20px;
-
-    //float: right;
   }
-  //.scroll-content{
-  //  margin-top:210px !important;
-  //  margin-bottom: 65px;
-  //}
+  .fixed-content{
+    background: #fff;
+  }
+  .img-bg{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top:0;
+    left: 0;
+    z-index: -1;
+  }
+  .place-name{
+    color: #516c6d;
+    font-size: 30px;
+  }
+  .time{
+    font-size:16px;
+    margin: 5px 0;
+  }
+  .tnfb-tilte{
+    background: #91b1ae;
+    border-radius: 100px;
+    margin: 10px 0px 0px 0px;
+    width: 100%;
+    height: auto;
+    float: left;
+    color:#fff;
+    padding: 12px;
+    font-size: 20px;
+    text-align: center;
+  }
+  .pl-box .pl-span-word{
+    color:#516c6d;
+  }
+  .pl-box {
+    border-bottom: 1px dashed #91b1ae;
+    width: 90%;
+    margin: 0 5%;
+    background: rgba(255,255,255,0.5);
+  }
+  .tq-box{
+    position: absolute;
+    top:25px;
+    right: 20px;
+    img{
+      width: 80px;
+    }
+    .sm-img{
+      width: 45px;
+    }
+    .sm-name{
+      color: #f8c400;
+      text-align: center;
+      width: 55px;
+    }
+  }
+  .send-btm-box-bg{
+    border-top:0;
+  }
+  .pop-item{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    position: absolute;
+    top:0;
+    left: 0;
+  }
+  .pop-box{
+    width: 90%;
+    height: 410px;
+    background: #fff;
+    border-radius: 8px;
+    position: absolute;
+    top: 100px;
+    left: 5%;
+    .pop-top-img{
+      width: 80px;
+      height: 80px;
+      border-radius: 100px;
+      position: absolute;
+      margin-left: 50%;
+      top:-50px;
+      left: -40px;
+      background: #eee;
+      border: 2px solid #fff;
+    }
+  }
+  .fz-img{
+    width: 35px;
+    margin: 12px 5px 0 10px;
+  }
+  .num-fz{
+    color: #516c6d;
+    font-size: 22px;
+  }
+  .syfz{
+    margin-top: 15px;
+  }
+  .top-box-news{
+    margin-top: 10px;
+    overflow: hidden;
+  }
+  .syfz-name{
+    font-size: 16px;
+  }
+  .shop-item{
+    width: 94%;
+    margin: 10px 3%;
+    height: 50px;
+    .shop-img{
+      width: 50px;
+      margin-right: 10px;
+      border: 1px solid #bbb;
+    }
+  }
+  .shop-num{
+    width: 24px;
+    height: 24px;
+    border: 1px solid #ddd;
+    color: #666;
+    line-height: 24px;
+    font-size: 16px;
+    text-align: center;
+    margin:0 5px;
+  }
+  .shop-sy{
+    font-size: 12px;
+    color: #666;
+    padding: 2px 8px;
+    background: #eee;
+    border: 1px solid #666;
+    border-radius: 20px;
+    float: left;
+    margin: 3px;
+  }
+  .shop-name{
+    margin: 2px 5px 0 0;
+    float: left;
+  }
+  .shop-dj,.shop-zl{
+    float: left;
+    font-size: 13px;
+    color: #666;
+  }
+  .shop-dj{
+    margin-right: 10px;
+  }
+  .shop-box-name{
+    width: 100%;
+    height: 25px;
+    float: left;
+    &:nth-child(2){
+      line-height: 28px;
+    }
+  }
+  .shop-add{
+    margin-top: 12px;
+    img{
+      width: 24px;
+    }
+  }
+  .btn-green{
+    background: #516c6d;
+    width: 90%;
+    margin: 30px 5%;
+    height: 46px;
+    font-size: 18px;
+  }
+  .close-btn{
+    width: 50px;
+    position: absolute;
+    top: 540px;
+    left: -25px;
+    margin-left: 50%;
+  }
+  @media (max-width: 321px) {
+    .pop-box{
+      top: 80px;
+    }
+    .close-btn {
+      width: 40px;
+      top: 510px;
+    }
+  }
+  .wt-lr{
+    width: 86%;
+    margin: 50px 7% 20px;
+    text-align: center;
+  }
+  .radio-box{
+    width: 86%;
+    margin: 15px 7%;
+    border: 1px solid #ddd;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    &:active{
+      background: #516c6d;
+      color: #fff;
+    }
+  }
+  .yellow-word{
+    color: #ff8000;
+    font-size: 14px;
+    margin-top: 0;
+  }
+  .radio-click{
+    background: #516c6d;
+    color: #fff;
+    border: 0;
+    height: 40px;
+    line-height: 40px;
+  }
+  .qk-til{
+    width: 86%;
+    margin: 20px 7% 15px;
+    color: #516c6d;
+    font-size: 20px;
+    text-align: center;
+  }
+  .qk-content{
+    width: 86%;
+    margin: 0 7%;
+    color: #516c6d;
+    text-align: center;
+    font-size: 14px;
+  }
+  .fz-box{
+    width: 94%;
+    margin: 0 3%;
+    .fz-item{
+      width: 27%;
+      float: left;
+      margin: 10px 3%;
+      img{
+        border: 1px solid #bbb;
+      }
+      div{
+        line-height: 25px;
+        font-size: 16px;
+        &:nth-child(3){
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
 }

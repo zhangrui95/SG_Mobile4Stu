@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {DomSanitizer} from "@angular/platform-browser";
 import {Subscription} from "rxjs/Subscription";
 import {ServerSocket} from "../../providers/ws.service";
@@ -30,6 +30,12 @@ export class GoldTounaofbPage {
   n_id
   s_data
   title;
+  bjPopShow = false;
+  lrPopShow = false;
+  lrClickPopShow = false;
+  mapShow = false;
+  fzPopShow = false;
+  btmMore = true;
 
   src = 'assets/img/juxing-10.png';
 
@@ -50,7 +56,8 @@ export class GoldTounaofbPage {
               public userData: UserData,
               public ws: ServerSocket,
               public http: ProxyHttpService,
-              public sanitizer: DomSanitizer) {
+              public sanitizer: DomSanitizer,
+              public toastCtrl: ToastController) {
     this.ws.connect()
     this.userData.getUserID().then(value => this.userId = value)
     this.n_id=this.navParams.data.n_id
@@ -59,7 +66,15 @@ export class GoldTounaofbPage {
     this.sim_id=this.navParams.data.sim_id
     this.getAnswerOfStuList();
   }
+  showToast(position: string, text: string) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 2000,
+      position: position
+    });
 
+    toast.present(toast);
+  }
   getAnswerOfStuList() {
     this.param = {
       n_id: this.n_id,
@@ -68,18 +83,13 @@ export class GoldTounaofbPage {
     };
 
     this.http.getAnswerOfStuList(this.param).subscribe(res => {
-
-      for (var i = 0; i < res['list'].length; i++) {
-        let url=res['list'][i].ImagePath;
-        if(url==''||url.length==0){
-          res['list'][i].ImagePath = "assets/img/header.png";
-        }else{
-          res['list'][i].ImagePath=this.sanitizer.bypassSecurityTrustResourceUrl(this.http.getBaseurl() + url);
-        }
-      }
       this.items = res['list']
 
     });
+  }
+
+  getFullPath(path){
+    return this.http.getBaseurl()+path
   }
 
 
@@ -96,16 +106,26 @@ export class GoldTounaofbPage {
       this.http.addStuAnswer(this.param).subscribe(res => {
         console.log(res)
         this.inputvalue = '';
-
+        this.showSuccess('bottom', '评论成功');
 
       });
     }
   }
+
+  showSuccess(position: string, text: string) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 2000,
+      position: position
+    });
+
+    toast.present(toast);
+  }
+
   common
   result
   ionViewDidLoad() {
     // JSON.parse()
-
     this.result=JSON.parse(this.s_data[0].s_data)
     this.common=this.result['componentList'][0].data.fillData;
 
@@ -119,10 +139,12 @@ export class GoldTounaofbPage {
 
       this.socketSubscription = this.ws.messages.subscribe(message => {
         let action=JSON.parse(message)['action'];
+        let msgs = JSON.parse(message)['msg'];
         if (action != null) {
           if (action == 'phone_scene_answers_update') {
 
-            this.items.push(JSON.parse(message)['list'])
+            let item = this.items.concat(JSON.parse(message)['list'])
+            this.items=item
             setTimeout(()=>{
 
               this.ioncontent.scrollToBottom(500);
@@ -131,20 +153,49 @@ export class GoldTounaofbPage {
           }else if (action === "phone_group") {
             this.userData.setAction(action);
           }
+          if(action === "phone_call"){
+            this.showToast('bottom', msgs);
+          }
         }
 
       })
     }
   }
-
   // ionViewDidLoad() {
   //   console.log('ionViewDidLoad BaidutbPage');
   // }
-
 
   ionViewDidLeave() {
     if (this.socketSubscription)
       this.socketSubscription.unsubscribe();
   }
-
+  bjPop(){
+    this.bjPopShow = true;
+    this.btmMore = false;
+  }
+  bjPopHide(){
+    this.bjPopShow = false;
+    this.lrPopShow = false;
+    this.lrClickPopShow = false;
+    this.mapShow = false;
+    this.fzPopShow = false;
+    this.btmMore = true;
+  }
+  lrPop(){
+    this.lrPopShow = true;
+    this.btmMore = false;
+  }
+  ShowDaAn(){
+    this.lrClickPopShow = true;
+    this.lrPopShow = false;
+    this.btmMore = false;
+  }
+  MapShow(){
+    this.mapShow = true;
+    this.btmMore = false;
+  }
+  fzPop(){
+    this.fzPopShow = true;
+    this.btmMore = false;
+  }
 }

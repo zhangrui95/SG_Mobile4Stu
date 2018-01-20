@@ -1,35 +1,60 @@
-<ion-header>
-  <ion-navbar color="dark">
-    <ion-title>头脑风暴</ion-title>
-  </ion-navbar>
-</ion-header>
+<!--<ion-header>-->
+  <!--<ion-navbar color="dark">-->
+    <!--<ion-title>头脑风暴</ion-title>-->
+  <!--</ion-navbar>-->
+<!--</ion-header>-->
 
 <ion-content class="cards-bg social-cards" #ioncontent>
-  <div style="padding-top: 20px;padding-left: 5%;padding-right: 5%;padding-bottom: 30px;">
-    <div
-      style="background-color: black;background: rgba(0,0,0,0.5);border-radius: 0.3em;margin: 10px 0px 0px 0px;width: 100%;height: auto;float: left">
-          <span style="min-height: 25px;color: #d8d8d8;margin: 10px 15px 10px 15px;float: left;font-size: large;">
-            {{title}}
-          </span>
-    </div>
-    <div style="float: left;width: 100%;margin-top: 20px;">
-      <span style="color: #d8d8d8">2018人回复了该帖</span>
-      <hr style="border-top: 1px solid #929292;">
-    </div>
+  <img src="assets/img/bj1.png" class="img-bg"/>
+  <div class="tq-box">
+    <img src="assets/img/tq1.png"/>
+    <!--<div class="float-l">-->
+      <!--<img class="sm-img" src="assets/img/tq3.png"/>-->
+      <!--<div class="sm-name">沙尘暴</div>-->
+    <!--</div>-->
+    <!--<div class="float-l">-->
+      <!--<img class="sm-img" src="assets/img/tq2.png" style="margin-left: 5px;"/>-->
+      <!--<div class="sm-name">高温</div>-->
+    <!--</div>-->
   </div>
-  <div *ngFor="let item of items;let n=index" class="pl-box">
-    <div style="margin-left: 20px;float: left;width: 100%">
-      <img style=" height: 50px;width: 50px;float: left;margin-top: 20px;" [src]="item.ImagePath">
-      <div class="time-pl-box">
-        <div style="color:white; margin-bottom:8px;">
-          <span style="font-size: large">{{item.UserName}}</span>
-          <span style="font-size: medium;padding-left: 10px">{{item.role_name}}</span>
+  <div style="padding-top: 30px;padding-left: 5%;padding-right: 5%;padding-bottom: 30px;">
+    <div class="place-name">营地</div>
+    <div class="place-name time">已停留时间：02:20:33</div>
+    <div class="tnfb-tilte">
+            <!--{{title}}-->
+      帐篷可以抵挡沙尘暴哦！
+    </div>
+    <!--<div style="float: left;width: 100%;margin: 20px 0;color: #516c6d;">-->
+      <!--2018人回复了该帖-->
+    <!--</div>-->
+  </div>
+  <!--<div *ngFor="let item of items;let n=index" class="pl-box">-->
+    <!--<div style="margin-left: 20px;float: left;width: 100%">-->
+      <!--<img style=" height: 50px;width: 50px;float: left;margin-top: 20px;" [src]="item.ImagePath">-->
+      <!--<div class="time-pl-box">-->
+        <!--<div style="color:white; margin-bottom:8px;">-->
+          <!--<span style="font-size: large">{{item.UserName}}</span>-->
+          <!--<span style="font-size: medium;padding-left: 10px">{{item.role_name}}</span>-->
+        <!--</div>-->
+        <!--<span style="color:#d8d8d8;margin-top: 5px;display: inline-block;">第{{n+1}}楼 | {{item.createtime}}</span>-->
+      <!--</div>-->
+      <!--<hr style="border-top: 1px dashed #929292;width: 73%;margin: 10px 0px 10px 15px;display: inline-block;" />-->
+      <!--<span class="pl-span-word">{{item.answer}}</span>-->
+    <!--</div>-->
+  <!--</div>-->
+  <div class="list-item-box-bd" style="margin-top: 55px;">
+    <div *ngFor="let item of items;let n=index" class="pl-box">
+      <div style="margin-left: 20px;">
+        <img style=" height: 50px;width: 50px;float: left;margin-top: 20px;" [src]="item.imagePath?getFullPath(item.imagePath):'assets/img/header.png'">
+        <div class="time-pl-box">
+          <div style="color:#516c6d; margin-bottom:8px;">
+            <span style="font-size: 20px;">{{item.userName}}</span>
+            <span style="font-size: 16px;">{{item.role_name}}</span>
+          </div>
+          <div style="color:#516c6d;font-size: 14px;line-height: 14px;">第{{n+1}}楼 |{{item.createtime}}</div>
         </div>
-        <span style="color:#d8d8d8;margin-top: 5px;display: inline-block;">第{{n+1}}楼 | {{item.createtime}}</span>
-
+        <span class="pl-span-word">{{item.answer}}</span>
       </div>
-      <hr style="border-top: 1px dashed #929292;width: 73%;margin: 10px 0px 10px 15px;display: inline-block;" />
-      <span class="pl-span-word">{{item.answer}}</span>
     </div>
   </div>
   <div *ngIf="isShow" style="background-color: rgba(0,0,0,0.5);position:fixed;left: 30%;top: 38%;height: 20%;width: 40%;border-radius: 5px; ">
@@ -46,13 +71,194 @@
       发送
     </button>
   </div>
-  <ion-fab right bottom style="bottom:80px;">
+  <ion-fab right bottom style="bottom:80px;" *ngIf="btmMore">
     <button ion-fab color="dark"><ion-icon name="arrow-dropup"></ion-icon></button>
     <ion-fab-list side="top">
-      <button ion-fab><ion-icon name="ios-stopwatch"></ion-icon></button>
-      <button ion-fab><ion-icon name="ios-home"></ion-icon></button>
-      <button ion-fab><ion-icon name="ios-paper"></ion-icon></button>
-      <button ion-fab><ion-icon name="ios-map"></ion-icon></button>
+      <button ion-fab (click)="lrPop()"><img src="assets/img/bot3.png"/></button>
+      <button ion-fab (click)="MapShow()"><img src="assets/img/bot4.png"/></button>
+      <button ion-fab (click)="fzPop()"><img src="assets/img/bot1.png"/></button>
+      <button ion-fab (click)="bjPop()"><img src="assets/img/bot2.png"/></button>
     </ion-fab-list>
   </ion-fab>
+  <div class="pop-item" *ngIf="bjPopShow">
+  <div class="pop-box">
+    <div class="pop-top-img">
+      <img src="assets/img/bot2.png"/>
+    </div>
+    <div class="top-box-news">
+      <div class="float-l">
+        <img src="assets/img/fz.png" class="float-l fz-img"/>
+        <div class="float-l syfz">
+          <div class="syfz-name">剩余负重</div>
+          <div class="num-fz">530</div>
+        </div>
+      </div>
+      <div class="float-r" style="margin-right: 10px;">
+        <img src="assets/img/jq.png" class="float-l fz-img"/>
+        <div class="float-l syfz">
+          <div class="syfz-name">剩余金钱</div>
+          <div class="num-fz">1000</div>
+        </div>
+      </div>
+    </div>
+    <div class="shop-list">
+      <div class="shop-item">
+        <img src="assets/img/dj1.png" class="shop-img float-l"/>
+        <div class="float-l" style="width: 125px;">
+          <div class="shop-box-name">
+            <span class="shop-name">水</span>
+            <span class="shop-sy">剩余：3</span>
+          </div>
+          <div class="shop-box-name">
+            <span class="shop-dj">单价：10</span>
+            <span class="shop-zl">重量：10</span>
+          </div>
+        </div>
+        <div class="float-r shop-add">
+          <img src="assets/img/jian.png" class="float-l"/>
+          <input type="number" value="0" class="float-l shop-num"/>
+          <img src="assets/img/jia.png" class="float-l"/>
+        </div>
+      </div>
+      <div class="shop-item">
+        <img src="assets/img/dj2.png" class="shop-img float-l"/>
+        <div class="float-l" style="width: 125px;">
+          <div class="shop-box-name">
+            <span class="shop-name">食物</span>
+            <span class="shop-sy">剩余：3</span>
+          </div>
+          <div class="shop-box-name">
+            <span class="shop-dj">单价：10</span>
+            <span class="shop-zl">重量：10</span>
+          </div>
+        </div>
+        <div class="float-r shop-add">
+          <img src="assets/img/jian.png" class="float-l"/>
+          <input type="number" value="0" class="float-l shop-num"/>
+          <img src="assets/img/jia.png" class="float-l"/>
+        </div>
+      </div>
+      <div class="shop-item">
+        <img src="assets/img/dj3.png" class="shop-img float-l"/>
+        <div class="float-l" style="width: 125px;">
+          <div class="shop-box-name">
+            <span class="shop-name">帐篷</span>
+            <span class="shop-sy">剩余：3</span>
+          </div>
+          <div class="shop-box-name">
+            <span class="shop-dj">单价：10</span>
+            <span class="shop-zl">重量：10</span>
+          </div>
+        </div>
+        <div class="float-r shop-add">
+          <img src="assets/img/jian.png" class="float-l"/>
+          <input type="number" value="0" class="float-l shop-num"/>
+          <img src="assets/img/jia.png" class="float-l"/>
+        </div>
+      </div>
+      <div class="shop-item">
+        <img src="assets/img/dj4.png" class="shop-img float-l"/>
+        <div class="float-l" style="width: 125px;">
+          <div class="shop-box-name">
+            <span class="shop-name">指南针</span>
+            <span class="shop-sy">剩余：3</span>
+          </div>
+          <div class="shop-box-name">
+            <span class="shop-dj">单价：10</span>
+            <span class="shop-zl">重量：10</span>
+          </div>
+        </div>
+        <div class="float-r shop-add">
+          <img src="assets/img/jian.png" class="float-l"/>
+          <input type="number" value="0" class="float-l shop-num"/>
+          <img src="assets/img/jia.png" class="float-l"/>
+        </div>
+      </div>
+    </div>
+    <button class="btn-green" ion-button block>确认购买</button>
+  </div>
+  <img src="assets/img/close.png" class="close-btn" (click)="bjPopHide()"/>
+</div>
+  <div class="pop-item" *ngIf="lrPopShow">
+    <div class="pop-box">
+      <div class="pop-top-img">
+        <img src="assets/img/bot3.png"/>
+      </div>
+      <div class="wt-lr">老人：你每天可询问一个问题，我会为你解答</div>
+      <div class="radio-box" (click)="ShowDaAn()">王陵天气</div>
+      <div class="radio-box" (click)="ShowDaAn()">矿山天气</div>
+      <div class="radio-box" (click)="ShowDaAn()">沙漠天气</div>
+      <div class="radio-box" (click)="ShowDaAn()">矿山的秘密</div>
+    </div>
+    <img src="assets/img/close.png" class="close-btn" (click)=" bjPopHide()"/>
+  </div>
+  <div class="pop-item" *ngIf="lrClickPopShow">
+    <div class="pop-box" style="height: 330px;">
+      <div class="pop-top-img">
+        <img src="assets/img/bot3.png"/>
+      </div>
+      <div class="wt-lr" style="margin-bottom: 10px;">老人：你每天可询问一个问题，我会为你解答</div>
+      <div class="wt-lr yellow-word">你今天已经询问过了，明天可以继续询问</div>
+      <div class="radio-box radio-click">王陵天气</div>
+      <div class="qk-til">今日王陵有高温和沙尘暴</div>
+      <div class="qk-content">物品小号将提升，购买道具可抵抗高温、沙尘暴道具只可在营地购买</div>
+    </div>
+    <img src="assets/img/close.png" class="close-btn" style="top:460px;" (click)=" bjPopHide()"/>
+  </div>
+  <div *ngIf="mapShow">
+    <img src="assets/img/bj6.png" class="pop-item"/>
+    <img src="assets/img/close.png" class="close-btn" style="top: 30px;left:auto;right: 20px;width: 30px;" (click)=" bjPopHide()"/>
+  </div>
+  <div class="pop-item" *ngIf="fzPopShow">
+    <div class="pop-box">
+      <div class="pop-top-img">
+        <img src="assets/img/bot1.png"/>
+      </div>
+      <div class="top-box-news">
+        <div class="float-l">
+          <img src="assets/img/fz.png" class="float-l fz-img"/>
+          <div class="float-l syfz">
+            <div class="syfz-name">剩余负重</div>
+            <div class="num-fz">530</div>
+          </div>
+        </div>
+        <div class="float-r" style="margin-right: 10px;">
+          <img src="assets/img/jq.png" class="float-l fz-img"/>
+          <div class="float-l syfz">
+            <div class="syfz-name">剩余金钱</div>
+            <div class="num-fz">1000</div>
+          </div>
+        </div>
+      </div>
+      <div class="fz-box">
+        <div class="fz-item">
+          <img src="assets/img/dj1.png"/>
+          <div class="float-l">水</div>
+          <div class="float-r">×10</div>
+        </div>
+        <div class="fz-item">
+          <img src="assets/img/dj2.png"/>
+          <div class="float-l">食物</div>
+          <div class="float-r">×10</div>
+        </div>
+        <div class="fz-item">
+          <img src="assets/img/dj3.png"/>
+          <div class="float-l">帐篷</div>
+          <div class="float-r">×10</div>
+        </div>
+        <div class="fz-item">
+          <img src="assets/img/dj4.png"/>
+          <div class="float-l">指南针</div>
+          <div class="float-r">×10</div>
+        </div>
+        <div class="fz-item">
+          <img src="assets/img/dj5.png"/>
+          <div class="float-l">金子</div>
+          <div class="float-r">150克</div>
+        </div>
+      </div>
+      <button class="btn-green" ion-button block>马上去采购道具</button>
+    </div>
+    <img src="assets/img/close.png" class="close-btn" (click)="bjPopHide()"/>
+  </div>
 </ion-content>
