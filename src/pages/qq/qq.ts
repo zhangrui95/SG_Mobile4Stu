@@ -103,6 +103,10 @@ export class QQPage{
         this.inputvalue = '';
         this.showSuccess('bottom', '评论成功');
 
+      },error2 => {
+        console.log(error2)
+        this.inputvalue = '';
+
       });
     }
   }
@@ -142,7 +146,9 @@ export class QQPage{
         let msgs = JSON.parse(message)['msg'];
         if (action != null) {
           if (action == 'phone_scene_answers_update') {
-
+            if(this.n_id!=JSON.parse(message)['list'][0].n_id){
+              return ;
+            }
             let item = this.items.concat(JSON.parse(message)['list'])
 
             console.log('---------------------------this.items.length----------------------'+this.items.length)

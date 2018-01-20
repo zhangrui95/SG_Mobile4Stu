@@ -138,6 +138,9 @@ export class BaidutbPage {
         console.log(res)
         this.inputvalue = '';
         this.showSuccess('bottom', '评论成功');
+      },error2 => {
+        console.log(error2)
+        this.inputvalue = '';
       });
     }
   }
@@ -166,10 +169,14 @@ export class BaidutbPage {
         if (action != null) {
           if (action == 'phone_scene_answers_update') {
 
+            if(this.n_id!=JSON.parse(message)['list'][0].n_id){
+              return ;
+            }
+
             let item = this.items.concat(JSON.parse(message)['list'])
             this.items=item
 
-            console.log('==============---------------===================-----------')
+
             console.log(this.items)
             setTimeout(() => {
 
