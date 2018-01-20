@@ -21,13 +21,13 @@ page-decision {
     }
     .option{
       float: left;
-      width: 50px;
+      width: 25px;
       text-align: center;
       margin-right: 0.5em;
     }
     .word{
       float: left;
-      width: 78%;
+      width: 87%;
     }
     input[type="radio"] + .option::before {
       position: relative;

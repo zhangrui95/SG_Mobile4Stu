@@ -39,7 +39,7 @@ export class DanmuPage {
   n_id
   s_data
   title;
-
+  videosrc={changingThisBreaksApplicationSecurity:''}
   src = 'assets/img/juxing-10.png';
 
   mousedownd() {
@@ -107,20 +107,47 @@ export class DanmuPage {
       this.http.addStuAnswer(this.param).subscribe(res => {
         console.log(res)
         this.inputvalue = '';
+        this.showSuccess('bottom', '评论成功');
       });
     }
   }
+
+  showSuccess(position: string, text: string) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 2000,
+      position: position
+    });
+
+    toast.present(toast);
+  }
+
   common
   result
   ionViewDidLoad() {
     // JSON.parse()
 
-    this.result=JSON.parse(this.s_data[0].s_data)
-    this.common=this.result['componentList'][0].data.fillData;
+    // this.result=JSON.parse(this.s_data[0].s_data)
+    // this.common=this.result['componentList'][0].data.fillData;
+    this.result = JSON.parse(this.s_data[0].s_data)
+    this.common = this.result['componentList'];
+    for (let com of  this.common ) {
+      let name = com.name;
+
+      if (name == 'video') {
+        this.name=name;
+        this.videosrc=com.data.src;
+
+      }
+      else {
+
+      }
+
+    }
 
     this.title=this.common.title;
     this.content=this.common.content;
-
+    // this.src=com.data.src;
     // this.title='范德萨的发生非法违法文文';
     // this.content='范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文';
 

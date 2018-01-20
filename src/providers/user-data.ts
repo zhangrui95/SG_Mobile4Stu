@@ -9,7 +9,7 @@ export class UserData {
   _favorites: string[] = [];
   HAS_LOGGED_IN = 'hasLoggedIn';
   HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
-
+  public simType
   public userToken;
 
   constructor(public events: Events,
@@ -72,7 +72,16 @@ export class UserData {
       return value;
     });
   };
+  setSimType(token: string): void {
+    this.storage.set('simtype', token);
+    this.simType=token
+  };
 
+  getSimType(): Promise<string> {
+    return this.storage.get('simtype').then((value) => {
+      return value;
+    });
+  };
   setAction(action: string): void {
     this.storage.set('action', action);
   };
@@ -108,6 +117,15 @@ export class UserData {
   };
   getSimId(): Promise<string> {
     return this.storage.get('simid').then((value) => {
+      return value;
+    });
+  };
+
+  setUposition(url: string): void {
+    this.storage.set('u_position', url);
+  };
+  getUposition(): Promise<string> {
+    return this.storage.get('u_position').then((value) => {
       return value;
     });
   };

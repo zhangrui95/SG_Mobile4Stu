@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {UsersPage} from "../users/users";
 import {ProxyHttpService} from "../../providers/proxy.http.service";
 import {UserData} from "../../providers/user-data";
@@ -39,7 +39,7 @@ export class DecisionPage {
   ]
   selectvalue;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public userData: UserData, public http: ProxyHttpService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public userData: UserData, public http: ProxyHttpService,public toastCtrl: ToastController,) {
     this.userData.getUserID().then(value => this.userId = value)
     this.n_id=this.navParams.data.n_id
     this.g_id=this.navParams.data.g_id
@@ -50,6 +50,8 @@ export class DecisionPage {
 
     this.title = this.result['componentList'][0].data.text;
     this.sim_id=this.navParams.data.sim_id
+
+    this.getAnswerOfStuList();
   }
 
   getForm(item) {
@@ -64,6 +66,18 @@ export class DecisionPage {
   //   console.log(this.Id);
   // }
 
+  getAnswerOfStuList() {
+
+    this.param = {
+      n_id: this.n_id,
+      g_id: this.g_id,
+      sim_id: this.sim_id
+    };
+
+    this.http.getAnswerOfStuList(this.param).subscribe(res => {
+      this.items = res['list']
+    });
+  }
 
   send() {
     this.param = {
@@ -75,7 +89,11 @@ export class DecisionPage {
     };
     if (this.selectvalue != '') {
       this.http.addStuAnswer(this.param).subscribe(res => {
-        this.navCtrl.pop();
+        if(res['code'] == 0){
+          this.navCtrl.pop();
+        }else{
+          this.showToast('bottom', res['msg']);
+        }
         console.log('------addanswer------')
         console.log(res)
         // console.log('received message from server666: ', res['code']);
@@ -85,5 +103,15 @@ export class DecisionPage {
         // }
       });
     }
+  }
+
+  showToast(position: string, text: string) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 2000,
+      position: position
+    });
+
+    toast.present(toast);
   }
 }

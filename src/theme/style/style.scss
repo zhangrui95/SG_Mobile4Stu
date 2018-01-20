@@ -48,7 +48,7 @@ $text-input-md-show-focus-highlight:false !default;
 }
 .toolbar-content-ios{
   .head-img{
-    width: 2.1em;
+    width: 36px;
     top: auto;
     bottom: 3px;
   }
@@ -57,10 +57,10 @@ $text-input-md-show-focus-highlight:false !default;
   }
 }
 .head-img{
-  width: 2.4em;
+  width: 44px;
   position: absolute;
-  top: 8px;
-  right: 15px;
+  top: 7px;
+  right: 10px;
 }
 .no-date{
   text-align: center;
@@ -137,7 +137,7 @@ $text-input-md-show-focus-highlight:false !default;
   }
 }
 .send-btn-bd{
-  background-color: #2D3451;
+  background-color: #1aa7b8;
   color: white;
   width:15%;
   height: 40px;
@@ -158,7 +158,12 @@ h3{
   border: 0;
   width:59%;
 }
-@media (max-width: 374px) {
+@media (max-width: 319px) {
+  .send-input-bd{
+    width:50%;
+  }
+}
+@media (min-width: 320px) and (max-width: 449px) {
   .send-input-bd{
     width:55%;
   }
@@ -173,7 +178,7 @@ h3{
   //overflow: hidden;
   float: left;
   width: 100%;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   .time-pl-box{
     float: left;
     margin: 20px 0px 0px 15px;
@@ -182,8 +187,8 @@ h3{
     float: left;
     color: #d8d8d8;
     width: 100%;
-    padding:10px 20px 0 65px;
-    font-size: 16px;
+    padding:5px 20px 0 65px;
+    font-size: 15px;
   }
 }
 .send-btm-box-bg{

@@ -11,6 +11,9 @@ import {TounaofbPage} from "../tounaofb/tounaofb";
 import {BaidutbPage} from "../baidutb/baidutb";
 import {QQPage} from "../qq/qq";
 import {DefaultPage} from "../default/default";
+import {GoldWeatherPage} from "../gold-weather/gold-weather";
+import {GoldTounaofbPage} from "../gold-tounaofb/gold-tounaofb";
+import {GoldDecisionPage} from "../gold-decision/gold-decision";
 
 
 @IonicPage()
@@ -29,6 +32,7 @@ export class ClassroomPage {
   sim_id;
   indexNs = [];
   g_id = "-1"
+  group_u = false;
 
   action;
 
@@ -44,7 +48,7 @@ export class ClassroomPage {
   }
 
   messagesSubscription;
-
+  simType
   ionViewDidEnter() {
     this.userData.getAction().then(value => {
       this.action=value
@@ -53,7 +57,9 @@ export class ClassroomPage {
         this.allocation = true;
       }
     })
-
+    this.userData.getSimType().then(value => {
+      this.simType=value
+    })
     this.userData.getSimId().then(value => {
       this.sim_id = value;
       this.userData.getUserID().then(value => {
@@ -121,12 +127,14 @@ export class ClassroomPage {
           this.indexNs.push(true);
         }
       }
-      console.log("123123123123123123")
-      console.log(this.g_id)
       this.groOfStu = res['groOfStu'];
       if (res['groOfStu'] === '') {
         this.GroupNews = false;
       } else {
+        if(res['groOfStu'].u_position == 1){
+          this.group_u = true;
+        }
+        this.userData.setUposition(res['groOfStu'].u_position);
         this.userData.setAction('')
         this.g_id = this.groOfStu.g_id
         this.GroupNews = true;
@@ -149,7 +157,6 @@ export class ClassroomPage {
       let data_list = JSON.parse(res['list'][0]['s_data'])['componentList']
       for (let component of data_list) {
         if (component.name == "SG_tieba" || component.name == "SG_bullet" || component.name == "SG_weibo" || component.name == "SG_brain" || component.name == "SG_select" || component.name == "SG_qq") {
-          console.log(component.name)
           name = component.name
         }
       }
@@ -165,16 +172,33 @@ export class ClassroomPage {
           this.navCtrl.push(WeiBoPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
           break;
         case "SG_brain":
-          this.navCtrl.push(TounaofbPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
+          if(this.simType=='gold'){
+            this.navCtrl.push(GoldTounaofbPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
+          }else{
+            this.navCtrl.push(TounaofbPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
+          }
+
+
           break;
         case "SG_select":
-          this.navCtrl.push(DecisionPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
+          if(this.simType=='gold'){
+            this.navCtrl.push(GoldDecisionPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
+          }else{
+            this.navCtrl.push(DecisionPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
+          }
+
           break;
         case "SG_QQ":
           this.navCtrl.push(QQPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
           break;
         case "default":
-          this.navCtrl.push(DefaultPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
+
+          if(this.simType=='gold'){
+            this.navCtrl.push(GoldWeatherPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
+          }else{
+            this.navCtrl.push(DefaultPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
+          }
+
           break;
       }
     });

@@ -104,9 +104,10 @@ export class IndexPage {
           console.log("uid======>"+this.userId)
           const params = {"cla_id": data.cla_id, "cour_id": data.cour_id, "sim_id": data.sim_id, "u_id": this.userId+""}
 
+          this.userData.setSimType(data.p_type);
           this.http.addClassPractice(params).subscribe(res => {
 
-              console.log(res)
+              console.log(res['code'])
               if (res['code'] == 0) {
                 this.userData.setSimId( data.sim_id)
                 this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
@@ -118,6 +119,7 @@ export class IndexPage {
               console.log(error.message);
             this.userData.setSimId( data.sim_id)
             this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
+            this.userData.setAction('')
             }
           );
         } else {
