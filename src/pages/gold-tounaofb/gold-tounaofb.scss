@@ -60,17 +60,18 @@ page-gold-tounaofb {
   .tq-box{
     position: absolute;
     top:25px;
-    right: 20px;
+    right: 15px;
     img{
       width: 80px;
     }
     .sm-img{
-      width: 45px;
+      width: 40px;
     }
     .sm-name{
       color: #f8c400;
       text-align: center;
-      width: 55px;
+      width: 42px;
+      font-size: 14px;
     }
   }
   .send-btm-box-bg{
@@ -263,5 +264,16 @@ page-gold-tounaofb {
       }
     }
   }
-
+  .fab-name{
+    color: #516c6d;
+    font-size: 12px;
+    position: absolute;
+    bottom: -5px;
+    left: -5px;
+    width: 48px;
+    text-align: center;
+  }
+  .fab-in-list{
+    margin: 12px 0;
+  }
 }

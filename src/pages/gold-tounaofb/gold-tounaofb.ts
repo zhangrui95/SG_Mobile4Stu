@@ -36,6 +36,9 @@ export class GoldTounaofbPage {
   mapShow = false;
   fzPopShow = false;
   btmMore = true;
+  ImgBg = 'assets/img/bj1.png';
+  type = 0;
+  tqList = [{name:'沙尘暴',Img:'assets/img/tq3.png'},{name:'高温',Img:'assets/img/tq2.png'}]
 
   src = 'assets/img/juxing-10.png';
 
@@ -107,7 +110,6 @@ export class GoldTounaofbPage {
         console.log(res)
         this.inputvalue = '';
         this.showSuccess('bottom', '评论成功');
-
       });
     }
   }
@@ -125,6 +127,7 @@ export class GoldTounaofbPage {
   common
   result
   ionViewDidLoad() {
+    this.getImgBg();
     // JSON.parse()
     this.result=JSON.parse(this.s_data[0].s_data)
     this.common=this.result['componentList'][0].data.fillData;
@@ -142,7 +145,6 @@ export class GoldTounaofbPage {
         let msgs = JSON.parse(message)['msg'];
         if (action != null) {
           if (action == 'phone_scene_answers_update') {
-
             let item = this.items.concat(JSON.parse(message)['list'])
             this.items=item
             setTimeout(()=>{
@@ -197,5 +199,19 @@ export class GoldTounaofbPage {
   fzPop(){
     this.fzPopShow = true;
     this.btmMore = false;
+  }
+  getImgBg(){
+    console.log(this.type);
+    if(this.type == 0){
+      this.ImgBg = 'assets/img/bj1.png';
+    }else if(this.type == 1){
+      this.ImgBg = 'assets/img/bj2.png';
+    }else if(this.type == 2){
+      this.ImgBg = 'assets/img/bj3.png';
+    }else if(this.type == 3){
+      this.ImgBg = 'assets/img/bj4.png';
+    }else if(this.type == 4){
+      this.ImgBg = 'assets/img/bj5.png';
+    }
   }
 }

@@ -5,17 +5,13 @@
 <!--</ion-header>-->
 
 <ion-content class="cards-bg social-cards" #ioncontent>
-  <img src="assets/img/bj1.png" class="img-bg"/>
+  <img src="{{ImgBg}}" class="img-bg"/>
   <div class="tq-box">
-    <img src="assets/img/tq1.png"/>
-    <!--<div class="float-l">-->
-      <!--<img class="sm-img" src="assets/img/tq3.png"/>-->
-      <!--<div class="sm-name">沙尘暴</div>-->
-    <!--</div>-->
-    <!--<div class="float-l">-->
-      <!--<img class="sm-img" src="assets/img/tq2.png" style="margin-left: 5px;"/>-->
-      <!--<div class="sm-name">高温</div>-->
-    <!--</div>-->
+    <!--<img src="assets/img/tq1.png"/>-->
+    <div class="float-l" *ngFor="let item of tqList;">
+      <img class="sm-img" src="{{item.Img}}"/>
+      <div class="sm-name">{{item.name}}</div>
+    </div>
   </div>
   <div style="padding-top: 30px;padding-left: 5%;padding-right: 5%;padding-bottom: 30px;">
     <div class="place-name">营地</div>
@@ -74,10 +70,19 @@
   <ion-fab right bottom style="bottom:80px;" *ngIf="btmMore">
     <button ion-fab color="dark"><ion-icon name="arrow-dropup"></ion-icon></button>
     <ion-fab-list side="top">
-      <button ion-fab (click)="lrPop()"><img src="assets/img/bot3.png"/></button>
-      <button ion-fab (click)="MapShow()"><img src="assets/img/bot4.png"/></button>
-      <button ion-fab (click)="fzPop()"><img src="assets/img/bot1.png"/></button>
-      <button ion-fab (click)="bjPop()"><img src="assets/img/bot2.png"/></button>
+      <div style="position: relative;">
+        <button ion-fab (click)="lrPop()"><img src="assets/img/bot3.png"/></button>
+        <span class="fab-name">老人解答</span>
+      </div>
+      <div style="position: relative;">
+        <button ion-fab (click)="MapShow()"><img src="assets/img/bot4.png"/></button><span class="fab-name">地图</span>
+      </div>
+      <div style="position: relative;">
+        <button ion-fab (click)="fzPop()"><img src="assets/img/bot1.png"/></button><span class="fab-name">背包</span>
+      </div>
+      <div style="position: relative;">
+        <button ion-fab (click)="bjPop()"><img src="assets/img/bot2.png"/></button><span class="fab-name">补给</span>
+      </div>
     </ion-fab-list>
   </ion-fab>
   <div class="pop-item" *ngIf="bjPopShow">
