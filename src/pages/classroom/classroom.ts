@@ -13,7 +13,7 @@ import {QQPage} from "../qq/qq";
 import {DefaultPage} from "../default/default";
 import {GoldWeatherPage} from "../gold-weather/gold-weather";
 import {GoldTounaofbPage} from "../gold-tounaofb/gold-tounaofb";
-import {GoldDecisionPage} from "../gold-decision/gold-decision";
+// import {GoldDecisionPage} from "../gold-decision/gold-decision";
 
 
 @IonicPage()
@@ -92,6 +92,8 @@ export class ClassroomPage {
             this.userData.setAction(action);
           } else if (action === "phone_call") {
             this.showToast('bottom', msgs);
+          }else if (action === "exercises_end") {
+            this.showToast('bottom', '本次演练终止');
           }
         }
       }
