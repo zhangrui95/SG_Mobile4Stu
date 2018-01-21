@@ -49,7 +49,14 @@ export class ClassroomPage {
   messagesSubscription;
   simType
   ionViewDidEnter() {
-    this.showAlwaysToast('bottom','演练结束，请等待结算')
+    this.userData.getIsDead().then(v => {
+      this.userData.getIsSuccess().then(e => {
+          if(v||e){
+            this.showAlwaysToast('bottom','演练结束，请等待结算')
+          }
+      })
+    })
+
     this.userData.getAction().then(value => {
       this.action=value
       if (this.action === "phone_group") {
