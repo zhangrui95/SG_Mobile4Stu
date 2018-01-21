@@ -82,6 +82,9 @@ export class ProxyHttpService {
   getGroupsList(params){
     return this._get("/phoneAppController/getGroupsList.do",params)
   }
+  getGoldStatus(params){
+    return this._get("/phoneAppController/getGDKDataByNId.do",params)
+  }
 
   getIsExistEndCour(params){
     return this._get("/phoneAppController/getIsExistEndCour.do",params)
