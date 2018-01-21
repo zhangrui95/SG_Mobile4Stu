@@ -510,7 +510,9 @@ export class DesertService {
   }
 
   setCurrState(state) {
-    this.currState = state;
+    if(state&&state.length>0){
+      this.currState = state;
+    }
   }
 
   getCurrState() {
@@ -519,17 +521,25 @@ export class DesertService {
 
   public currState = {
     position: 'A1',
-    place: 0,
+    place: PLACE_START,
     money: totalMoney,
     weight: totalWeight,
     food: 0,
-    days: 0,
+    days: 1,
     water: 0,
     tent: 0,
     compass: 0,
     gold: 0,
     status: [],
-    events: []
+    events: [
+      {
+        e_name: '营地交易',
+        type: EVENT_TRADE
+      }, {
+        e_name: '询问老人',
+        type: EVENT_ASK
+      }
+    ]
   };
   public reduce = {food: 0, water: 0};
 

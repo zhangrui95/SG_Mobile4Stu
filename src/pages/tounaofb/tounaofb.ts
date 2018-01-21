@@ -156,7 +156,6 @@ export class TounaofbPage {
             let item = this.items.concat(JSON.parse(message)['list'])
             this.items=item
             setTimeout(()=>{
-
               this.ioncontent.scrollToBottom(500);
             },1000)
 

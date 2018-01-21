@@ -173,19 +173,19 @@ export class ClassroomPage {
           break;
         case "SG_brain":
           if(this.simType=='gold'){
+
             this.navCtrl.push(GoldTounaofbPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
+
           }else{
+
             this.navCtrl.push(TounaofbPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
+
           }
 
 
           break;
         case "SG_select":
-          if(this.simType=='gold'){
-            this.navCtrl.push(GoldDecisionPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
-          }else{
-            this.navCtrl.push(DecisionPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
-          }
+          this.navCtrl.push(DecisionPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
 
           break;
         case "SG_QQ":
