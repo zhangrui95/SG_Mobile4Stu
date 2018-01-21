@@ -29,6 +29,9 @@ page-decision {
       float: left;
       width: 87%;
     }
+    .word-green{
+      color: #1aa7b8;
+    }
     input[type="radio"] + .option::before {
       position: relative;
       content: "\a0";

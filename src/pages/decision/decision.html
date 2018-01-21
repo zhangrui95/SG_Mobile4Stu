@@ -13,13 +13,13 @@
       <!--</div>-->
       <form class="form-box">
          <label *ngFor="let item of common;let n = index;" (change)="getForm(options[n].option)">
-            <input type="radio" name="choice"/>
-            <span class="option"></span>
-            <span class="word">{{item.value}}</span>
+            <input type="radio" name="choice" *ngIf="btnShow"/>
+            <span class="option" *ngIf="btnShow"></span>
+            <span class="{{item.Checked?'word word-green':'word'}}">{{item.value}}</span>
          </label>
        </form>
     </div>
-  <div padding class="mar-btn" *ngIf="group_u&&simType=='gold'">
-    <button ion-button block (click)="send()" >确认投票</button>
+  <div padding class="mar-btn"  *ngIf="group_u&&simType=='gold'">
+    <button ion-button block (click)="send()" *ngIf="btnShow">确认投票</button>
   </div>
 </ion-content>
