@@ -91,6 +91,8 @@ export class ClassroomPage {
             this.userData.setAction(action);
           } else if (action === "phone_call") {
             this.showToast('bottom', msgs);
+          }else if (action === "exercises_end") {
+            this.showToast('bottom', '本次演练终止');
           }
         }
       }

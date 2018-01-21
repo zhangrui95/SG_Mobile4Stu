@@ -25,6 +25,7 @@ export class IndexPage {
   registerBackButton
   btnShow = false;
   simId;
+  messagesSubscription;
 
 
   exitApp() {
@@ -79,6 +80,23 @@ export class IndexPage {
         this.btnShow = true;
       }
     })
+  }
+  ionViewDidEnter(){
+    this.messagesSubscription = this.ws.messages.subscribe(msg => {
+      if (msg !== null) {
+        let action = JSON.parse(msg)['action'];
+        console.log('action', action);
+        if (action !== "undefined") {
+          if (action === "exercises_end") {
+            this.btnShow = false;
+          }
+        }
+      }
+    });
+  }
+
+  ionViewDidLeave() {
+    this.messagesSubscription.unsubscribe()
   }
 
   getUser() {

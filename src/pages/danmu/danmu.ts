@@ -173,12 +173,12 @@ export class DanmuPage {
             },1000)
 
 
-          }
-          else if (action === "phone_group") {
+          } else if (action === "phone_group") {
             this.userData.setAction(action);
-          }
-          if(action === "phone_call"){
+          } else if(action === "phone_call"){
             this.showToast('bottom', msgs);
+          }else if (action === "exercises_end") {
+            this.showToast('bottom', '本次演练终止');
           }
 
         }
