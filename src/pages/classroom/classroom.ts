@@ -13,7 +13,6 @@ import {QQPage} from "../qq/qq";
 import {DefaultPage} from "../default/default";
 import {GoldWeatherPage} from "../gold-weather/gold-weather";
 import {GoldTounaofbPage} from "../gold-tounaofb/gold-tounaofb";
-import {GoldDecisionPage} from "../gold-decision/gold-decision";
 
 
 @IonicPage()
@@ -156,7 +155,7 @@ export class ClassroomPage {
       let s_data = res['list'];
       let data_list = JSON.parse(res['list'][0]['s_data'])['componentList']
       for (let component of data_list) {
-        if (component.name == "SG_tieba" || component.name == "SG_bullet" || component.name == "SG_weibo" || component.name == "SG_brain" || component.name == "SG_select" || component.name == "SG_qq") {
+        if (component.name == "SG_tieba" || component.name == "SG_bullet" || component.name == "SG_weibo" || component.name == "SG_brain" || component.name == "SG_select" || component.name == "SG_QQ") {
           name = component.name
         }
       }
@@ -174,7 +173,7 @@ export class ClassroomPage {
         case "SG_brain":
           if(this.simType=='gold'){
 
-            this.navCtrl.push(GoldTounaofbPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
+            this.navCtrl.push(GoldTounaofbPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id, group_u: this.group_u})
 
           }else{
 
@@ -185,7 +184,7 @@ export class ClassroomPage {
 
           break;
         case "SG_select":
-          this.navCtrl.push(DecisionPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
+          this.navCtrl.push(DecisionPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id,group_u:this.group_u})
 
           break;
         case "SG_QQ":
