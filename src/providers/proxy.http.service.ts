@@ -108,6 +108,11 @@ export class ProxyHttpService {
   addClassPractice(params){
     return this._post("/phoneAppController/addClassPractice.do",params)
   }
+  getAnswerByUId(params){
+    return this._get("/phoneAppController/getAnswerByUId.do",params)
+  }
+
+
 
   getBaseurl(){
     return ProxyHttpService.IP_PORT;

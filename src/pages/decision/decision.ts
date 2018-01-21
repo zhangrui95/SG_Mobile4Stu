@@ -41,17 +41,17 @@ export class DecisionPage {
   selectvalue;
   group_u
   simType
+  u_id;
   simData;
+  btnShow = true;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userData: UserData, public http: ProxyHttpService, public toastCtrl: ToastController,) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public userData: UserData, public http: ProxyHttpService,public toastCtrl: ToastController,) {
     this.userData.getUserID().then(value => this.userId = value)
-    this.n_id = this.navParams.data.n_id
-    this.g_id = this.navParams.data.g_id
-    this.s_data = this.navParams.data.s_data
-    this.lastnid = this.navParams.data.lastnid
-    this.result = JSON.parse(this.s_data[0].s_data)
+    this.n_id=this.navParams.data.n_id;
+    this.g_id=this.navParams.data.g_id;
+    this.s_data = this.navParams.data.s_data;
+    this.result = JSON.parse(this.s_data[0].s_data);
     this.common = this.result['componentList'][0].data.selectData;
-
     this.title = this.result['componentList'][0].data.text;
     this.sim_id = this.navParams.data.sim_id
     this.group_u = this.navParams.data.group_u
@@ -59,8 +59,24 @@ export class DecisionPage {
     this.userData.getSimType().then(res => {
       this.simType = res;
     })
-
-    this.getAnswerOfStuList();
+    this.sim_id=this.navParams.data.sim_id;
+    for(let i in this.common){
+      this.common[i].Checked = false;
+    }
+    this.userData.getUserID().then(value => {
+      this.u_id = value
+      let param = {sim_id:this.sim_id,n_id:this.n_id,u_id:this.u_id}
+      this.http.getAnswerByUId(param).subscribe(res => {
+        console.log(res);
+        if(res['answer'] == -1){
+          this.btnShow = true;
+        }else{
+          this.common[res['answer']].Checked = true;
+          this.btnShow = false;
+        }
+      })
+    })
+    // this.getAnswerOfStuList();
   }
 
   getForm(item) {
@@ -71,22 +87,19 @@ export class DecisionPage {
     this.navCtrl.push(UsersPage);
   }
 
-  // vote() {
-  //   console.log(this.Id);
+  // getAnswerOfStuList() {
+  //
+  //   this.param = {
+  //     n_id: this.n_id,
+  //     g_id: this.g_id,
+  //     sim_id: this.sim_id
+  //   };
+  //
+  //   this.http.getAnswerOfStuList(this.param).subscribe(res => {
+  //     console.log(res)
+  //     this.items = res['list']
+  //   });
   // }
-
-  getAnswerOfStuList() {
-
-    this.param = {
-      n_id: this.n_id,
-      g_id: this.g_id,
-      sim_id: this.sim_id
-    };
-
-    this.http.getAnswerOfStuList(this.param).subscribe(res => {
-      this.items = res['list']
-    });
-  }
 
   send() {
 
