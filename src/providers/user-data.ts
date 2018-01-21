@@ -92,8 +92,26 @@ export class UserData {
       return value;
     });
   };
+  setIsDead(token: boolean): void {
+    this.storage.set('isDead', token);
+    this.simType=token
+  };
 
+  getIsDead(): Promise<boolean> {
+    return this.storage.get('isDead').then((value) => {
+      return value;
+    });
+  };
+  setIsSuccess(token: boolean): void {
+    this.storage.set('isSuccess', token);
+    this.simType=token
+  };
 
+  getIsSuccess(): Promise<boolean> {
+    return this.storage.get('isSuccess').then((value) => {
+      return value;
+    });
+  };
   setSimType(token: string): void {
     this.storage.set('simtype', token);
     this.simType=token

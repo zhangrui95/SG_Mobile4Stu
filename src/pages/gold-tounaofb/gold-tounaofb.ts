@@ -64,14 +64,15 @@ export class GoldTounaofbPage {
   lost;
   lostDuration
   group_u
+
   setWeather() {
-    this.weather= this.desertService.getWeather()
-    switch (this.weather){
+    this.weather = this.desertService.getWeather()
+    switch (this.weather) {
       case WEATHER_HOT_SANDSTORM:
         this.tqList = [{name: '沙暴', Img: 'assets/img/tq3.png'}, {name: '高温', Img: 'assets/img/tq2.png'}]
         break
       case WEATHER_HOT:
-        this. tqList = [ {name: '高温', Img: 'assets/img/tq2.png'}]
+        this.tqList = [{name: '高温', Img: 'assets/img/tq2.png'}]
         break
       case WEATHER_SANDSTORM:
         this.tqList = [{name: '沙暴', Img: 'assets/img/tq3.png'}]
@@ -81,17 +82,19 @@ export class GoldTounaofbPage {
         break
     }
   }
-  isLost(){
-    this.lost= this.desertService.isGetLost()
-    if(this.lost){
-      for(let statu of  this.currentStatus.status){
-        if(statu.status_type==STATUS_GET_LOST){
-          this.lostDuration=statu.status_duration
+
+  isLost() {
+    this.lost = this.desertService.isGetLost()
+    if (this.lost) {
+      for (let statu of  this.currentStatus.status) {
+        if (statu.status_type == STATUS_GET_LOST) {
+          this.lostDuration = statu.status_duration
         }
       }
 
     }
   }
+
   mousedownd() {
     this.isShow = true
     this.src = 'assets/img/yuyin-3.png';
@@ -132,7 +135,7 @@ export class GoldTounaofbPage {
     this.userData.getSimId().then(res => {
       this.sim_id = res;
     })
-    this.group_u=this.navParams.data.group_u
+    this.group_u = this.navParams.data.group_u
 
     this.getAnswerOfStuList();
   }
@@ -302,22 +305,24 @@ export class GoldTounaofbPage {
   goodReduce(item) {
     item.num--
   }
-  useCompass=false;
-  useTent=false;
+
+  useCompass = false;
+  useTent = false;
+
   userAction(type, item?, count?) {
     console.log()
-    if(!this.group_u){
-      this.showToast('bottom',"只有领队可以执行")
+    if (!this.group_u) {
+      this.showToast('bottom', "只有领队可以执行")
       return
     }
     switch (type) {
       case 'trade':
         for (let good of this.goods) {
-          let result=this.desertService.trade(good.type, good.num);
-          if(!result.isSuccess){
-            this.showToast('bottom',result.msg)
-          }else{
-            this.showToast('bottom','交易成功')
+          let result = this.desertService.trade(good.type, good.num);
+          if (!result.isSuccess) {
+            this.showToast('bottom', result.msg)
+          } else {
+            this.showToast('bottom', '交易成功')
           }
         }
         break;
@@ -325,19 +330,19 @@ export class GoldTounaofbPage {
         let limType
         if (item == 'compass') {
           limType = ITEM_COMPASS
-          if(this.desertService.useItem(limType)){
-            this.showToast('bottom','使用成功')
-            this.useCompass=true;
-          }else{
-            this.showToast('bottom','使用失败')
+          if (this.desertService.useItem(limType)) {
+            this.showToast('bottom', '使用成功')
+            this.useCompass = true;
+          } else {
+            this.showToast('bottom', '使用失败')
           }
         } else if (item == 'tent') {
           limType = ITEM_TENT
-          if(this.desertService.useItem(limType)){
-            this.showToast('bottom','使用成功')
-            this.useTent=true;
-          }else {
-            this.showToast('bottom','使用失败')
+          if (this.desertService.useItem(limType)) {
+            this.showToast('bottom', '使用成功')
+            this.useTent = true;
+          } else {
+            this.showToast('bottom', '使用失败')
           }
         }
 
@@ -359,12 +364,11 @@ export class GoldTounaofbPage {
         }
 
 
-
-      if(this.desertService.throwItem(limType, count).isSuccess){
-        this.showToast('bottom','丢弃成功')
-      }else {
-        this.showToast('bottom','丢弃失败')
-      }
+        if (this.desertService.throwItem(limType, count).isSuccess) {
+          this.showToast('bottom', '丢弃成功')
+        } else {
+          this.showToast('bottom', '丢弃失败')
+        }
         break
 
 
@@ -378,11 +382,12 @@ export class GoldTounaofbPage {
   name_position
   already
   stay
+
   ionViewDidLoad() {
 
 
-    this.userData.getAlready(this.n_id).then(res=>{
-      this.already=res
+    this.userData.getAlready(this.n_id).then(res => {
+      this.already = res
     });
     // JSON.parse()
     this.result = JSON.parse(this.s_data[0].s_data)
@@ -407,21 +412,25 @@ export class GoldTounaofbPage {
       this.setWeather()
       this.isLost();
 
-
-      if(this.currentStatus.place==PLACE_START&&this.currentStatus.days>1){
-        //若在开始位置且天数>1 判断是否结算
-      }
-      if(this.currentStatus.place==PLACE_END){
-        //若在结束位置 次日得一单位金
-      }
-      if(this.currentStatus.place==PLACE_TOMBS){
+      if (this.currentStatus.place == PLACE_TOMBS) {
         //若在王陵 获得随机事件
-        if(this.group_u){
-            this.userData.setAlready(this.n_id+this.currentStatus.days,true)
-            this.desertService.digging()
-            this.stay=true
+        if (this.group_u) {
+          this.userData.getAlready(this.n_id + this.currentStatus.days).then(res => {
+            if (!res) {
+              let result = this.desertService.trigRandomEvent()
+              if (result.isSuccess) {
+                this.showToast('bottom', result.msg)
+              }
+              this.userData.setAlready(this.n_id + this.currentStatus.days, true)
+            } else {
+
+            }
+
+          })
+
         }
       }
+
     })
 
 
@@ -442,6 +451,15 @@ export class GoldTounaofbPage {
           } else if (action === "phone_group") {
             this.userData.setAction(action);
           }
+
+          if (action == 'phone_Death') {
+            if (JSON.parse(message)['datas']['type'] == 'dead') {
+              this.userData.setIsDead(true)
+            } else if (JSON.parse(message)['datas']['type'] == 'success') {
+              this.userData.setIsSuccess(true)
+            }
+            this.navCtrl.pop()
+          }
           if (action === "phone_call") {
             this.showToast('bottom', msgs);
           }
@@ -457,24 +475,151 @@ export class GoldTounaofbPage {
   // }
 
 
+  goDead() {
+    this.userData.setIsDead(true)
+    let params = {
+      g_id: this.g_id,
+      sim_id: this.sim_id,
+      datas: {
+        type: 'dead',
+        n_id: this.n_id,
+        g_id: this.g_id
+      }
 
-  goDead(){
-
+    }
+    this.http.getPushDeathNoticeByGro(params).subscribe(res => {
+      console.log(res)
+    })
   }
-  goSuccess(){
 
+  goSuccess() {
+    this.userData.setIsSuccess(true)
+    let params = {
+      g_id: this.g_id,
+      sim_id: this.sim_id,
+      datas: {
+        type: 'success',
+        n_id: this.n_id,
+        g_id: this.g_id
+      }
+
+    }
+    this.http.getPushDeathNoticeByGro(params).subscribe(res => {
+      console.log(res)
+    })
   }
-  ionViewWillLeave(){
-    if(this.weather==WEATHER_SANDSTORM||this.weather==WEATHER_HOT_SANDSTORM){
-      if(this.useCompass){
+
+  ionViewWillLeave() {
+    if(!this.group_u){
+      return
+    }
+    if (this.weather == WEATHER_SANDSTORM || this.weather == WEATHER_HOT_SANDSTORM) {
+      if (this.useCompass) {
         this.desertService.setLostStatus()
+        this.stay = true
       }
     }
-    if(!this.desertService.consume(this.weather,this.useTent).isSuccess) {
-        this.goDead();
+    if (!this.desertService.consume(this.weather, this.useTent).isSuccess) {
+      this.goDead();
+    } else {
+      this.userData.getIsSuccess().then(v => {
+        {
+          this.userData.getIsDead().then(e => {
+            {
+
+              if (!v && !e) {
+                if (this.currentStatus.place == PLACE_START && this.currentStatus.days > 1) {
+                  //若在开始位置且天数>1 判断是否结算
+                  let f = confirm("是否出售所有黄金并等待结算？");
+                  if (f) {
+                    //todo 推送当前组成员 通知结束
+                    this.goSuccess()
+                    let params = {
+                      sim_id: this.sim_id,
+                      n_id: '-1'
+                    };
+                    this.http.getDataForRanking(params).subscribe(res => {
+                      console.log(res)
+                      let count = +res['totalRanking']
+                      count = count + 1
+                      let money = this.currentStatus.money;
+                      switch (count) {
+                        case 1:
+                          money = money + (this.currentStatus.gold * 50 * 100)
+                          break;
+                        case 2:
+                          money = money + (this.currentStatus.gold * 50 * 90)
+                          break;
+                        case 3:
+                          money = money + (this.currentStatus.gold * 50 * 85)
+                          break;
+                        case 4:
+                          money = money + (this.currentStatus.gold * 50 * 80)
+                          break;
+                        default:
+                          money = money + (this.currentStatus.gold * 50 * 75)
+                          break;
+
+
+                      }
+                      let p = {
+                        sim_id: this.sim_id,
+                        g_id: this.g_id,
+                        n_id: this.n_id,
+                        current_status: this.currentStatus,
+                        money: money + '',
+                      }
+                      console.log(p)
+                      this.http.addGDKAnswer(p).subscribe(res => {
+                        if (res['code'] == 0) {
+                          this.navCtrl.pop();
+                        } else {
+                          this.showToast('bottom', res['msg']);
+                        }
+                        console.log('------addanswer------')
+                        console.log(res)
+                        // console.log('received message from server666: ', res['code']);
+                        // this.value='';
+                        // if (res['code'] == 0) {
+                        //
+                        // }
+                      }, error => {
+                        console.log(error)
+                        this.navCtrl.pop();
+                      });
+
+                    })
+                  }
+                }
+                if (this.currentStatus.place == PLACE_END) {
+                  //若在结束位置 次日得一单位金
+
+                  this.userData.getAlready(this.n_id + this.currentStatus.days).then(res => {
+                    if (!res) {
+                      this.desertService.digging()
+                      this.userData.setAlready(this.n_id + this.currentStatus.days, true)
+                    } else {
+
+                    }
+
+                  })
+
+
+                }
+              }
+            }
+          })
+
+
+        }
+      })
+
+
     }
-    this.userData.setSimData('simdata'+this.n_id,this.currentStatus);
+
+    this.userData.setSimData('simdata' + this.n_id, this.currentStatus);
   }
+
   ionViewDidLeave() {
 
     if (this.socketSubscription)
@@ -511,23 +656,23 @@ export class GoldTounaofbPage {
   answer
 
   ShowDaAn(i) {
-    if(this.already){
-      this.showToast('bottom',"今天已经回答过了，请明天再来")
+    if (this.already) {
+      this.showToast('bottom', "今天已经回答过了，请明天再来")
       return
     }
-    if(!this.group_u){
-      this.showToast('bottom',"我只回答领队的问题")
+    if (!this.group_u) {
+      this.showToast('bottom', "我只回答领队的问题")
       return
     }
-    this.stay=true
+    this.stay = true
     this.answer = this.desertService.getAnswer(i)
     this.lrClickPopShow = true;
     this.lrPopShow = false;
     this.btmMore = false;
-    this.currentStatus.asked=true;
-    this.desertService.getCurrState().asked=false;
-    this.userData.setAlready(this.n_id+this.currentStatus.days,true)
-    this.currentStatus=this.desertService.getCurrState()
+    this.currentStatus.asked = true;
+    this.desertService.getCurrState().asked = false;
+    this.userData.setAlready(this.n_id + this.currentStatus.days, true)
+    this.currentStatus = this.desertService.getCurrState()
 
   }
 

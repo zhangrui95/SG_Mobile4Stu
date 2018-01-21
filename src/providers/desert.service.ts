@@ -470,7 +470,7 @@ export class DesertService {
             this.currState.food = 0;
             isSuccess = false;
             msg = foodNotEnough
-            this.goDead(this.currState.position)
+            // this.goDead(this.currState.position)
 
           } else {
             this.currState.food = this.currState.food - event.num
@@ -498,7 +498,7 @@ export class DesertService {
             this.currState.water = 0
             isSuccess = false;
             msg = waterNotEnough
-            this.goDead(this.currState.position)
+            // this.goDead(this.currState.position)
 
           } else {
             this.currState.water = this.currState.water - event.num

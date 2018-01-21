@@ -69,6 +69,17 @@ export class ProxyHttpService {
   getAnswerOfStuList(params){
     return this._post("/phoneAppController/getAnswerOfStuList.do",params)
   }
+
+
+  getPushDeathNoticeByGro(params){
+    return this._post("/phoneAppController/getPushDeathNoticeByGro.do",params)
+  }
+
+
+  getDataForRanking(params){
+    return this._get("/phoneAppController/getDataForRanking.do",params)
+  }
+
   addStuAnswer(params){
     return this._post("/phoneAppController/addStuAnswer.do",params)
   }
@@ -78,6 +89,10 @@ export class ProxyHttpService {
   getappExercisesInfo(params){
     return this._post("/statistical/appExercisesInfo.do",params)
   }
+  addGDKAnswer(params){
+    return this._post("/phoneAppController/addGDKAnswer.do",params)
+  }
+
 
   getGroupsList(params){
     return this._get("/phoneAppController/getGroupsList.do",params)

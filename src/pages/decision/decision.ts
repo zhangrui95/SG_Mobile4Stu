@@ -23,37 +23,41 @@ export class DecisionPage {
   select
   title
   result
+  lastnid
   common
   common_data
   data_list: any;
   // data_list: any;
   // issue = '若你作为辉发乳业（集团）股份有限公司的决策者，关注到网贴后该如何决策？';
   options = [
-    {option:'A'},
-    {option:'B'},
-    {option:'C'},
-    {option:'D'},
-    {option:'E'},
-    {option:'F'},
-    {option:'G'}
+    {option: 'A'},
+    {option: 'B'},
+    {option: 'C'},
+    {option: 'D'},
+    {option: 'E'},
+    {option: 'F'},
+    {option: 'G'}
   ]
   selectvalue;
   group_u
   simType
-  constructor(public navCtrl: NavController, public navParams: NavParams,public userData: UserData, public http: ProxyHttpService,public toastCtrl: ToastController,) {
-    this.userData.getUserID().then(value => this.userId = value)
-    this.n_id=this.navParams.data.n_id
-    this.g_id=this.navParams.data.g_id
-    this.s_data = this.navParams.data.s_data
+  simData;
 
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userData: UserData, public http: ProxyHttpService, public toastCtrl: ToastController,) {
+    this.userData.getUserID().then(value => this.userId = value)
+    this.n_id = this.navParams.data.n_id
+    this.g_id = this.navParams.data.g_id
+    this.s_data = this.navParams.data.s_data
+    this.lastnid = this.navParams.data.lastnid
     this.result = JSON.parse(this.s_data[0].s_data)
     this.common = this.result['componentList'][0].data.selectData;
 
     this.title = this.result['componentList'][0].data.text;
-    this.sim_id=this.navParams.data.sim_id
-    this.group_u=this.navParams.data.group_u
-    this.userData.getSimType().then(res=>{
-      this.simType=res;
+    this.sim_id = this.navParams.data.sim_id
+    this.group_u = this.navParams.data.group_u
+    this.simData = this.navParams.data.simData
+    this.userData.getSimType().then(res => {
+      this.simType = res;
     })
 
     this.getAnswerOfStuList();
@@ -85,31 +89,59 @@ export class DecisionPage {
   }
 
   send() {
+
+    let simD=this.userData.getSimData('simdata'+this.n_id)
+
     this.param = {
       sim_id: this.sim_id,
-      g_id:  this.g_id,
+      g_id: this.g_id,
       u_id: this.userId,
       answer: this.selectvalue,
-      n_id: this.n_id
+      current_status: simD,
+      n_id: this.n_id,
+      money: ''
     };
+
+
     if (this.selectvalue != '') {
-      this.http.addStuAnswer(this.param).subscribe(res => {
-        if(res['code'] == 0){
+      if (this.simType == 'gold') {
+        this.http.addGDKAnswer(this.param).subscribe(res => {
+          if (res['code'] == 0) {
+            this.navCtrl.pop();
+          } else {
+            this.showToast('bottom', res['msg']);
+          }
+          console.log('------addanswer------')
+          console.log(res)
+          // console.log('received message from server666: ', res['code']);
+          // this.value='';
+          // if (res['code'] == 0) {
+          //
+          // }
+        }, error => {
+          console.log(error)
           this.navCtrl.pop();
-        }else{
-          this.showToast('bottom', res['msg']);
-        }
-        console.log('------addanswer------')
-        console.log(res)
-        // console.log('received message from server666: ', res['code']);
-        // this.value='';
-        // if (res['code'] == 0) {
-        //
-        // }
-      },error =>{
-        console.log(error)
-        this.navCtrl.pop();
-      } );
+        });
+      } else {
+        this.http.addStuAnswer(this.param).subscribe(res => {
+          if (res['code'] == 0) {
+            this.navCtrl.pop();
+          } else {
+            this.showToast('bottom', res['msg']);
+          }
+          console.log('------addanswer------')
+          console.log(res)
+          // console.log('received message from server666: ', res['code']);
+          // this.value='';
+          // if (res['code'] == 0) {
+          //
+          // }
+        }, error => {
+          console.log(error)
+          this.navCtrl.pop();
+        });
+      }
+
     }
   }
 

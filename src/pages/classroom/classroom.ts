@@ -49,6 +49,7 @@ export class ClassroomPage {
   messagesSubscription;
   simType
   ionViewDidEnter() {
+    this.showAlwaysToast('bottom','演练结束，请等待结算')
     this.userData.getAction().then(value => {
       this.action=value
       if (this.action === "phone_group") {
@@ -82,6 +83,14 @@ export class ClassroomPage {
         console.log(JSON.parse(msg)['action']);
         console.log('action', action);
         if (action !== "undefined") {
+          if(action=='phone_Death'){
+            if(JSON.parse(msg)['datas']['type']=='dead'){
+              this.userData.setIsDead(true)
+            }else if(JSON.parse(msg)['datas']['type']=='success'){
+              this.userData.setIsSuccess(true)
+            }
+
+          }
           if (action === "phone_process_update") {
             this.getProcessOfStu();
             this.scrollToBottom();
@@ -110,38 +119,45 @@ export class ClassroomPage {
   //   });
   // }
   getProcessOfStu() {
-    const params = {sim_id: this.sim_id, u_id: this.userId};
-    console.log("*-*-*-*-*-*-*-*-*-*");
-    console.log(JSON.stringify(params));
-    this.http.getProcessOfStu(params).subscribe(res => {
-      // for(let i in res['list']){
-      //   res['list'][0].ns = '';
-      //   res['list'][i].ns = [{"n_id":"1.1","n_name":"sdfsdfs"},{"n_id":"1.2","n_name":"sdfsdfd"}];
-      // }
-      this.items = res['list'];
-      console.log("*-*-*-*-*-*-*-*-*-*" + JSON.stringify(res));
-      console.log(JSON.stringify(res));
-      for (let n in this.items) {
-        if (res['list'][n].ns === '') {
-          this.indexNs.push(false);
-        } else {
-          this.indexNs.push(true);
+    this.userData.getIsDead().then(v=>{
+      this.userData.getIsSuccess().then(e=>{
+        if(!v&&!e){
+          const params = {sim_id: this.sim_id, u_id: this.userId};
+          console.log("*-*-*-*-*-*-*-*-*-*");
+          console.log(JSON.stringify(params));
+          this.http.getProcessOfStu(params).subscribe(res => {
+            // for(let i in res['list']){
+            //   res['list'][0].ns = '';
+            //   res['list'][i].ns = [{"n_id":"1.1","n_name":"sdfsdfs"},{"n_id":"1.2","n_name":"sdfsdfd"}];
+            // }
+            this.items = res['list'];
+            console.log("*-*-*-*-*-*-*-*-*-*" + JSON.stringify(res));
+            console.log(JSON.stringify(res));
+            for (let n in this.items) {
+              if (res['list'][n].ns === '') {
+                this.indexNs.push(false);
+              } else {
+                this.indexNs.push(true);
+              }
+            }
+            this.groOfStu = res['groOfStu'];
+            if (res['groOfStu'] === '') {
+              this.GroupNews = false;
+            } else {
+              if(res['groOfStu'].u_position == 1){
+                this.group_u = true;
+              }
+              this.userData.setUposition(res['groOfStu'].u_position);
+              this.userData.setAction('')
+              this.g_id = this.groOfStu.g_id
+              this.GroupNews = true;
+              this.allocation = false;
+            }
+          });
         }
-      }
-      this.groOfStu = res['groOfStu'];
-      if (res['groOfStu'] === '') {
-        this.GroupNews = false;
-      } else {
-        if(res['groOfStu'].u_position == 1){
-          this.group_u = true;
-        }
-        this.userData.setUposition(res['groOfStu'].u_position);
-        this.userData.setAction('')
-        this.g_id = this.groOfStu.g_id
-        this.GroupNews = true;
-        this.allocation = false;
-      }
-    });
+      })
+    })
+
   }
 
   action_name = "";
@@ -175,7 +191,11 @@ export class ClassroomPage {
         case "SG_brain":
           if(this.simType=='gold'){
 
-            this.navCtrl.push(GoldTounaofbPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id, group_u: this.group_u})
+            if(this.items.length>1){
+              let i=this.items[this.items.length-1]
+              this.navCtrl.push(GoldTounaofbPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id, group_u: this.group_u,lastnid: i.n_id})
+
+            }
 
           }else{
 
@@ -186,7 +206,13 @@ export class ClassroomPage {
 
           break;
         case "SG_select":
-          this.navCtrl.push(DecisionPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id,group_u:this.group_u})
+          if(this.items.length>1){
+            let i=this.items[this.items.length-1]
+            this.navCtrl.push(DecisionPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id,group_u:this.group_u,lastnid: i.n_id})
+
+          }
+
+
 
           break;
         case "SG_QQ":
@@ -234,5 +260,13 @@ export class ClassroomPage {
 
     toast.present(toast);
   }
+  showAlwaysToast(position: string, text: string) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 99999000,
+      position: position
+    });
 
+    toast.present(toast);
+  }
 }
