@@ -130,6 +130,7 @@ export class IndexPage {
                 this.userData.setSimId( data.sim_id)
                 this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
                 this.userData.setAction('')
+                this.userData.setSimData('')
               } else {
                 // this.showToast('bottom', res['msg']);
               }
@@ -138,6 +139,7 @@ export class IndexPage {
             this.userData.setSimId( data.sim_id)
             this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
             this.userData.setAction('')
+            this.userData.setSimData('')
             }
           );
         } else {

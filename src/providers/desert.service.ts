@@ -78,6 +78,52 @@ const goldNotEnough = '金子不够了'
 
 @Injectable()
 export class DesertService {
+  public getUnitWeightAndUnitPrice(type, place) {
+    let price = 0
+    let weight = 0;
+    switch (type) {
+      case ITEM_WATER:
+        weight = waterUnitWeight
+        switch (place) {
+          case PLACE_START:
+            price = waterUnitPrice
+            break;
+          case PLACE_VILLIGE:
+            price = waterUnitPrice * villigeWaterTradeRatio
+            break;
+          case PLACE_OASIS:
+            price = 0
+            break;
+          case PLACE_END:
+            price = 0
+            break;
+        }
+        break
+      case ITEM_FOOD:
+        weight = foodUnitWeight
+        switch (place) {
+          case PLACE_START:
+            price = foodUnitPrice
+            break;
+          case PLACE_VILLIGE:
+            price = foodUnitPrice * villigeFoodTradeRatio
+            break;
+        }
+        break
+
+      case ITEM_COMPASS:
+        weight = compassUnitWeight
+        price = compassUnitPrice
+        break
+      case ITEM_TENT:
+        weight = tentUnitWeight
+        price = tentUnitPrice
+        break
+
+    }
+    return {weight: weight, price: price}
+  }
+
   public getPlace(name) {
     if (name.startWith("村庄")) {
       this.currState.place = PLACE_VILLIGE
@@ -88,7 +134,7 @@ export class DesertService {
     if (name.startWith("王陵")) {
       this.currState.place = PLACE_TOMBS
     }
-    if (name.startWith("大山")) {
+    if (name.startWith("矿山")) {
       this.currState.place = PLACE_END
     }
     if (name.startWith("沙漠")) {
@@ -97,6 +143,32 @@ export class DesertService {
     if (name.startWith("绿洲")) {
       this.currState.place = PLACE_OASIS
     }
+  }
+
+  getWeather() {
+
+    switch (this.currState.place) {
+      case PLACE_VILLIGE:
+        return this.weathers[this.currState.days - 1].village
+      case PLACE_START:
+
+        return this.weathers[this.currState.days - 1].base
+      case PLACE_OASIS:
+        return this.weathers[this.currState.days - 1].oasis
+      case PLACE_TOMBS:
+        return this.weathers[this.currState.days - 1].tombs
+
+      case PLACE_DESERT:
+
+        return this.weathers[this.currState.days - 1].desert
+
+      case PLACE_END:
+
+        return this.weathers[this.currState.days - 1].mountain
+
+
+    }
+
   }
 
   public weathers = [
@@ -252,7 +324,7 @@ export class DesertService {
   public events =
     [
       {
-        position: '',
+        position: '1',
         place: PLACE_START,
         events: [
           {
@@ -264,7 +336,7 @@ export class DesertService {
           }
         ]
       }, {
-      position: '',
+      position: '3',
       place: PLACE_VILLIGE,
       events: [
         {
@@ -273,7 +345,7 @@ export class DesertService {
         }
       ]
     }, {
-      position: '',
+      position: '8',
       place: PLACE_VILLIGE,
       events: [
         {
@@ -282,7 +354,7 @@ export class DesertService {
         }
       ]
     }, {
-      position: '',
+      position: '14',
       place: PLACE_VILLIGE,
       events: [
         {
@@ -291,7 +363,7 @@ export class DesertService {
         }
       ]
     }, {
-      position: '',
+      position: '22',
       place: PLACE_VILLIGE,
       events: [
         {
@@ -300,7 +372,7 @@ export class DesertService {
         }
       ]
     }, {
-      position: '',
+      position: '12',
       place: PLACE_OASIS,
       events: [
         {
@@ -309,7 +381,7 @@ export class DesertService {
         }
       ]
     }, {
-      position: '',
+      position: '15',
       place: PLACE_OASIS,
       events: [
         {
@@ -318,7 +390,7 @@ export class DesertService {
         }
       ]
     }, {
-      position: '',
+      position: '16',
       place: PLACE_TOMBS,
       events: [
         {
@@ -327,7 +399,7 @@ export class DesertService {
         }
       ]
     }, {
-      position: '',
+      position: '25',
       place: PLACE_END,
       events: [
         {
@@ -509,10 +581,13 @@ export class DesertService {
     return {isSuccess: isSuccess, msg: msg}
   }
 
-  setCurrState(state) {
-    if(state&&state.length>0){
+  setCurrState(state, name, pos) {
+    if (state && state.length > 0) {
       this.currState = state;
+
     }
+    this.currState.position = pos
+    this.getPlace(name)
   }
 
   getCurrState() {
@@ -520,7 +595,7 @@ export class DesertService {
   }
 
   public currState = {
-    position: 'A1',
+    position: '1',
     place: PLACE_START,
     money: totalMoney,
     weight: totalWeight,
@@ -530,6 +605,9 @@ export class DesertService {
     tent: 0,
     compass: 0,
     gold: 0,
+    asked:false,
+    isSuccess:false,
+    isDead:false,
     status: [],
     events: [
       {
@@ -674,15 +752,16 @@ export class DesertService {
     return flag
   }
 
-  public consume(type) {
+  public consume(type,useTent?) {
     let isSuccess = true;
     let msg = ''
     let tempWater;
     let tempFood;
-    let tempWaterRatio;
-    let tempFoodRatio;
+    let tempWaterRatio=1;
+    let tempFoodRatio=1;
     switch (type) {
       case WEATHER_HOT:
+
         tempWaterRatio = hotWaterConsumeRatio
         tempFoodRatio = hotFoodConsumeRatio
         break;
@@ -691,12 +770,18 @@ export class DesertService {
         tempFoodRatio = 1
         break;
       case WEATHER_HOT_SANDSTORM:
-        tempWaterRatio = hotsandstormWaterConsumeRatio
-        tempFoodRatio = hotsandstormFoodConsumeRatio
+        if(!useTent){
+          tempWaterRatio = hotsandstormWaterConsumeRatio
+          tempFoodRatio = hotsandstormFoodConsumeRatio
+        }
+
         break;
       case WEATHER_SANDSTORM:
-        tempWaterRatio = sandstormWaterConsumeRatio
-        tempFoodRatio = sandstormFoodConsumeRatio
+        if(!useTent){
+          tempWaterRatio = sandstormWaterConsumeRatio
+          tempFoodRatio = sandstormFoodConsumeRatio
+        }
+
         break;
     }
     let reduceFood = baseFoodConsumePerDay * tempFoodRatio
@@ -902,7 +987,7 @@ export class DesertService {
       //todo confirm 欢迎回来，是否出售所有金子并结束本次游戏？
       return
     }
-    if (!this.isAlive(this.consume(this.weathers[this.currState.days - 1]))) {
+    if (!this.isAlive(this.consume(this.weathers[this.currState.days - 1]).isSuccess)) {
       this.goDead(this.currState.position)
       return
     }

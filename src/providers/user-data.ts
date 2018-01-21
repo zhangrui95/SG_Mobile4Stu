@@ -72,6 +72,28 @@ export class UserData {
       return value;
     });
   };
+  setSimData(key,token: string): void {
+    this.storage.set(key, token);
+  };
+
+  getSimData(key): Promise<string> {
+    return this.storage.get(key).then((value) => {
+      return value;
+    });
+  };
+
+
+  setAlready(n_id:string,token: boolean): void {
+    this.storage.set(n_id, token);
+  };
+
+  getAlready(n_id): Promise<boolean> {
+    return this.storage.get(n_id).then((value) => {
+      return value;
+    });
+  };
+
+
   setSimType(token: string): void {
     this.storage.set('simtype', token);
     this.simType=token

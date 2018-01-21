@@ -19,7 +19,7 @@
          </label>
        </form>
     </div>
-  <div padding class="mar-btn">
-    <button ion-button block (click)="send()">确认投票</button>
+  <div padding class="mar-btn" *ngIf="group_u&&simType=='gold'">
+    <button ion-button block (click)="send()" >确认投票</button>
   </div>
 </ion-content>

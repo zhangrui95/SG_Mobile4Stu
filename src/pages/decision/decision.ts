@@ -38,7 +38,8 @@ export class DecisionPage {
     {option:'G'}
   ]
   selectvalue;
-
+  group_u
+  simType
   constructor(public navCtrl: NavController, public navParams: NavParams,public userData: UserData, public http: ProxyHttpService,public toastCtrl: ToastController,) {
     this.userData.getUserID().then(value => this.userId = value)
     this.n_id=this.navParams.data.n_id
@@ -50,6 +51,10 @@ export class DecisionPage {
 
     this.title = this.result['componentList'][0].data.text;
     this.sim_id=this.navParams.data.sim_id
+    this.group_u=this.navParams.data.group_u
+    this.userData.getSimType().then(res=>{
+      this.simType=res;
+    })
 
     this.getAnswerOfStuList();
   }
