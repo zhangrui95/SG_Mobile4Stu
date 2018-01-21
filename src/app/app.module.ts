@@ -71,6 +71,7 @@ import {GoldMapPage} from "../pages/gold-map/gold-map";
 import {GoldTypePage} from "../pages/gold-type/gold-type";
 import {GoldOlderPage} from "../pages/gold-older/gold-older";
 import {GoldSupplyPage} from "../pages/gold-supply/gold-supply";
+import {DesertService} from "../providers/desert.service";
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -243,6 +244,7 @@ import {GoldSupplyPage} from "../pages/gold-supply/gold-supply";
     ConferenceData,
     ProxyHttpService,
     UserData,
+    DesertService,
     InAppBrowser,
     Camera,
     Base64,

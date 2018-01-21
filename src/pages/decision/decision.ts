@@ -44,7 +44,7 @@ export class DecisionPage {
   u_id;
   simData;
   btnShow = true;
-
+  stay
   constructor(public navCtrl: NavController, public navParams: NavParams,public userData: UserData, public http: ProxyHttpService,public toastCtrl: ToastController,) {
     this.userData.getUserID().then(value => this.userId = value)
     this.n_id=this.navParams.data.n_id;
@@ -52,6 +52,7 @@ export class DecisionPage {
     this.s_data = this.navParams.data.s_data;
     this.result = JSON.parse(this.s_data[0].s_data);
     this.common = this.result['componentList'][0].data.selectData;
+
     this.title = this.result['componentList'][0].data.text;
     this.sim_id = this.navParams.data.sim_id
     this.group_u = this.navParams.data.group_u
@@ -63,6 +64,12 @@ export class DecisionPage {
     for(let i in this.common){
       this.common[i].Checked = false;
     }
+    this.userData.getIsStay().then(v=>{
+      this.stay=v;
+      let a =new Array
+      a.push(this.common[0])
+      this.common=a;
+    })
     this.userData.getUserID().then(value => {
       this.u_id = value
       let param = {sim_id:this.sim_id,n_id:this.n_id,u_id:this.u_id}

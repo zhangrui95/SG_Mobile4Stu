@@ -102,9 +102,13 @@ export class ClassroomPage {
             this.getProcessOfStu();
             this.scrollToBottom();
           } else if (action === "phone_group") {
-            this.getProcessOfStu();
-            this.allocation = true;
-            this.userData.setAction(action);
+            console.log(JSON.parse(msg)['datas']['sim_id'])
+            if(this.sim_id==JSON.parse(msg)['datas']['sim_id']){
+              this.getProcessOfStu();
+              this.allocation = true;
+              this.userData.setAction(action);
+            }
+
           } else if (action === "phone_call") {
             this.showToast('bottom', msgs);
           }else if (action === "exercises_end") {
@@ -200,7 +204,7 @@ export class ClassroomPage {
 
             if(this.items.length>1){
               let i=this.items[this.items.length-1]
-              this.navCtrl.push(GoldTounaofbPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id, group_u: this.group_u,lastnid: i.n_id})
+              this.navCtrl.push(GoldTounaofbPage, {name_position:i.n_name,n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id, group_u: this.group_u,lastnid: i.n_id})
 
             }
 

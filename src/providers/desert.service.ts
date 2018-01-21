@@ -125,27 +125,27 @@ export class DesertService {
   }
 
   public getPlace(name) {
-    if (name.startWith("村庄")) {
+    if (name.indexOf("村庄") != -1) {
       this.currState.place = PLACE_VILLIGE
     }
-    if (name.startWith("营地")) {
+    if (name.indexOf("营地") != -1) {
       this.currState.place = PLACE_START
     }
-    if (name.startWith("王陵")) {
+    if (name.indexOf("王陵") != -1) {
       this.currState.place = PLACE_TOMBS
     }
-    if (name.startWith("矿山")) {
+    if (name.indexOf("矿山") != -1) {
       this.currState.place = PLACE_END
     }
-    if (name.startWith("沙漠")) {
+    if (name.indexOf("沙漠") != -1) {
       this.currState.place = PLACE_DESERT
     }
-    if (name.startWith("绿洲")) {
+    if (name.indexOf("绿洲") != -1) {
       this.currState.place = PLACE_OASIS
     }
   }
 
-  getWeather() {
+  public getWeather() {
 
     switch (this.currState.place) {
       case PLACE_VILLIGE:
@@ -434,12 +434,12 @@ export class DesertService {
 
   ]
 
-  getRandomEventInTombs() {
+  public getRandomEventInTombs() {
     let index = Math.random() * this.eventInTombs.length
     return this.eventInTombs[index]
   }
 
-  trigRandomEvent() {
+  public trigRandomEvent() {
     let isSuccess = true;
     let msg = '';
     let addOrReduce = '';
@@ -581,7 +581,7 @@ export class DesertService {
     return {isSuccess: isSuccess, msg: msg}
   }
 
-  setCurrState(state, name, pos) {
+  public setCurrState(state, name, pos) {
     if (state && state.length > 0) {
       this.currState = state;
 
@@ -590,7 +590,7 @@ export class DesertService {
     this.getPlace(name)
   }
 
-  getCurrState() {
+  public getCurrState() {
     return this.currState
   }
 
@@ -605,9 +605,9 @@ export class DesertService {
     tent: 0,
     compass: 0,
     gold: 0,
-    asked:false,
-    isSuccess:false,
-    isDead:false,
+    asked: false,
+    isSuccess: false,
+    isDead: false,
     status: [],
     events: [
       {
@@ -622,102 +622,63 @@ export class DesertService {
   public reduce = {food: 0, water: 0};
 
   //events
-  public trade(type, count) {
+  public trade(arr) {
     let isSuccess = false;
     let msg = "";
-    let tempMoney
-    let tempWeight
-    let tempPlaceFoodRatio;
-    let tempPlaceWaterRatio;
-    for (let e of this.currState.events) {
-      switch (e.type) {
-        case EVENT_TRADE:
-          tempPlaceFoodRatio = 1
-          tempPlaceWaterRatio = 1;
-          break;
+    let tempMoney = this.currState.money
+    let tempWeight = this.currState.weight
 
-        case EVENT_TRADE_Villige:
-          tempPlaceFoodRatio = villigeFoodTradeRatio
-          tempPlaceWaterRatio = villigeWaterTradeRatio;
-          break;
+    for (let a of arr) {
+      let count = a.num
+      let price = a.price
+      let weight = a.weight;
+      tempMoney = tempMoney - (price * count);
+      tempWeight = tempWeight - (weight * count);
+
+    }
+    if (tempMoney >= 0 && tempWeight >= 0) {
+      this.currState.money = tempMoney
+      this.currState.weight = tempWeight
+      for (let a of arr) {
+        let count = a.num
+        switch (a.type) {
+          case ITEM_COMPASS:
+            this.currState.compass = this.currState.compass + count;
+            a.remain=this.currState.compass
+            break
+          case
+          ITEM_FOOD:
+            this.currState.food = this.currState.food + count;
+            a.remain=this.currState.food
+            break
+          case ITEM_WATER:
+
+            this.currState.water = this.currState.water + count;
+            a.remain=this.currState.water
+            break
+          case ITEM_TENT:
+
+            this.currState.tent = this.currState.tent + count;
+            a.remain=this.currState.tent
+            break
+        }
+        a.num=0
       }
+    } else if (tempMoney < 0) {
+      isSuccess = false;
+      msg = moneyNotEnough
+    } else if (tempWeight < 0) {
+      isSuccess = false;
+      msg = weightNotEnough
     }
-    switch (type) {
-      case ITEM_COMPASS:
-        tempMoney = this.currState.money - (compassUnitPrice * count);
-        tempWeight = this.currState.weight - (compassUnitWeight * count);
-        if (tempMoney > 0 && tempWeight > 0) {
-          this.currState.compass = this.currState.compass + count;
-          this.currState.money = tempMoney
-          this.currState.weight = tempWeight
-          isSuccess = true
-        } else if (tempMoney <= 0) {
-          isSuccess = false;
-          msg = moneyNotEnough
-        } else if (tempWeight <= 0) {
-          isSuccess = false;
-          msg = weightNotEnough
-        }
 
-        break
-      case ITEM_FOOD:
-
-        tempMoney = this.currState.money - (foodUnitPrice * count * tempPlaceFoodRatio);
-        tempWeight = this.currState.weight - (foodUnitWeight * count);
-        if (tempMoney > 0 && tempWeight > 0) {
-          this.currState.food = this.currState.food + count;
-          this.currState.money = tempMoney
-          this.currState.weight = tempWeight
-          isSuccess = true
-        } else if (tempMoney <= 0) {
-          isSuccess = false;
-          msg = moneyNotEnough
-        } else if (tempWeight <= 0) {
-          isSuccess = false;
-          msg = weightNotEnough
-        }
-
-        break
-      case ITEM_WATER:
-
-
-        tempMoney = this.currState.money - (waterUnitPrice * count * tempPlaceWaterRatio);
-        tempWeight = this.currState.weight - (waterUnitWeight * count);
-        if (tempMoney > 0 && tempWeight > 0) {
-          this.currState.water = this.currState.water + count;
-          this.currState.money = tempMoney
-          this.currState.weight = tempWeight
-          isSuccess = true
-        } else if (tempMoney <= 0) {
-          isSuccess = false;
-          msg = moneyNotEnough
-        } else if (tempWeight <= 0) {
-          isSuccess = false;
-          msg = weightNotEnough
-        }
-
-        break
-      case ITEM_TENT:
-
-        tempMoney = this.currState.money - (tentUnitPrice * count);
-        tempWeight = this.currState.weight - (tentUnitWeight * count);
-        if (tempMoney > 0 && tempWeight > 0) {
-          this.currState.tent = this.currState.tent + count;
-          this.currState.money = tempMoney
-          this.currState.weight = tempWeight
-          isSuccess = true
-        } else if (tempMoney <= 0) {
-          isSuccess = false;
-          msg = moneyNotEnough
-        } else if (tempWeight <= 0) {
-          isSuccess = false;
-          msg = weightNotEnough
-        }
-
-        break
-    }
-    return {isSuccess: isSuccess, msg: msg};
+    return {
+      isSuccess: isSuccess
+      ,
+      msg: msg
+    };
   }
+
 
   public waterfree(count) {
     let isSuccess = false
@@ -735,6 +696,7 @@ export class DesertService {
     return {isSuccess: isSuccess, msg: msg};
   }
 
+
   public isGetLost() {
 
     for (let statu of this.currState.status) {
@@ -748,17 +710,20 @@ export class DesertService {
     return false;
   }
 
-  public isAlive(flag) {
+  public
+
+  isAlive(flag) {
     return flag
   }
 
-  public consume(type,useTent?) {
+
+  public consume(type, useTent ?) {
     let isSuccess = true;
     let msg = ''
     let tempWater;
     let tempFood;
-    let tempWaterRatio=1;
-    let tempFoodRatio=1;
+    let tempWaterRatio = 1;
+    let tempFoodRatio = 1;
     switch (type) {
       case WEATHER_HOT:
 
@@ -770,14 +735,14 @@ export class DesertService {
         tempFoodRatio = 1
         break;
       case WEATHER_HOT_SANDSTORM:
-        if(!useTent){
+        if (!useTent) {
           tempWaterRatio = hotsandstormWaterConsumeRatio
           tempFoodRatio = hotsandstormFoodConsumeRatio
         }
 
         break;
       case WEATHER_SANDSTORM:
-        if(!useTent){
+        if (!useTent) {
           tempWaterRatio = sandstormWaterConsumeRatio
           tempFoodRatio = sandstormFoodConsumeRatio
         }
@@ -818,6 +783,7 @@ export class DesertService {
     return {isSuccess: isSuccess, msg: msg}
   }
 
+
   public useItem(item) {
     switch (item) {
       case ITEM_TENT:
@@ -840,6 +806,7 @@ export class DesertService {
     }
   }
 
+
   public digging() {
     let tempWeight = this.currState.weight - (goldDiggedPerDay * goldUnitWeight)
     if (tempWeight > 0) {
@@ -847,6 +814,7 @@ export class DesertService {
       this.currState.weight = tempWeight
     }
   }
+
 
   public throwItem(item, count) {
     let isSuccess = true;
@@ -902,13 +870,15 @@ export class DesertService {
 
   }
 
-  getMessagesFromOlder() {
+
+  public getMessagesFromOlder() {
     return this.messagesFromOlder;
   }
 
+
   public getAnswer(i) {
     let item = this.messagesFromOlder[i]
-    if (item.status.status_type == STATUS_CAN_DIG_IN_MOUNTAIN) {
+    if (item.status&&item.status.status_type == STATUS_CAN_DIG_IN_MOUNTAIN) {
       this.currState.status.push(item.status)
       for (let e of this.events) {
         if (e.place == PLACE_END) {
@@ -923,9 +893,11 @@ export class DesertService {
 
   }
 
+
   public setStatus(statu, durations) {
     this.currState.status.push({status_type: statu, status_duration: durations})
   }
+
 
   public setLostStatus() {
     let flag = false;
@@ -955,7 +927,8 @@ export class DesertService {
     }
   }
 
-  updateEvent() {
+
+  public updateEvent() {
     for (let event of this.events) {
       if (event.position == this.currState.position) {
         this.currState.events = event.events
@@ -963,7 +936,8 @@ export class DesertService {
     }
   }
 
-  updateStatus() {
+
+  public updateStatus() {
     for (let statu of this.currState.status) {
       if (statu.status_duration > 0) {
         statu.status_duration--
@@ -971,6 +945,7 @@ export class DesertService {
 
     }
   }
+
 
   public onNext(state) {
 
@@ -1004,20 +979,7 @@ export class DesertService {
     }
   }
 
-  onEvent(type, params?) {
-    switch (type) {
-      case EVENT_TRADE:
-        return this.trade(params.type, params.count)
-      case EVENT_TRADE_Villige:
-        return this.trade(params.type, params.count)
-      case EVENT_ASK:
-        return this.getMessagesFromOlder()
-      case EVENT_WATER_FREE:
-        return this.waterfree(params.count)
-      case EVENT_RANDOM_IN_TOMBS:
-        return this.trigRandomEvent()
-    }
-  }
+
 
   getResult() {
     //todo 根据先后返回的结果 计算金价

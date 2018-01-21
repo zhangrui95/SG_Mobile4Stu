@@ -72,11 +72,11 @@ export class UserData {
       return value;
     });
   };
-  setSimData(key,token: string): void {
+  setSimData(key,token: any): void {
     this.storage.set(key, token);
   };
 
-  getSimData(key): Promise<string> {
+  getSimData(key): Promise<any> {
     return this.storage.get(key).then((value) => {
       return value;
     });
@@ -94,7 +94,6 @@ export class UserData {
   };
   setIsDead(token: boolean): void {
     this.storage.set('isDead', token);
-    this.simType=token
   };
 
   getIsDead(): Promise<boolean> {
@@ -104,11 +103,19 @@ export class UserData {
   };
   setIsSuccess(token: boolean): void {
     this.storage.set('isSuccess', token);
-    this.simType=token
   };
 
   getIsSuccess(): Promise<boolean> {
     return this.storage.get('isSuccess').then((value) => {
+      return value;
+    });
+  };
+  setIsStay(token: boolean): void {
+    this.storage.set('needstay', token);
+  };
+
+  getIsStay(): Promise<boolean> {
+    return this.storage.get('needstay').then((value) => {
       return value;
     });
   };

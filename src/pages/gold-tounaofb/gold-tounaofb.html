@@ -18,7 +18,7 @@
     <div class="place-name time">第{{currentStatus.days}}天</div>
     <div class="tnfb-tilte">
       <!--{{title}}-->
-      帐篷可以抵挡沙尘暴哦！
+      接下来该做什么
     </div>
     <!--<div style="float: left;width: 100%;margin: 20px 0;color: #516c6d;">-->
     <!--2018人回复了该帖-->
@@ -129,7 +129,7 @@
           </div>
           <div class="float-r shop-add">
             <img src="assets/img/jian.png" class="float-l" (click)="goodReduce(good)"/>
-            <input type="number" value="0" class="float-l shop-num"/>
+            <input type="number" value="{{good.num}}" class="float-l shop-num"/>
             <img src="assets/img/jia.png" class="float-l" (click)="goodPlus(good)"/>
           </div>
         </div>
@@ -240,6 +240,7 @@
           <div class="float-r">×{{currentStatus.gold}}</div>
         </div>
         <div class="w-100">
+          <div class="float-l user-btn" ></div>
           <div class="float-r user-btn give-up" (click)="userAction('throw','food',1)">丢弃</div>
         </div>
       </div>

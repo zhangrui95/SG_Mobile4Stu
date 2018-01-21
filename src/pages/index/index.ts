@@ -60,7 +60,7 @@ export class IndexPage {
     }
   }
 
-  constructor(public ws:ServerSocket,public ionicApp: IonicApp, public navCtrl: NavController, public barcodeScanner: BarcodeScanner, public navParams: NavParams, public keyboard: Keyboard, public toastCtrl: ToastController,
+  constructor(public ws: ServerSocket, public ionicApp: IonicApp, public navCtrl: NavController, public barcodeScanner: BarcodeScanner, public navParams: NavParams, public keyboard: Keyboard, public toastCtrl: ToastController,
               public platform: Platform, public userData: UserData,
               public http: ProxyHttpService,) {
     this.userData.getUserID().then(value => this.userId = value)
@@ -69,19 +69,21 @@ export class IndexPage {
       this.exitApp()
     }, 10)
   }
+
   ionViewWillEnter() {
     const params = {}
 
     this.http.getIsExistEndCour(params).subscribe(res => {
       if (res['list'].length != 0) {
-        console.log("+-+---+-+-+-++--+-+-++--+-+"+JSON.stringify(res))
+        console.log("+-+---+-+-+-++--+-+-++--+-+" + JSON.stringify(res))
         this.simId = res['list'][0].sim_id;
         this.userData.setSimId(this.simId)
         this.btnShow = true;
       }
     })
   }
-  ionViewDidEnter(){
+
+  ionViewDidEnter() {
     this.messagesSubscription = this.ws.messages.subscribe(msg => {
       if (msg !== null) {
         let action = JSON.parse(msg)['action'];
@@ -119,27 +121,34 @@ export class IndexPage {
       if (!barcodeData.cancelled) {
         if (barcodeData.text.indexOf('4dec1f9e20f86b62335ba913ae29fa0d') != -1) {
           let data = JSON.parse(barcodeData.text)
-          console.log("uid======>"+this.userId)
-          const params = {"cla_id": data.cla_id, "cour_id": data.cour_id, "sim_id": data.sim_id, "u_id": this.userId+""}
+          console.log("uid======>" + this.userId)
+          const params = {
+            "cla_id": data.cla_id,
+            "cour_id": data.cour_id,
+            "sim_id": data.sim_id,
+            "u_id": this.userId + ""
+          }
 
           this.userData.setSimType(data.p_type);
           this.http.addClassPractice(params).subscribe(res => {
 
               console.log(res['code'])
               if (res['code'] == 0) {
-                this.userData.setSimId( data.sim_id)
+                this.userData.setSimId(data.sim_id)
                 this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
                 this.userData.setAction('')
-
+                this.userData.setIsDead(false)
+                this.userData.setIsSuccess(false)
               } else {
                 // this.showToast('bottom', res['msg']);
               }
             }, error => {
               console.log(error.message);
-            this.userData.setSimId( data.sim_id)
-            this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
-            this.userData.setAction('')
-
+              this.userData.setSimId(data.sim_id)
+              this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
+              this.userData.setAction('')
+              this.userData.setIsDead(false)
+              this.userData.setIsSuccess(false)
             }
           );
         } else {
@@ -152,8 +161,6 @@ export class IndexPage {
       console.log(err)
       this.showToast('bottom', "扫描到的二维码有误，请重新尝试")
     });
-
-
 
 
   }
