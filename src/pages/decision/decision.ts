@@ -66,9 +66,12 @@ export class DecisionPage {
     }
     this.userData.getIsStay().then(v=>{
       this.stay=v;
-      let a =new Array
-      a.push(this.common[0])
-      this.common=a;
+      if(v){
+        let a =new Array
+        a.push(this.common[0])
+        this.common=a;
+      }
+
     })
     this.userData.getUserID().then(value => {
       this.u_id = value

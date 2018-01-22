@@ -92,7 +92,7 @@ export class LoginsPage {
             userId: res['userId'],
             imagepath: res['imagepath']
           });
-          let ImagePath = 'http://192.168.0.52:8080' + res['imagepath'];
+          let ImagePath = this.http.getBaseurl() + res['imagepath'];
           this.userData.login(res['username'],res['token'],res['userId'],ImagePath,res['phone'], this.login.username)
         } else {
           loading.dismiss();

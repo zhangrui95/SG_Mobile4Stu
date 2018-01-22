@@ -821,7 +821,7 @@ export class DesertService {
     let msg = "";
     switch (item) {
       case ITEM_COMPASS:
-        if (this.currState.compass > count) {
+        if (this.currState.compass >= count) {
           this.currState.weight = this.currState.weight + (compassUnitWeight * count)
           this.currState.compass = this.currState.compass - count
         } else {
@@ -830,7 +830,7 @@ export class DesertService {
         }
         break;
       case ITEM_TENT:
-        if (this.currState.tent > count) {
+        if (this.currState.tent >= count) {
           this.currState.weight = this.currState.weight + (tentUnitWeight * count)
           this.currState.tent = this.currState.tent - count
         } else {
@@ -839,7 +839,7 @@ export class DesertService {
         }
         break;
       case ITEM_FOOD:
-        if (this.currState.food > count) {
+        if (this.currState.food >= count) {
           this.currState.weight = this.currState.weight + (foodUnitWeight * count)
           this.currState.food = this.currState.food - count
         } else {
@@ -848,7 +848,7 @@ export class DesertService {
         }
         break;
       case ITEM_WATER:
-        if (this.currState.water > count) {
+        if (this.currState.water >= count) {
           this.currState.weight = this.currState.weight + (waterUnitWeight * count)
           this.currState.water = this.currState.water - count
         } else {
@@ -857,7 +857,7 @@ export class DesertService {
         }
         break;
       case ITEM_GOLD:
-        if (this.currState.gold > count) {
+        if (this.currState.gold >= count) {
           this.currState.weight = this.currState.weight + (goldUnitWeight * count)
           this.currState.gold = this.currState.gold - count
         } else {

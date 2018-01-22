@@ -102,8 +102,7 @@ export class ClassroomPage {
             this.getProcessOfStu();
             this.scrollToBottom();
           } else if (action === "phone_group") {
-            console.log(JSON.parse(msg)['datas']['sim_id'])
-            if(this.sim_id==JSON.parse(msg)['datas']['sim_id']){
+            if(this.sim_id==JSON.parse(msg)['sim_id']){
               this.getProcessOfStu();
               this.allocation = true;
               this.userData.setAction(action);
@@ -130,6 +129,7 @@ export class ClassroomPage {
   //     console.log(res)
   //   });
   // }
+
   getProcessOfStu() {
     this.userData.getIsDead().then(v=>{
       this.userData.getIsSuccess().then(e=>{
@@ -143,6 +143,10 @@ export class ClassroomPage {
             //   res['list'][i].ns = [{"n_id":"1.1","n_name":"sdfsdfs"},{"n_id":"1.2","n_name":"sdfsdfd"}];
             // }
             this.items = res['list'];
+            if(this.items.length>4){
+
+             this.userData.setCurrentDays( Math.ceil((this.items.length-4)/2))
+            }
             console.log("*-*-*-*-*-*-*-*-*-*" + JSON.stringify(res));
             console.log(JSON.stringify(res));
             for (let n in this.items) {

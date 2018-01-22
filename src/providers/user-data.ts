@@ -110,6 +110,24 @@ export class UserData {
       return value;
     });
   };
+  setCurrentDays(token: number): void {
+    this.storage.set('days', token);
+  };
+
+  getCurrentDays(): Promise<number> {
+    return this.storage.get('days').then((value) => {
+      return value;
+    });
+  };
+  setHasConsume(key,token: boolean): void {
+    this.storage.set(key, token);
+  };
+
+  getHasConsume(key): Promise<boolean> {
+    return this.storage.get(key).then((value) => {
+      return value;
+    });
+  };
   setIsStay(token: boolean): void {
     this.storage.set('needstay', token);
   };
