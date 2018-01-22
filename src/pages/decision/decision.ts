@@ -45,6 +45,13 @@ export class DecisionPage {
   simData;
   btnShow = true;
   stay
+  isShowBtn(){
+    if(this.simType=='gold'){
+      return this.group_u
+    }else{
+      return true
+    }
+  }
   constructor(public navCtrl: NavController, public navParams: NavParams,public userData: UserData, public http: ProxyHttpService,public toastCtrl: ToastController,) {
     this.userData.getUserID().then(value => this.userId = value)
     this.n_id=this.navParams.data.n_id;
