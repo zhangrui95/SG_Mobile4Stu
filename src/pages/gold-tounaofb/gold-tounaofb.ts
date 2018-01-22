@@ -88,7 +88,9 @@ export class GoldTounaofbPage {
     if (this.lost) {
       for (let statu of  this.currentStatus.status) {
         if (statu.status_type == STATUS_GET_LOST) {
+
           this.lostDuration = statu.status_duration
+          this.stay=true
         }
       }
 
@@ -304,7 +306,7 @@ export class GoldTounaofbPage {
   }
 
   goodReduce(item) {
-    if(item.num==0){
+    if (item.num == 0) {
       return
     }
     item.num--
@@ -422,14 +424,15 @@ export class GoldTounaofbPage {
   result
   name_position
   already
-  stay
+  stay=false
 
   ionViewDidLoad() {
+    this.userData.setIsStay(false)
     this.userData.getSimId().then(res => {
       this.sim_id = res;
 
 
-      this.userData.getAlready(this.sim_id+this.n_id+ this.currentStatus.days).then(res => {
+      this.userData.getAlready(this.sim_id + this.n_id + this.currentStatus.days).then(res => {
         console.log(res)
         this.already = res
       });
@@ -441,41 +444,51 @@ export class GoldTounaofbPage {
       this.content = this.common.content;
 
       let params = {sim_id: this.sim_id, n_id: this.n_id, g_id: this.g_id}
-      this.http.getGoldStatus(params).subscribe(res => {
-        console.log(res['listGDK'])
+      this.userData.getCurrentDays().then(v=>{
 
-        if (this.name_position.indexOf('-') != -1) {
-          let arr = this.name_position.split('-')
-          this.desertService.setCurrState(res['listGDK'], arr[0], arr[1])
-        }
-        this.messages = this.desertService.getMessagesFromOlder()
-        this.currentStatus = this.desertService.getCurrState()
-        this.desertService.updateStatus()
-        this.setGoods();
-        this.getImgBg();
-        this.setWeather()
-        this.isLost();
+        this.http.getGoldStatus(params).subscribe(res => {
+          console.log(res['listGDK'])
 
-        if (this.currentStatus.place == PLACE_TOMBS) {
-          //若在王陵 获得随机事件
-          if (this.group_u) {
-            this.userData.getAlready(this.sim_id+this.n_id + this.currentStatus.days).then(res => {
-              if (!res) {
-                let result = this.desertService.trigRandomEvent()
-                if (result.isSuccess) {
-                  this.showToast('bottom', result.msg)
-                }
-                this.userData.setAlready(this.sim_id+this.n_id + this.currentStatus.days, true)
-              } else {
+          if (this.name_position.indexOf('-') != -1) {
+            let arr = this.name_position.split('-')
 
-              }
-
-            })
-
+            this.desertService.setCurrState(res['listGDK'], arr[0], arr[1].split('.')[0])
           }
-        }
+          this.messages = this.desertService.getMessagesFromOlder()
+          if(this.currentStatus){
+            this.desertService.currState.days=v;
+          }
+          this.currentStatus = this.desertService.getCurrState()
+          this.desertService.updateStatus()
+
+          this.setGoods();
+          this.getImgBg();
+          this.setWeather()
+          this.isLost();
+
+          if (this.currentStatus.place == PLACE_TOMBS) {
+            //若在王陵 获得随机事件
+            if (this.group_u) {
+              this.userData.getAlready(this.sim_id + this.n_id + this.currentStatus.days).then(res => {
+                if (!res) {
+                  let result = this.desertService.trigRandomEvent()
+                  if (result.isSuccess) {
+                    this.showToast('bottom', result.msg)
+                  }
+                  this.userData.setAlready(this.sim_id + this.n_id + this.currentStatus.days, true)
+                } else {
+
+                }
+
+              })
+
+            }
+          }
+
+        })
 
       })
+
 
     })
     if (this.ws.messages) {
@@ -567,104 +580,116 @@ export class GoldTounaofbPage {
         this.stay = true
       }
     }
+
     this.userData.setIsStay(this.stay)
-    if (!this.desertService.consume(this.weather, this.useTent).isSuccess) {
-      // this.goDead();
-    } else {
-      this.userData.getIsSuccess().then(v => {
-        {
-          this.userData.getIsDead().then(e => {
+    this.userData.getHasConsume(this.sim_id + this.n_id + this.currentStatus.days).then(res => {
+      if(!res){
+        if(this.currentStatus.days==1){
+          return
+        }
+        if (!this.desertService.consume(this.weather, this.useTent).isSuccess) {
+          this.goDead();
+        } else {
+          this.userData.setHasConsume(this.sim_id + this.n_id + this.currentStatus.days, true)
+          this.userData.getIsSuccess().then(v => {
             {
+              this.userData.getIsDead().then(e => {
+                {
 
-              if (!v && !e) {
-                if (this.currentStatus.place == PLACE_START && this.currentStatus.days > 1) {
-                  //若在开始位置且天数>1 判断是否结算
-                  let f = confirm("是否出售所有黄金并等待结算？");
-                  if (f) {
-                    //todo 推送当前组成员 通知结束
-                    this.goSuccess()
-                    let params = {
-                      sim_id: this.sim_id,
-                      n_id: '-1'
-                    };
-                    this.http.getDataForRanking(params).subscribe(res => {
-                      console.log(res)
-                      let count = +res['totalRanking']
-                      count = count + 1
-                      let money = this.currentStatus.money;
-                      switch (count) {
-                        case 1:
-                          money = money + (this.currentStatus.gold * 50 * 100)
-                          break;
-                        case 2:
-                          money = money + (this.currentStatus.gold * 50 * 90)
-                          break;
-                        case 3:
-                          money = money + (this.currentStatus.gold * 50 * 85)
-                          break;
-                        case 4:
-                          money = money + (this.currentStatus.gold * 50 * 80)
-                          break;
-                        default:
-                          money = money + (this.currentStatus.gold * 50 * 75)
-                          break;
+                  if (!v && !e) {
+                    if (this.currentStatus.place == PLACE_START && this.currentStatus.days > 1) {
+                      //若在开始位置且天数>1 判断是否结算
+                      let f = confirm("是否出售所有黄金并等待结算？");
+                      if (f) {
+                        //todo 推送当前组成员 通知结束
+                        this.goSuccess()
+                        let params = {
+                          sim_id: this.sim_id,
+                          n_id: '-1'
+                        };
+                        this.http.getDataForRanking(params).subscribe(res => {
+                          console.log(res)
+                          let count = +res['totalRanking']
+                          count = count + 1
+                          let money = this.currentStatus.money;
+                          switch (count) {
+                            case 1:
+                              money = money + (this.currentStatus.gold * 50 * 100)
+                              break;
+                            case 2:
+                              money = money + (this.currentStatus.gold * 50 * 90)
+                              break;
+                            case 3:
+                              money = money + (this.currentStatus.gold * 50 * 85)
+                              break;
+                            case 4:
+                              money = money + (this.currentStatus.gold * 50 * 80)
+                              break;
+                            default:
+                              money = money + (this.currentStatus.gold * 50 * 75)
+                              break;
 
 
+                          }
+                          let p = {
+                            sim_id: this.sim_id,
+                            g_id: this.g_id,
+                            n_id: this.n_id,
+                            current_status: this.currentStatus,
+                            money: money + '',
+                          }
+                          console.log(p)
+                          this.http.addGDKAnswer(p).subscribe(res => {
+                            if (res['code'] == 0) {
+                              this.navCtrl.pop();
+                            } else {
+                              this.showToast('bottom', res['msg']);
+                            }
+                            console.log('------addanswer------')
+                            console.log(res)
+                            // console.log('received message from server666: ', res['code']);
+                            // this.value='';
+                            // if (res['code'] == 0) {
+                            //
+                            // }
+                          }, error => {
+                            console.log(error)
+                            this.navCtrl.pop();
+                          });
+
+                        })
                       }
-                      let p = {
-                        sim_id: this.sim_id,
-                        g_id: this.g_id,
-                        n_id: this.n_id,
-                        current_status: this.currentStatus,
-                        money: money + '',
-                      }
-                      console.log(p)
-                      this.http.addGDKAnswer(p).subscribe(res => {
-                        if (res['code'] == 0) {
-                          this.navCtrl.pop();
+                    }
+                    if (this.currentStatus.place == PLACE_END) {
+                      //若在结束位置 次日得一单位金
+
+                      this.userData.getAlready(this.sim_id + this.n_id + this.currentStatus.days).then(res => {
+                        if (!res) {
+                          this.desertService.digging()
+                          this.userData.setAlready(this.sim_id + this.n_id + this.currentStatus.days, true)
                         } else {
-                          this.showToast('bottom', res['msg']);
+
                         }
-                        console.log('------addanswer------')
-                        console.log(res)
-                        // console.log('received message from server666: ', res['code']);
-                        // this.value='';
-                        // if (res['code'] == 0) {
-                        //
-                        // }
-                      }, error => {
-                        console.log(error)
-                        this.navCtrl.pop();
-                      });
 
-                    })
-                  }
-                }
-                if (this.currentStatus.place == PLACE_END) {
-                  //若在结束位置 次日得一单位金
+                      })
 
-                  this.userData.getAlready(this.sim_id+this.n_id + this.currentStatus.days).then(res => {
-                    if (!res) {
-                      this.desertService.digging()
-                      this.userData.setAlready(this.sim_id+this.n_id + this.currentStatus.days, true)
-                    } else {
 
                     }
-
-                  })
-
-
+                  }
                 }
-              }
+              })
+
+
             }
           })
 
 
         }
-      })
+      }
 
 
-    }
+    })
+
 
     this.userData.setSimData('simdata' + this.n_id, this.currentStatus);
   }
@@ -707,6 +732,7 @@ export class GoldTounaofbPage {
   ShowDaAn(i) {
     if (this.already) {
       this.showToast('bottom', "今天已经回答过了，请明天再来")
+      this.stay = true
       return
     }
     if (!this.group_u) {
@@ -714,14 +740,14 @@ export class GoldTounaofbPage {
       return
     }
     this.stay = true
-    this.already=true
+    this.already = true
     this.answer = this.desertService.getAnswer(i)
     this.lrClickPopShow = true;
     this.lrPopShow = false;
     this.btmMore = false;
     this.currentStatus.asked = true;
     this.desertService.getCurrState().asked = false;
-    this.userData.setAlready(this.sim_id+this.n_id + this.currentStatus.days, true)
+    this.userData.setAlready(this.sim_id + this.n_id + this.currentStatus.days, true)
 
     this.currentStatus = this.desertService.getCurrState()
 
