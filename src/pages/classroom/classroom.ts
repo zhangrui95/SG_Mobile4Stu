@@ -141,10 +141,11 @@ export class ClassroomPage {
             //   res['list'][0].ns = '';
             //   res['list'][i].ns = [{"n_id":"1.1","n_name":"sdfsdfs"},{"n_id":"1.2","n_name":"sdfsdfd"}];
             // }
+            let count=1;
             this.items = res['list'];
-            if(this.items.length>4){
+            if(this.items.length>count){
 
-             this.userData.setCurrentDays( Math.ceil((this.items.length-4)/2))
+             this.userData.setCurrentDays( Math.ceil((this.items.length-count)/2))
             }
             console.log("*-*-*-*-*-*-*-*-*-*" + JSON.stringify(res));
             console.log(JSON.stringify(res));

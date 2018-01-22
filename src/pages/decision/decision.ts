@@ -124,7 +124,7 @@ export class DecisionPage {
       n_id: this.n_id,
       money: ''
     };
-
+1
 
     if (this.selectvalue != '') {
       if (this.simType == 'gold') {
