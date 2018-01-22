@@ -53,6 +53,7 @@ export class BaidutbPage {
   g_id
   n_id
   s_data
+  sendBtn = true;
   getFullPath(path){
     return this.http.getBaseurl()+path
   }
@@ -125,23 +126,31 @@ export class BaidutbPage {
   }
 
   send() {
-    this.param = {
-      sim_id: this.sim_id,
-      g_id: this.g_id,
-      u_id: this.userId,
-      answer: this.inputvalue,
-      n_id: this.n_id
-    };
-    console.log('g_id:' + this.param.g_id + 'sim_id:' + this.param.sim_id + 'n_id:' + this.param.n_id)
-    if (this.inputvalue != '') {
-      this.http.addStuAnswer(this.param).subscribe(res => {
-        console.log(res)
-        this.inputvalue = '';
-        this.showSuccess('bottom', '评论成功');
-      },error2 => {
-        console.log(error2)
-        this.inputvalue = '';
-      });
+    if(this.sendBtn){
+      this.sendBtn = false;
+      this.param = {
+        sim_id: this.sim_id,
+        g_id: this.g_id,
+        u_id: this.userId,
+        answer: this.inputvalue,
+        n_id: this.n_id
+      };
+      console.log('g_id:' + this.param.g_id + 'sim_id:' + this.param.sim_id + 'n_id:' + this.param.n_id)
+      if (this.inputvalue != '') {
+        this.http.addStuAnswer(this.param).subscribe(res => {
+          console.log(res)
+          this.inputvalue = '';
+          this.sendBtn = true;
+          this.showSuccess('bottom', '评论成功');
+        },error2 => {
+          console.log(error2)
+          this.sendBtn = true;
+          this.showSuccess('bottom', '评论失败');
+        });
+      }else{
+        this.sendBtn = true;
+        this.showSuccess('bottom', '评论不能为空');
+      }
     }
   }
 
