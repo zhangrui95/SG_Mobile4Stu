@@ -120,59 +120,61 @@ export class DecisionPage {
 
   send() {
 
-    let simD=this.userData.getSimData('simdata'+this.n_id)
+    this.userData.getSimData('simdata').then(res=>{
+      this.param = {
+        sim_id: this.sim_id,
+        g_id: this.g_id,
+        u_id: this.userId,
+        answer: this.selectvalue,
+        current_status: res,
+        n_id: this.n_id,
+        money: ''
+      };
 
-    this.param = {
-      sim_id: this.sim_id,
-      g_id: this.g_id,
-      u_id: this.userId,
-      answer: this.selectvalue,
-      current_status: simD,
-      n_id: this.n_id,
-      money: ''
-    };
-1
 
-    if (this.selectvalue != '') {
-      if (this.simType == 'gold') {
-        this.http.addGDKAnswer(this.param).subscribe(res => {
-          if (res['code'] == 0) {
+      if (this.selectvalue != '') {
+        if (this.simType == 'gold') {
+          this.http.addGDKAnswer(this.param).subscribe(res => {
+            if (res['code'] == 0) {
+              this.navCtrl.pop();
+            } else {
+              this.showToast('bottom', res['msg']);
+            }
+            console.log('------addanswer------')
+            console.log(res)
+            // console.log('received message from server666: ', res['code']);
+            // this.value='';
+            // if (res['code'] == 0) {
+            //
+            // }
+          }, error => {
+            console.log(error)
             this.navCtrl.pop();
-          } else {
-            this.showToast('bottom', res['msg']);
-          }
-          console.log('------addanswer------')
-          console.log(res)
-          // console.log('received message from server666: ', res['code']);
-          // this.value='';
-          // if (res['code'] == 0) {
-          //
-          // }
-        }, error => {
-          console.log(error)
-          this.navCtrl.pop();
-        });
-      } else {
-        this.http.addStuAnswer(this.param).subscribe(res => {
-          if (res['code'] == 0) {
+          });
+        } else {
+          this.http.addStuAnswer(this.param).subscribe(res => {
+            if (res['code'] == 0) {
+              this.navCtrl.pop();
+            } else {
+              this.showToast('bottom', res['msg']);
+            }
+            console.log('------addanswer------')
+            console.log(res)
+            // console.log('received message from server666: ', res['code']);
+            // this.value='';
+            // if (res['code'] == 0) {
+            //
+            // }
+          }, error => {
+            console.log(error)
             this.navCtrl.pop();
-          } else {
-            this.showToast('bottom', res['msg']);
-          }
-          console.log('------addanswer------')
-          console.log(res)
-          // console.log('received message from server666: ', res['code']);
-          // this.value='';
-          // if (res['code'] == 0) {
-          //
-          // }
-        }, error => {
-          console.log(error)
-          this.navCtrl.pop();
-        });
+          });
+        }
+
       }
+    })
 
-    }
+
   }
 
   showToast(position: string, text: string) {

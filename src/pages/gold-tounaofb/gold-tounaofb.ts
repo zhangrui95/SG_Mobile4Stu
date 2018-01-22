@@ -87,13 +87,16 @@ export class GoldTounaofbPage {
   isLost() {
     this.lost = this.desertService.isGetLost()
     if (this.lost) {
-      for (let statu of  this.currentStatus.status) {
-        if (statu.status_type == STATUS_GET_LOST) {
+      if(this.currentStatus.status){
+        for (let statu of  this.currentStatus.status) {
+          if (statu.status_type == STATUS_GET_LOST) {
 
-          this.lostDuration = statu.status_duration
-          this.stay=true
+            this.lostDuration = statu.status_duration
+            this.stay=true
+          }
         }
       }
+
 
     }
   }
@@ -134,13 +137,16 @@ export class GoldTounaofbPage {
     this.n_id = this.navParams.data.n_id
     this.g_id = this.navParams.data.g_id
     this.s_data = this.navParams.data.s_data
-
+    this.isHistory=this.navParams.data.isHistory
     this.name_position = this.navParams.data.name_position
     // this.sim_id=this.navParams.data.sim_id
 
-    this.group_u = this.navParams.data.group_u = true
+    this.group_u = this.navParams.data.group_u
 
-    this.getAnswerOfStuList();
+    this.userData.getSimId().then(value => {
+      this.sim_id=value
+      this.getAnswerOfStuList();
+    })
   }
 
   getPlace() {
@@ -438,6 +444,7 @@ export class GoldTounaofbPage {
   stay=false
 
   ionViewDidLoad() {
+
     this.userData.setIsStay(false)
     this.userData.getSimId().then(res => {
       this.sim_id = res;
@@ -463,7 +470,7 @@ export class GoldTounaofbPage {
           if (this.name_position.indexOf('-') != -1) {
             let arr = this.name_position.split('-')
 
-            this.desertService.setCurrState(res['listGDK'], arr[0], arr[1].split('.')[0])
+            this.desertService.setCurrState(JSON.parse(res['listGDK'][0]['current_status']), arr[0], arr[1].split('.')[0])
           }
           this.messages = this.desertService.getMessagesFromOlder()
           if(this.currentStatus){
@@ -541,7 +548,7 @@ export class GoldTounaofbPage {
       })
     }
   }
-
+  isHistory
   askItems
   // ionViewDidLoad() {
   //   console.log('ionViewDidLoad BaidutbPage');
@@ -583,6 +590,9 @@ export class GoldTounaofbPage {
   }
 
   ionViewWillLeave() {
+    if(this.isHistory){
+      return
+    }
     if (!this.group_u) {
       return
     }
@@ -600,6 +610,7 @@ export class GoldTounaofbPage {
         if(this.currentStatus.days==1){
           return
         }
+
         if (!this.desertService.consume(this.weather, this.useTent).isSuccess) {
           this.goDead();
         } else {
@@ -704,7 +715,7 @@ export class GoldTounaofbPage {
     })
 
 
-    this.userData.setSimData('simdata' + this.n_id, this.currentStatus);
+    this.userData.setSimData('simdata', this.currentStatus);
   }
 
   ionViewDidLeave() {

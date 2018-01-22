@@ -31,7 +31,7 @@ export class ClassroomPage {
   sim_id;
   indexNs = [];
   g_id = "-1"
-  group_u = false;
+  group_u = true;
 
   action;
 
@@ -142,12 +142,7 @@ export class ClassroomPage {
             //   res['list'][0].ns = '';
             //   res['list'][i].ns = [{"n_id":"1.1","n_name":"sdfsdfs"},{"n_id":"1.2","n_name":"sdfsdfd"}];
             // }
-            let count=1;
             this.items = res['list'];
-            if(this.items.length>count){
-
-             this.userData.setCurrentDays( Math.ceil((this.items.length-count)/2))
-            }
             console.log("*-*-*-*-*-*-*-*-*-*" + JSON.stringify(res));
             console.log(JSON.stringify(res));
             for (let n in this.items) {
@@ -181,7 +176,15 @@ export class ClassroomPage {
   getFullPath(path){
     return this.http.getBaseurl()+path
   }
-  getScenesById(nid) {
+  getScenesById(nid,index?) {
+
+
+    let count=0;
+
+    if( index>count){
+
+      this.userData.setCurrentDays( Math.ceil((index-count)/2))
+    }
     let param = {
       n_id: nid
     }
@@ -209,8 +212,14 @@ export class ClassroomPage {
           if(this.simType=='gold'){
 
             if(this.items.length>1){
-              let i=this.items[this.items.length-1]
-              this.navCtrl.push(GoldTounaofbPage, {name_position:i.n_name,n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id, group_u: this.group_u,lastnid: i.n_id})
+              let i=this.items[index]
+              let isHistory=false
+              if(index<(this.items.length-2)){
+                isHistory=true
+                this.showToast("bottom" ,'请前往下个步骤')
+                return
+              }
+              this.navCtrl.push(GoldTounaofbPage, {isHistory:isHistory,name_position:i.n_name,n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id, group_u: this.group_u,lastnid: i.n_id})
 
             }
 
@@ -253,9 +262,9 @@ export class ClassroomPage {
     this.navCtrl.push(GroupingPage, {sim_id: this.sim_id});
   }
 
-  goPage(n_id) {
+  goPage(n_id,index?) {
 
-    this.getScenesById(n_id)
+    this.getScenesById(n_id,index)
 
   }
 
