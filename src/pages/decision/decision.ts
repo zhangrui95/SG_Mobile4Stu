@@ -45,6 +45,7 @@ export class DecisionPage {
   simData;
   btnShow = true;
   stay
+  btnClick = true;
   isShowBtn(){
     if(this.simType=='gold'){
       return this.group_u
@@ -119,62 +120,65 @@ export class DecisionPage {
   // }
 
   send() {
-
-    this.userData.getSimData('simdata').then(res=>{
-      this.param = {
-        sim_id: this.sim_id,
-        g_id: this.g_id,
-        u_id: this.userId,
-        answer: this.selectvalue,
-        current_status: res,
-        n_id: this.n_id,
-        money: ''
-      };
-
-
-      if (this.selectvalue != '') {
-        if (this.simType == 'gold') {
-          this.http.addGDKAnswer(this.param).subscribe(res => {
-            if (res['code'] == 0) {
+    if(this.btnClick){
+      this.btnClick = false;
+      this.userData.getSimData('simdata').then(res=>{
+        this.param = {
+          sim_id: this.sim_id,
+          g_id: this.g_id,
+          u_id: this.userId,
+          answer: this.selectvalue,
+          current_status: res,
+          n_id: this.n_id,
+          money: ''
+        };
+        if (this.selectvalue != '') {
+          if (this.simType == 'gold') {
+            this.http.addGDKAnswer(this.param).subscribe(res => {
+              if (res['code'] == 0) {
+                this.btnClick = true;
+                this.navCtrl.pop();
+              } else {
+                this.showToast('bottom', res['msg']);
+                this.btnClick = true;
+              }
+              console.log('------addanswer------')
+              console.log(res)
+              // console.log('received message from server666: ', res['code']);
+              // this.value='';
+              // if (res['code'] == 0) {
+              //
+              // }
+            }, error => {
+              console.log(error)
               this.navCtrl.pop();
-            } else {
-              this.showToast('bottom', res['msg']);
-            }
-            console.log('------addanswer------')
-            console.log(res)
-            // console.log('received message from server666: ', res['code']);
-            // this.value='';
-            // if (res['code'] == 0) {
-            //
-            // }
-          }, error => {
-            console.log(error)
-            this.navCtrl.pop();
-          });
-        } else {
-          this.http.addStuAnswer(this.param).subscribe(res => {
-            if (res['code'] == 0) {
+            });
+          } else {
+            this.http.addStuAnswer(this.param).subscribe(res => {
+              if (res['code'] == 0) {
+                this.btnClick = true;
+                this.navCtrl.pop();
+              } else {
+                this.btnClick = true;
+                this.showToast('bottom', res['msg']);
+              }
+              console.log('------addanswer------')
+              console.log(res)
+              // console.log('received message from server666: ', res['code']);
+              // this.value='';
+              // if (res['code'] == 0) {
+              //
+              // }
+            }, error => {
+              console.log(error)
               this.navCtrl.pop();
-            } else {
-              this.showToast('bottom', res['msg']);
-            }
-            console.log('------addanswer------')
-            console.log(res)
-            // console.log('received message from server666: ', res['code']);
-            // this.value='';
-            // if (res['code'] == 0) {
-            //
-            // }
-          }, error => {
-            console.log(error)
-            this.navCtrl.pop();
-          });
+              this.btnClick = true;
+            });
+          }
+
         }
-
-      }
-    })
-
-
+      })
+    }
   }
 
   showToast(position: string, text: string) {
