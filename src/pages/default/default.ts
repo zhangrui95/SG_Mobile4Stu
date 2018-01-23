@@ -28,7 +28,7 @@ src;
 
   private socketSubscription: Subscription
   showPhoto(){
-    this.photoViewer.show('src')
+    this.photoViewer.show(this.src)
   }
   ngOnInit(): void {
     // console.log(this.s_data.s_data.componentList)
