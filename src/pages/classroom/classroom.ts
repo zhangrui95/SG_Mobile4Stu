@@ -43,7 +43,7 @@ export class ClassroomPage {
               public vibration: Vibration,
               public ws: ServerSocket) {
 
-    this.ws.connect();
+
 
   }
 
@@ -52,6 +52,7 @@ export class ClassroomPage {
   simType
 
   ionViewDidEnter() {
+    this.ws.connect();
     this.userData.getIsDead().then(v => {
       this.userData.getIsSuccess().then(e => {
         if (v || e) {
@@ -77,24 +78,26 @@ export class ClassroomPage {
         this.getProcessOfStu();
       });
     });
+    //
+    // setInterval(() => {
+    //   if (!this.ws.messages) {
+    //     this.ws.connect();
+    //
+    //   }
+    //   if(this.ws.messages &&!this.messagesSubscription){
+    //     this.registeReciever()
+    //   }
+    //
+    // }, 5000)
 
-    setInterval(() => {
-      if (!this.ws.messages) {
-        this.ws.connect();
-
-      }
-      if(this.ws.messages &&!this.messagesSubscription){
-        this.registeReciever()
-      }
-
-    }, 5000)
-    if(this.ws.messages &&!this.messagesSubscription){
+    if(this.ws.messages ){
       this.registeReciever()
     }
 
   }
 
   registeReciever() {
+
     this.messagesSubscription = this.ws.messages.subscribe(msg => {
       console.log('+++++++++++++++++++++++++++++++++++++++++');
       console.log(msg);
