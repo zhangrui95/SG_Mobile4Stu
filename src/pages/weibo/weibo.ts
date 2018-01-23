@@ -145,40 +145,56 @@ export class WeiBoPage{
     // this.title='范德萨的发生非法违法文文';
     // this.content='范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文';
 
-    if (this.ws.messages) {
+    this.intervalTimer = setInterval(() => {
+      if (!this.ws.messages) {
+        this.ws.connect();
 
-      this.socketSubscription = this.ws.messages.subscribe(message => {
-        if (JSON.parse(message)['action'] != null) {
-          let action=JSON.parse(message)['action'];
-          let msgs = JSON.parse(message)['msg'];
-          if (action != null) {
-            if (action == 'phone_scene_answers_update') {
-              if(this.n_id!=JSON.parse(message)['list'][0].n_id){
-                return ;
-              }
-              let item = this.items.concat(JSON.parse(message)['list'])
-              this.items=item
+      }
+      if (this.ws.messages && !this.messagesSubscription) {
+        this.registeReciever()
+      }
 
-              setTimeout(()=>{
+    }, 5000)
+    if (this.ws.messages && !this.messagesSubscription) {
+      this.registeReciever()
+    }
+  }
 
-                this.ioncontent.scrollToBottom(500);
-              },1000)
+  intervalTimer
+  messagesSubscription;
+
+  registeReciever() {
+    this.socketSubscription = this.ws.messages.subscribe(message => {
+      if (JSON.parse(message)['action'] != null) {
+        let action=JSON.parse(message)['action'];
+        let msgs = JSON.parse(message)['msg'];
+        if (action != null) {
+          if (action == 'phone_scene_answers_update') {
+            if(this.n_id!=JSON.parse(message)['list'][0].n_id){
+              return ;
+            }
+            let item = this.items.concat(JSON.parse(message)['list'])
+            this.items=item
+
+            setTimeout(()=>{
+
+              this.ioncontent.scrollToBottom(500);
+            },1000)
 
 
-            }else if (action === "phone_group") {
-              this.userData.setAction(action);
-            } else if(action === "phone_call"){
-              this.showToast('bottom', msgs);
-            }else if (action === "exercises_end") {
-              if(this.sim_id == JSON.parse(message)['sim_id']){
-                this.showToast('bottom', '本次演练终止');
-              }
+          }else if (action === "phone_group") {
+            this.userData.setAction(action);
+          } else if(action === "phone_call"){
+            this.showToast('bottom', msgs);
+          }else if (action === "exercises_end") {
+            if(this.sim_id == JSON.parse(message)['sim_id']){
+              this.showToast('bottom', '本次演练终止');
             }
           }
         }
+      }
 
-      })
-    }
+    })
   }
 
 

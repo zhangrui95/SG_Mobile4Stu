@@ -78,7 +78,7 @@ export class ClassroomPage {
       });
     });
 
-    setInterval(() => {
+    this.intervalTimer=setInterval(() => {
       if (!this.ws.messages) {
         this.ws.connect();
 
@@ -93,7 +93,7 @@ export class ClassroomPage {
     }
 
   }
-
+  intervalTimer
   registeReciever() {
     this.messagesSubscription = this.ws.messages.subscribe(msg => {
       console.log('+++++++++++++++++++++++++++++++++++++++++');
@@ -145,6 +145,7 @@ export class ClassroomPage {
 
   ionViewDidLeave() {
     this.messagesSubscription.unsubscribe()
+    this.intervalTimer=null
   }
 
   // getPushFreeGroListForPhone(){
