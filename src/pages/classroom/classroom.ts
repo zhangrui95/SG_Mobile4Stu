@@ -13,6 +13,7 @@ import {QQPage} from "../qq/qq";
 import {DefaultPage} from "../default/default";
 import {GoldWeatherPage} from "../gold-weather/gold-weather";
 import {GoldTounaofbPage} from "../gold-tounaofb/gold-tounaofb";
+import {Vibration} from "@ionic-native/vibration";
 
 
 @IonicPage()
@@ -31,7 +32,7 @@ export class ClassroomPage {
   sim_id;
   indexNs = [];
   g_id = "-1"
-  group_u = false;
+  group_u = true;
 
   action;
 
@@ -40,32 +41,40 @@ export class ClassroomPage {
               public toastCtrl: ToastController,
               public http: ProxyHttpService,
               public userData: UserData,
+              public vibration: Vibration,
               public ws: ServerSocket) {
 
     this.ws.connect();
 
   }
 
+  refresh() {
+
+    this.ws.connect()
+
+  }
+
   messagesSubscription;
   simType
+
   ionViewDidEnter() {
     this.userData.getIsDead().then(v => {
       this.userData.getIsSuccess().then(e => {
-          if(v||e){
-            this.showAlwaysToast('bottom','演练结束，请等待结算')
-          }
+        if (v || e) {
+          this.showAlwaysToast('bottom', '演练结束，请等待结算')
+        }
       })
     })
 
     this.userData.getAction().then(value => {
-      this.action=value
+      this.action = value
       if (this.action === "phone_group") {
         this.getProcessOfStu();
         this.allocation = true;
       }
     })
     this.userData.getSimType().then(value => {
-      this.simType=value
+      this.simType = value
     })
     this.userData.getSimId().then(value => {
       this.sim_id = value;
@@ -75,10 +84,19 @@ export class ClassroomPage {
       });
     });
 
+    if (this.ws.messages != null) {
+      this.registeReciever()
+    }else{
+      setInterval(() => {
+        this.ws.connect();
+        this.registeReciever()
+      },5000)
+    }
 
-    // setTimeout(()=>{
-    //     this.getPushFreeGroListForPhone();
-    //   },1000);
+
+  }
+
+  registeReciever() {
     this.messagesSubscription = this.ws.messages.subscribe(msg => {
       console.log('+++++++++++++++++++++++++++++++++++++++++');
       console.log(msg);
@@ -90,27 +108,35 @@ export class ClassroomPage {
         console.log(JSON.parse(msg)['action']);
         console.log('action', action);
         if (action !== "undefined") {
-          if(action=='phone_Death'){
-            if(JSON.parse(msg)['datas']['type']=='dead'){
+          if (action == 'phone_Death') {
+            this.vibration.vibrate(2000);
+
+            if (JSON.parse(msg)['datas']['type'] == 'dead') {
               this.userData.setIsDead(true)
-            }else if(JSON.parse(msg)['datas']['type']=='success'){
+            } else if (JSON.parse(msg)['datas']['type'] == 'success') {
               this.userData.setIsSuccess(true)
             }
 
           }
           if (action === "phone_process_update") {
+            this.vibration.vibrate(2000);
             this.getProcessOfStu();
             this.scrollToBottom();
           } else if (action === "phone_group") {
-            if(this.sim_id==JSON.parse(msg)['sim_id']){
+            if (this.sim_id == JSON.parse(msg)['sim_id']) {
+              this.vibration.vibrate(2000);
               this.getProcessOfStu();
               this.allocation = true;
               this.userData.setAction(action);
             }
           } else if (action === "phone_call") {
+            this.vibration.vibrate(2000);
             this.showToast('bottom', msgs);
-          }else if (action === "exercises_end") {
-            if(this.sim_id == JSON.parse(msg)['sim_id']){
+          } else if (action === "exercises_end") {
+
+
+            if (this.sim_id == JSON.parse(msg)['sim_id']) {
+              this.vibration.vibrate(2000);
               this.showToast('bottom', '本次演练终止');
             }
           }
@@ -131,9 +157,9 @@ export class ClassroomPage {
   // }
 
   getProcessOfStu() {
-    this.userData.getIsDead().then(v=>{
-      this.userData.getIsSuccess().then(e=>{
-        if(!v&&!e){
+    this.userData.getIsDead().then(v => {
+      this.userData.getIsSuccess().then(e => {
+        if (!v && !e) {
           const params = {sim_id: this.sim_id, u_id: this.userId};
           console.log("*-*-*-*-*-*-*-*-*-*");
           console.log(JSON.stringify(params));
@@ -143,10 +169,6 @@ export class ClassroomPage {
             //   res['list'][i].ns = [{"n_id":"1.1","n_name":"sdfsdfs"},{"n_id":"1.2","n_name":"sdfsdfd"}];
             // }
             this.items = res['list'];
-            if(this.items.length>4){
-
-             this.userData.setCurrentDays( Math.ceil((this.items.length-4)/2))
-            }
             console.log("*-*-*-*-*-*-*-*-*-*" + JSON.stringify(res));
             console.log(JSON.stringify(res));
             for (let n in this.items) {
@@ -160,7 +182,7 @@ export class ClassroomPage {
             if (res['groOfStu'] === '') {
               this.GroupNews = false;
             } else {
-              if(res['groOfStu'].u_position == 1){
+              if (res['groOfStu'].u_position == 1) {
                 this.group_u = true;
               }
               this.userData.setUposition(res['groOfStu'].u_position);
@@ -177,10 +199,20 @@ export class ClassroomPage {
   }
 
   action_name = "";
-  getFullPath(path){
-    return this.http.getBaseurl()+path
+
+  getFullPath(path) {
+    return this.http.getBaseurl() + path
   }
-  getScenesById(nid) {
+
+  getScenesById(nid, index?) {
+
+
+    let count = 0;
+
+    if (index > count) {
+
+      this.userData.setCurrentDays(Math.ceil((index - count) / 2))
+    }
     let param = {
       n_id: nid
     }
@@ -205,15 +237,30 @@ export class ClassroomPage {
           this.navCtrl.push(WeiBoPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
           break;
         case "SG_brain":
-          if(this.simType=='gold'){
+          if (this.simType == 'gold') {
 
-            if(this.items.length>1){
-              let i=this.items[this.items.length-1]
-              this.navCtrl.push(GoldTounaofbPage, {name_position:i.n_name,n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id, group_u: this.group_u,lastnid: i.n_id})
+            if (this.items.length > 1) {
+              let i = this.items[index]
+              let isHistory = false
+              if (index < (this.items.length - 2)) {
+                isHistory = true
+                this.showToast("bottom", '请前往下个步骤')
+                return
+              }
+              this.navCtrl.push(GoldTounaofbPage, {
+                isHistory: isHistory,
+                name_position: i.n_name,
+                n_id: nid,
+                g_id: this.g_id,
+                s_data: s_data,
+                sim_id: this.sim_id,
+                group_u: this.group_u,
+                lastnid: i.n_id
+              })
 
             }
 
-          }else{
+          } else {
 
             this.navCtrl.push(TounaofbPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
 
@@ -222,12 +269,18 @@ export class ClassroomPage {
 
           break;
         case "SG_select":
-          if(this.items.length>1){
-            let i=this.items[this.items.length-1]
-            this.navCtrl.push(DecisionPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id,group_u:this.group_u,lastnid: i.n_id})
+          if (this.items.length > 1) {
+            let i = this.items[this.items.length - 1]
+            this.navCtrl.push(DecisionPage, {
+              n_id: nid,
+              g_id: this.g_id,
+              s_data: s_data,
+              sim_id: this.sim_id,
+              group_u: this.group_u,
+              lastnid: i.n_id
+            })
 
           }
-
 
 
           break;
@@ -236,9 +289,9 @@ export class ClassroomPage {
           break;
         case "default":
 
-          if(this.simType=='gold'){
+          if (this.simType == 'gold') {
             this.navCtrl.push(GoldWeatherPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
-          }else{
+          } else {
             this.navCtrl.push(DefaultPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
           }
 
@@ -252,9 +305,9 @@ export class ClassroomPage {
     this.navCtrl.push(GroupingPage, {sim_id: this.sim_id});
   }
 
-  goPage(n_id) {
+  goPage(n_id, index?) {
 
-    this.getScenesById(n_id)
+    this.getScenesById(n_id, index)
 
   }
 
@@ -276,6 +329,7 @@ export class ClassroomPage {
 
     toast.present(toast);
   }
+
   showAlwaysToast(position: string, text: string) {
     let toast = this.toastCtrl.create({
       message: text,

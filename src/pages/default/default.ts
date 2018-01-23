@@ -3,6 +3,7 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {ServerSocket} from "../../providers/ws.service";
 import {Subscription} from "rxjs/Subscription";
 import {ProxyHttpService} from "../../providers/proxy.http.service";
+import {PhotoViewer} from "@ionic-native/photo-viewer";
 
 
 @IonicPage()
@@ -26,7 +27,9 @@ src;
   common
 
   private socketSubscription: Subscription
-
+  showPhoto(){
+    this.photoViewer.show('src')
+  }
   ngOnInit(): void {
     // console.log(this.s_data.s_data.componentList)
     // this.datas = this.s_data.s_data.componentList;
@@ -86,11 +89,12 @@ src;
   }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public ws: ServerSocket,
-              public http: ProxyHttpService) {
+              public http: ProxyHttpService,private photoViewer: PhotoViewer) {
     this.n_id=this.navParams.data.n_id
     this.g_id=this.navParams.data.g_id
     this.s_data=this.navParams.data.s_data
     this.sim_id=this.navParams.data.sim_id
+
   }
 
   ionViewDidLoad() {

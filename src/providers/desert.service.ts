@@ -610,13 +610,6 @@ export class DesertService {
     isDead: false,
     status: [],
     events: [
-      {
-        e_name: '营地交易',
-        type: EVENT_TRADE
-      }, {
-        e_name: '询问老人',
-        type: EVENT_ASK
-      }
     ]
   };
   public reduce = {food: 0, water: 0};
