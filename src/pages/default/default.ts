@@ -68,7 +68,7 @@ src;
       }
       else {
         this.name=name;
-        this.src=com.data.src;
+        this.src=this.getFullpath(com.data.src);
       }
 
     }
@@ -89,7 +89,9 @@ src;
 
   intervalTimer
   messagesSubscription;
-
+  getFullpath(path){
+    return  this.http.getBaseurl()+path
+  }
   registeReciever() {
     console.log(this.ws.messages)
     this.ws.messages.subscribe(res => {
