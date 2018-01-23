@@ -86,11 +86,15 @@ export class ClassroomPage {
 
     if (this.ws.messages != null) {
       this.registeReciever()
-    }else{
+    } else {
       setInterval(() => {
+
         this.ws.connect();
-        this.registeReciever()
-      },5000)
+        if (this.messagesSubscription == null) {
+          this.registeReciever()
+        }
+
+      }, 5000)
     }
 
 
@@ -109,7 +113,7 @@ export class ClassroomPage {
         console.log('action', action);
         if (action !== "undefined") {
           if (action == 'phone_Death') {
-            this.vibration.vibrate(2000);
+            this.vibration.vibrate(1000);
 
             if (JSON.parse(msg)['datas']['type'] == 'dead') {
               this.userData.setIsDead(true)
@@ -119,24 +123,24 @@ export class ClassroomPage {
 
           }
           if (action === "phone_process_update") {
-            this.vibration.vibrate(2000);
+            this.vibration.vibrate(1000);
             this.getProcessOfStu();
             this.scrollToBottom();
           } else if (action === "phone_group") {
             if (this.sim_id == JSON.parse(msg)['sim_id']) {
-              this.vibration.vibrate(2000);
+              this.vibration.vibrate(1000);
               this.getProcessOfStu();
               this.allocation = true;
               this.userData.setAction(action);
             }
           } else if (action === "phone_call") {
-            this.vibration.vibrate(2000);
+            this.vibration.vibrate(1000);
             this.showToast('bottom', msgs);
           } else if (action === "exercises_end") {
 
 
             if (this.sim_id == JSON.parse(msg)['sim_id']) {
-              this.vibration.vibrate(2000);
+              this.vibration.vibrate(1000);
               this.showToast('bottom', '本次演练终止');
             }
           }
@@ -204,9 +208,14 @@ export class ClassroomPage {
     return this.http.getBaseurl() + path
   }
 
+  itemClicked = false
+
   getScenesById(nid, index?) {
 
-
+    if (this.itemClicked) {
+      return
+    }
+    this.itemClicked = true
     let count = 0;
 
     if (index > count) {
@@ -225,6 +234,7 @@ export class ClassroomPage {
           name = component.name
         }
       }
+      this.itemClicked = false
       console.log(this.g_id)
       switch (name) {
         case "SG_tieba":
