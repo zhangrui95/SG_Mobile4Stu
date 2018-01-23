@@ -12,7 +12,7 @@
           <span style="min-height: 25px;color: #d8d8d8;margin: 0;float: left;font-size: x-large;font-size: 20px;">
             {{title}}
           </span>
-      <p  class="p_content">
+      <p class="p_content">
         {{content}}
       </p>
     </div>
@@ -30,7 +30,7 @@
   <div class="list-item-box-bd">
   <div *ngFor="let item of items;let n=index;" class="pl-box">
     <div style="margin-left: 20px;">
-      <img style=" height: 50px;width: 50px;float: left;margin-top: 20px;" [src]="item.imagePath?getFullPath(item.imagePath):'assets/img/header.png'">
+      <img style=" height: 50px;width: 50px;float: left;margin-top: 20px;" [src]="item.imagePath?getFullPath(item.imagePath):'assets/img/header.png'"/>
       <div class="time-pl-box">
         <div style="color:white; margin-bottom:8px;">
           <span style="font-size: 20px;">{{item.userName}}</span>

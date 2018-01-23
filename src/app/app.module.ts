@@ -72,6 +72,8 @@ import {GoldTypePage} from "../pages/gold-type/gold-type";
 import {GoldOlderPage} from "../pages/gold-older/gold-older";
 import {GoldSupplyPage} from "../pages/gold-supply/gold-supply";
 import {DesertService} from "../providers/desert.service";
+import {Vibration} from "@ionic-native/vibration";
+import {PhotoViewer} from "@ionic-native/photo-viewer";
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -245,6 +247,8 @@ import {DesertService} from "../providers/desert.service";
     ProxyHttpService,
     UserData,
     DesertService,
+    Vibration,
+    PhotoViewer,
     InAppBrowser,
     Camera,
     Base64,
