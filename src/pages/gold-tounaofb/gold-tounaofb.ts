@@ -6,6 +6,7 @@ import {ServerSocket} from "../../providers/ws.service";
 import {ProxyHttpService} from "../../providers/proxy.http.service";
 import {UserData} from "../../providers/user-data";
 import {DesertService} from "../../providers/desert.service";
+import {Vibration} from "@ionic-native/vibration";
 
 const ITEM_TENT = 101;
 const ITEM_WATER = 102;
@@ -128,6 +129,7 @@ export class GoldTounaofbPage {
               public navParams: NavParams,
               public userData: UserData,
               public ws: ServerSocket,
+              public vibration: Vibration,
               public http: ProxyHttpService,
               public sanitizer: DomSanitizer,
               public desertService: DesertService,
@@ -548,6 +550,7 @@ export class GoldTounaofbPage {
           }
 
           if (action == 'phone_Death') {
+            this.vibration.vibrate(1000);
             if (JSON.parse(message)['datas']['type'] == 'dead') {
               this.userData.setIsDead(true)
             } else if (JSON.parse(message)['datas']['type'] == 'success') {
@@ -556,6 +559,7 @@ export class GoldTounaofbPage {
             this.navCtrl.pop()
           }
           if (action === "phone_call") {
+            this.vibration.vibrate(1000);
             this.showToast('bottom', msgs);
           } else if (action === "exercises_end") {
             if (this.sim_id == JSON.parse(message)['sim_id']) {

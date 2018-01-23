@@ -6,6 +6,7 @@ import {Subscription} from "rxjs/Subscription";
 import {ServerSocket} from "../../providers/ws.service";
 import {ProxyHttpService} from "../../providers/proxy.http.service";
 import {UserData} from "../../providers/user-data";
+import {Vibration} from "@ionic-native/vibration";
 
 /**
  * Generated class for the BaidutbPage page.
@@ -60,6 +61,7 @@ export class DanmuPage {
               public ws: ServerSocket,
               public http: ProxyHttpService,
               public sanitizer: DomSanitizer,
+              public vibration: Vibration,
               public toastCtrl: ToastController) {
     this.ws.connect()
     this.userData.getUserID().then(value => this.userId = value)
@@ -112,8 +114,9 @@ export class DanmuPage {
           this.showSuccess('bottom', '评论成功');
         },error2 => {
           console.log(error2)
+          this.inputvalue = '';
           this.sendBtn = true;
-          this.showSuccess('bottom', '评论失败');
+
         });
       }else{
         this.sendBtn = true;
@@ -160,17 +163,17 @@ export class DanmuPage {
     // this.src=com.data.src;
     // this.title='范德萨的发生非法违法文文';
     // this.content='范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文';
-    this.intervalTimer = setInterval(() => {
-      if (!this.ws.messages) {
-        this.ws.connect();
-
-      }
-      if (this.ws.messages && !this.messagesSubscription) {
-        this.registeReciever()
-      }
-
-    }, 5000)
-    if (this.ws.messages && !this.messagesSubscription) {
+    // this.intervalTimer = setInterval(() => {
+    //   if (!this.ws.messages) {
+    //     this.ws.connect();
+    //
+    //   }
+    //   if (this.ws.messages && !this.messagesSubscription) {
+    //     this.registeReciever()
+    //   }
+    //
+    // }, 5000)
+    if (this.ws.messages) {
       this.registeReciever()
     }
 
@@ -200,6 +203,7 @@ export class DanmuPage {
         } else if (action === "phone_group") {
           this.userData.setAction(action);
         } else if(action === "phone_call"){
+          this.vibration.vibrate(1000);
           this.showToast('bottom', msgs);
         }else if (action === "exercises_end") {
           if(this.sim_id == JSON.parse(message)['sim_id']){

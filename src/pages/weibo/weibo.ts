@@ -7,6 +7,7 @@ import {UserData} from "../../providers/user-data";
 import {ServerSocket} from "../../providers/ws.service";
 import {DomSanitizer} from "@angular/platform-browser";
 import {Subscription} from "rxjs/Subscription";
+import {Vibration} from "@ionic-native/vibration";
 
 @IonicPage()
 @Component({
@@ -54,6 +55,8 @@ export class WeiBoPage{
               public userData: UserData,
               public ws: ServerSocket,
               public http: ProxyHttpService,
+              public vibration: Vibration,
+
               public sanitizer: DomSanitizer,
               public toastCtrl: ToastController) {
     this.ws.connect()
@@ -108,7 +111,7 @@ export class WeiBoPage{
         },error2 => {
           console.log(error2)
           this.sendBtn = true;
-          this.showSuccess('bottom', '评论失败');
+          this.inputvalue = '';
         });
       }else{
         this.sendBtn = true;
@@ -145,17 +148,17 @@ export class WeiBoPage{
     // this.title='范德萨的发生非法违法文文';
     // this.content='范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文';
 
-    this.intervalTimer = setInterval(() => {
-      if (!this.ws.messages) {
-        this.ws.connect();
-
-      }
-      if (this.ws.messages && !this.messagesSubscription) {
-        this.registeReciever()
-      }
-
-    }, 5000)
-    if (this.ws.messages && !this.messagesSubscription) {
+    // this.intervalTimer = setInterval(() => {
+    //   if (!this.ws.messages) {
+    //     this.ws.connect();
+    //
+    //   }
+    //   if (this.ws.messages && !this.messagesSubscription) {
+    //     this.registeReciever()
+    //   }
+    //
+    // }, 5000)
+    if (this.ws.messages ) {
       this.registeReciever()
     }
   }
@@ -185,6 +188,7 @@ export class WeiBoPage{
           }else if (action === "phone_group") {
             this.userData.setAction(action);
           } else if(action === "phone_call"){
+            this.vibration.vibrate(1000);
             this.showToast('bottom', msgs);
           }else if (action === "exercises_end") {
             if(this.sim_id == JSON.parse(message)['sim_id']){

@@ -6,6 +6,7 @@ import {Subscription} from "rxjs/Subscription";
 import {ServerSocket} from "../../providers/ws.service";
 import {ProxyHttpService} from "../../providers/proxy.http.service";
 import {UserData} from "../../providers/user-data";
+import {Vibration} from "@ionic-native/vibration";
 
 /**
  * Generated class for the BaidutbPage page.
@@ -58,6 +59,7 @@ export class TounaofbPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public userData: UserData,
+              public vibration: Vibration,
               public ws: ServerSocket,
               public http: ProxyHttpService,
               public sanitizer: DomSanitizer,
@@ -117,7 +119,7 @@ export class TounaofbPage {
         },error2 => {
           console.log(error2)
           this.sendBtn = true;
-          this.showSuccess('bottom', '评论失败');
+          this.inputvalue = '';
         });
       }else{
         this.sendBtn = true;
@@ -187,6 +189,8 @@ export class TounaofbPage {
         }else if (action === "phone_group") {
           this.userData.setAction(action);
         }else if(action === "phone_call"){
+          this.vibration.vibrate(1000);
+
           this.showToast('bottom', msgs);
         }else if (action === "exercises_end") {
           if(this.sim_id == JSON.parse(message)['sim_id']){
