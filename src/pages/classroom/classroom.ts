@@ -11,7 +11,6 @@ import {TounaofbPage} from "../tounaofb/tounaofb";
 import {BaidutbPage} from "../baidutb/baidutb";
 import {QQPage} from "../qq/qq";
 import {DefaultPage} from "../default/default";
-import {GoldWeatherPage} from "../gold-weather/gold-weather";
 import {GoldTounaofbPage} from "../gold-tounaofb/gold-tounaofb";
 import {Vibration} from "@ionic-native/vibration";
 
@@ -48,11 +47,7 @@ export class ClassroomPage {
 
   }
 
-  refresh() {
 
-    this.ws.connect()
-
-  }
 
   messagesSubscription;
   simType
@@ -299,11 +294,7 @@ export class ClassroomPage {
           break;
         case "default":
 
-          if (this.simType == 'gold') {
-            this.navCtrl.push(GoldWeatherPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
-          } else {
-            this.navCtrl.push(DefaultPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
-          }
+          this.navCtrl.push(DefaultPage, {n_id: nid, g_id: this.g_id, s_data: s_data, sim_id: this.sim_id})
 
           break;
       }

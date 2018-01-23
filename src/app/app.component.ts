@@ -21,7 +21,6 @@ import {UserData} from '../providers/user-data';
 import {UsersPage} from "../pages/users/users";
 import {IndexPage} from "../pages/index/index";
 import {LoginsPage} from "../pages/logins/logins";
-import {ServerSocket} from "../providers/ws.service";
 
 export interface PageInterface {
   title: string;
@@ -88,7 +87,10 @@ export class ConferenceApp {
               public storage: Storage,
               public splashScreen: SplashScreen,
               public toastCtrl: ToastController,
-              public ws: ServerSocket) {
+              ) {
+    this.userData.getToken().then(res=>{
+      this.userData.setToken(res)
+    })
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
       if(hasLoggedIn){
         this.rootPage=IndexPage;

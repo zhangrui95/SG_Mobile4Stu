@@ -138,7 +138,7 @@ export class IndexPage {
               this.userData.setAction('')
               this.userData.setIsDead(false)
               this.userData.setIsSuccess(false)
-            this.userData.setCurrentDays(1)
+              this.userData.setCurrentDays(1)
             }
           );
         } else {
