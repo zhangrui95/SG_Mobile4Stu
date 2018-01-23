@@ -8,7 +8,7 @@
 <div class="center">
   <div class="img-box" >
     <div *ngIf="name=='img'">
-      <img src="{{src}}" style="height:200px;width:fit-content;"/>
+      <img src="{{src}}" style="height:200px;width:fit-content;" (click)="showPhoto()"/>
       <!--<img src="{{items.data.src}}"
               style="width: {{items.style.width+'px'}};height:{{items.style.width+'px'}};left:{{items.style.x+'px'}};top:{{items.style.y+'px'}}"/>-->
       <!--<img src="../assets/img/add.png"-->
