@@ -1,6 +1,7 @@
 <ion-header>
   <ion-navbar color="dark">
     <ion-title>QQ</ion-title>
+    <img src="assets/img/sx.png" style="float: right;width: 26px;margin: 10px 10px 0px 0px;" (click)="getAnswerOfStuList()"/>
   </ion-navbar>
 </ion-header>
 
@@ -36,7 +37,7 @@
     </div>
   </div>
   <div *ngIf="isShow" style="background-color: rgba(0,0,0,0.5);position:fixed;left: 30%;top: 38%;height: 20%;width: 40%;border-radius: 5px; ">
-    <img src="assets/img/yuyin-5.png" style="width: 50%;margin: 15px auto 10px;display: block;"/>
+    <!--<img src="assets/img/yuyin-5.png" style="width: 50%;margin: 15px auto 10px;display: block;"/>-->
     <div style="color: white;font-size: 14px;text-align: center;width: 100%;"> 正在收录语音,<br/>保持长按</div>
   </div>
   <div class="send-btm-box-bg">
