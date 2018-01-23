@@ -13,6 +13,7 @@ import {QQPage} from "../qq/qq";
 import {DefaultPage} from "../default/default";
 import {GoldWeatherPage} from "../gold-weather/gold-weather";
 import {GoldTounaofbPage} from "../gold-tounaofb/gold-tounaofb";
+import {Vibration} from "@ionic-native/vibration";
 
 
 @IonicPage()
@@ -40,6 +41,7 @@ export class ClassroomPage {
               public toastCtrl: ToastController,
               public http: ProxyHttpService,
               public userData: UserData,
+              public vibration: Vibration,
               public ws: ServerSocket) {
 
     this.ws.connect();
@@ -107,6 +109,8 @@ export class ClassroomPage {
         console.log('action', action);
         if (action !== "undefined") {
           if (action == 'phone_Death') {
+            this.vibration.vibrate(2000);
+
             if (JSON.parse(msg)['datas']['type'] == 'dead') {
               this.userData.setIsDead(true)
             } else if (JSON.parse(msg)['datas']['type'] == 'success') {
@@ -115,18 +119,24 @@ export class ClassroomPage {
 
           }
           if (action === "phone_process_update") {
+            this.vibration.vibrate(2000);
             this.getProcessOfStu();
             this.scrollToBottom();
           } else if (action === "phone_group") {
             if (this.sim_id == JSON.parse(msg)['sim_id']) {
+              this.vibration.vibrate(2000);
               this.getProcessOfStu();
               this.allocation = true;
               this.userData.setAction(action);
             }
           } else if (action === "phone_call") {
+            this.vibration.vibrate(2000);
             this.showToast('bottom', msgs);
           } else if (action === "exercises_end") {
+
+
             if (this.sim_id == JSON.parse(msg)['sim_id']) {
+              this.vibration.vibrate(2000);
               this.showToast('bottom', '本次演练终止');
             }
           }
