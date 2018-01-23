@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-
+import {Injectable} from '@angular/core';
 
 
 import 'rxjs/add/operator/map';
@@ -11,124 +10,128 @@ import {UserData} from "./user-data";
 @Injectable()
 export class ProxyHttpService {
 
-  public static IP_PORT="http://192.168.0.52:8080";
-  public static PROJECT_PACKAGE="/VisualizationMgt"
-  public BASE_URL=ProxyHttpService.IP_PORT+ProxyHttpService.PROJECT_PACKAGE
-  constructor(public http: HttpClient,public userData:UserData) {
+  public static IP_PORT = "http://192.168.0.52:8080";
+  public static PROJECT_PACKAGE = "/VisualizationMgt"
+  public BASE_URL = ProxyHttpService.IP_PORT + ProxyHttpService.PROJECT_PACKAGE
+
+  constructor(public http: HttpClient, public userData: UserData) {
 
   }
 
 
-
-
-
-updateRankingData(params){
-  return this._post("/phoneAppController/updateRankingData.do",params)
-}
-  login(params){
-    return this._post("/userstu/login.do",params)
+  updateRankingData(params) {
+    return this._post("/phoneAppController/updateRankingData.do", params)
   }
 
-  updatePhone(params){
-    return this._post("/userstu/updatePhone.do",params)
+  login(params) {
+    return this._post("/userstu/login.do", params)
   }
 
-  updatePass(params){
-    return this._post("/userstu/updatePass.do",params)
+  updatePhone(params) {
+    return this._post("/userstu/updatePhone.do", params)
   }
 
-  getVersionByType(params){
-    return this._post("/version/getVersionByType.do",params)
+  updatePass(params) {
+    return this._post("/userstu/updatePass.do", params)
   }
 
-  register(params){
-    return this._post("/userstu/register.do",params)
+  getVersionByType(params) {
+    return this._post("/version/getVersionByType.do", params)
   }
 
-  updateHeadPic(params){
-    return this._post("/userstu/updateHeadPic.do",params)
+  register(params) {
+    return this._post("/userstu/register.do", params)
   }
 
-  getSimulationList(params){
-    return this._get("/phoneAppController/getSimulationList.do",params)
+  updateHeadPic(params) {
+    return this._post("/userstu/updateHeadPic.do", params)
   }
 
-  initPass(params){
-    return this._post("/userstu/initPass.do",params)
+  getSimulationList(params) {
+    return this._get("/phoneAppController/getSimulationList.do", params)
   }
 
-  getProcessOfStu(params){
-    return this._get("/phoneAppController/getProcessOfStu.do",params)
+  initPass(params) {
+    return this._post("/userstu/initPass.do", params)
   }
 
-  getPushFreeGroListForPhone(params){
-    return this._post("/tabletController/getPushFreeGroListForPhone.do",params)
+  getProcessOfStu(params) {
+    return this._get("/phoneAppController/getProcessOfStu.do", params)
   }
 
-  addfreeGroupOfStu(params){
-    return this._post("/phoneAppController/addfreeGroupOfStu.do",params)
+  getPushFreeGroListForPhone(params) {
+    return this._post("/tabletController/getPushFreeGroListForPhone.do", params)
   }
 
-  getScenesById(params){
-    return this._get("/phoneAppController/getScenesById.do",params)
-  }
-  getAnswerOfStuList(params){
-    return this._post("/phoneAppController/getAnswerOfStuList.do",params)
+  addfreeGroupOfStu(params) {
+    return this._post("/phoneAppController/addfreeGroupOfStu.do", params)
   }
 
+  getScenesById(params) {
+    return this._get("/phoneAppController/getScenesById.do", params)
+  }
 
-  getPushDeathNoticeByGro(params){
-    return this._post("/phoneAppController/getPushDeathNoticeByGro.do",params)
+  getAnswerOfStuList(params) {
+    return this._post("/phoneAppController/getAnswerOfStuList.do", params)
   }
 
 
-  getDataForRanking(params){
-    return this._get("/phoneAppController/getDataForRanking.do",params)
-  }
-
-  addStuAnswer(params){
-    return this._post("/phoneAppController/addStuAnswer.do",params)
-  }
-  getappExercisesList(params){
-    return this._get("/statistical/appExercisesList.do",params)
-  }
-  getappExercisesInfo(params){
-    return this._post("/statistical/appExercisesInfo.do",params)
-  }
-  addGDKAnswer(params){
-    return this._post("/phoneAppController/addGDKAnswer.do",params)
+  getPushDeathNoticeByGro(params) {
+    return this._post("/phoneAppController/getPushDeathNoticeByGro.do", params)
   }
 
 
-  getGroupsList(params){
-    return this._get("/phoneAppController/getGroupsList.do",params)
-  }
-  getGoldStatus(params){
-    return this._get("/phoneAppController/getGDKDataByNId.do",params)
+  getDataForRanking(params) {
+    return this._get("/phoneAppController/getDataForRanking.do", params)
   }
 
-  getIsExistEndCour(params){
-    return this._get("/phoneAppController/getIsExistEndCour.do",params)
+  addStuAnswer(params) {
+    return this._post("/phoneAppController/addStuAnswer.do", params)
   }
 
-  addClassPractice(params){
-    return this._post("/phoneAppController/addClassPractice.do",params)
-  }
-  getAnswerByUId(params){
-    return this._get("/phoneAppController/getAnswerByUId.do",params)
+  getappExercisesList(params) {
+    return this._get("/statistical/appExercisesList.do", params)
   }
 
+  getappExercisesInfo(params) {
+    return this._post("/statistical/appExercisesInfo.do", params)
+  }
+
+  addGDKAnswer(params) {
+    return this._post("/phoneAppController/addGDKAnswer.do", params)
+  }
 
 
-  getBaseurl(){
+  getGroupsList(params) {
+    return this._get("/phoneAppController/getGroupsList.do", params)
+  }
+
+  getGoldStatus(params) {
+    return this._get("/phoneAppController/getGDKDataByNId.do", params)
+  }
+
+  getIsExistEndCour(params) {
+    return this._get("/phoneAppController/getIsExistEndCour.do", params)
+  }
+
+  addClassPractice(params) {
+    return this._post("/phoneAppController/addClassPractice.do", params)
+  }
+
+  getAnswerByUId(params) {
+    return this._get("/phoneAppController/getAnswerByUId.do", params)
+  }
+
+
+  getBaseurl() {
     return ProxyHttpService.IP_PORT;
   }
 
 
-  _post(url,params?:any){
+  _post(url, params?: any) {
     console.log(this.BASE_URL + url)
-    params.deviceType="phone"
-    params.token=this.userData.userToken;
+    params.deviceType = "phone"
+    params.token = this.userData.userToken;
     console.log(JSON.stringify(params))
 
     return this.http.post(this.BASE_URL + url, JSON.stringify(params))
