@@ -14,24 +14,35 @@
     <h3 style="height: 25px;margin: -40px 0px 0px 90px;color: #e8e8e8">
       {{title}}
     </h3>
-    <!--<span style="color: #e8e8e8;font-size: initial;margin: 20px 25px 0px 25px;float: left;">{{content}}</span>-->
     <p class="p_content">
-      {{content}}</p>
+      {{content}}
+    </p>
     <hr style="border-top: 2px solid #1aa7b8;float: left;margin: 20px 0px 0px 0px;width: 415px;"/>
   </div>
   <div class="list-item-box-bd">
+    <!--<div class="pl-box" *ngFor="let item of items;let n=index">-->
+      <!--&lt;!&ndash;<div *ngIf="item.UserName!='士兵002'" >&ndash;&gt;-->
+      <!--<div class="time-pl-box">-->
+        <!--<img style="width: 40px;height: 40px;float: left;" [src]="item.imagePath?getFullPath(item.imagePath):'assets/img/header.png'">-->
+        <!--<div style="color:white; margin-bottom:8px;">-->
+          <!--<span style="font-size: large">{{item.userName}}</span>-->
+          <!--<span style="font-size: medium;padding-left: 10px">{{item.role_name}}</span>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div-->
+        <!--style="background-color: black;background: rgba(0,0,0,0.5);border-radius: 1em;margin: 10px 0px 30px 15px;width: 75%;height: auto;float: left">-->
+        <!--<span class="pl-span-word">{{item.answer}}</span>-->
+      <!--</div>-->
+    <!--</div>-->
     <div class="pl-box" *ngFor="let item of items;let n=index">
-      <!--<div *ngIf="item.UserName!='士兵002'" >-->
       <div class="time-pl-box">
-        <img style="width: 40px;height: 40px;float: left;" [src]="item.imagePath?getFullPath(item.imagePath):'assets/img/header.png'">
-        <div style="color:white; margin-bottom:8px;">
-          <span style="font-size: large">{{item.userName}}</span>
-          <span style="font-size: medium;padding-left: 10px">{{item.role_name}}</span>
+        <img style="width: 50px;height: 50px;border-radius:50px;" class="float-l" [src]="item.imagePath?getFullPath(item.imagePath):'assets/img/header.png'">
+        <div style="color: white;margin: 5px 0 0 10px;" class="float-l">
+          <span style="font-size: 18px;">{{item.userName}}</span>
         </div>
       </div>
-      <div
-        style="background-color: black;background: rgba(0,0,0,0.5);border-radius: 1em;margin: 10px 0px 30px 15px;width: 75%;height: auto;float: left">
-        <span class="pl-span-word">{{item.answer}}</span>
+      <div class="qq-bg-word">
+        {{item.answer}}
       </div>
     </div>
   </div>

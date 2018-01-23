@@ -14,7 +14,7 @@ page-qq {
     overflow-y: hidden;
     font-size: 18px;
     width: 86%;
-
+    text-align: justify;
   }
   .ss {
     float: right;
@@ -101,8 +101,23 @@ page-qq {
 
   .span-1{
     float:left; padding:5px 20px;
-
-
+  }
+  .qq-bg-word{
+    background: rgba(0,0,0,0.5);
+    border-radius: 7px;
+    margin: -15px 75px 0;
+    min-height: 22px;
+    line-height:22px;
+    float: left;
+    font-size: 16px;
+    padding: 8px 10px;
+    color: #fff;
+  }
+  .pl-box{
+    border-bottom: 0;
+  }
+  .time-pl-box{
+    width: 100%;
   }
 }
 
