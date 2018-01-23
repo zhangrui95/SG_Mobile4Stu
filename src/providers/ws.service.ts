@@ -4,6 +4,8 @@ import {Observable} from 'rxjs/Observable'
 import websocketConnect from 'rxjs-websockets'
 import 'rxjs/add/operator/share'
 import {UserData} from "./user-data";
+import "rxjs/add/operator/retryWhen";
+import "rxjs/add/operator/delay";
 
 @Injectable()
 export class ServerSocket {
@@ -26,18 +28,13 @@ export class ServerSocket {
       this.messages = websocketConnect(
         'ws://192.168.0.52:8080/VisualizationMgt/websocket.do?token=' + this.userData.userToken + "&type=phone",
         this.inputStream = new QueueingSubject<string>()
-      ,[]).messages.share()
+      ,[]).messages.retryWhen(errors => errors.delay(1000)).share()
+      // this.messages.retryWhen(errors => errors.delay(1000)).subscribe(message => {
+      //   console.log(message)
+      // })
     }
   }
-  public reconnect() {
 
-    if (this.userData.userToken) {
-      this.messages = websocketConnect(
-        'ws://192.168.0.52:8080/VisualizationMgt/websocket.do?token=' + this.userData.userToken + "&type=phone",
-        this.inputStream = new QueueingSubject<string>()
-      ).messages.share()
-    }
-  }
   public send(message: string): void {
     // If the websocket is not connected then the QueueingSubject will ensure
     // that messages are queued and delivered when the websocket reconnects.

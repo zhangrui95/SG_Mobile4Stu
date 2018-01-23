@@ -83,7 +83,6 @@ export class LoginsPage {
       this.http.login(params).subscribe(res => {
         if (res['code'] == 0) {
           loading.dismiss();
-          this.ws.reconnect();
           this.navCtrl.push(IndexPage, {
             userid: '',
             name: res['username'],

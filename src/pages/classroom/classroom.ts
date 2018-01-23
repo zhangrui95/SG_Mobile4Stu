@@ -48,7 +48,6 @@ export class ClassroomPage {
   }
 
 
-
   messagesSubscription;
   simType
 
@@ -79,19 +78,19 @@ export class ClassroomPage {
       });
     });
 
-    if (this.ws.messages != null) {
-      this.registeReciever()
-    } else {
-      setInterval(() => {
-
+    setInterval(() => {
+      if (!this.ws.messages) {
         this.ws.connect();
-        if (this.messagesSubscription == null) {
-          this.registeReciever()
-        }
 
-      }, 5000)
+      }
+      if(this.ws.messages &&!this.messagesSubscription){
+        this.registeReciever()
+      }
+
+    }, 5000)
+    if(this.ws.messages &&!this.messagesSubscription){
+      this.registeReciever()
     }
-
 
   }
 
@@ -154,6 +153,11 @@ export class ClassroomPage {
   //     console.log(res)
   //   });
   // }
+  refresh() {
+    this.ws.connect()
+    this.registeReciever();
+    this.getProcessOfStu()
+  }
 
   getProcessOfStu() {
     this.userData.getIsDead().then(v => {
@@ -163,6 +167,7 @@ export class ClassroomPage {
           console.log("*-*-*-*-*-*-*-*-*-*");
           console.log(JSON.stringify(params));
           this.http.getProcessOfStu(params).subscribe(res => {
+            // this.registeReciever()
             // for(let i in res['list']){
             //   res['list'][0].ns = '';
             //   res['list'][i].ns = [{"n_id":"1.1","n_name":"sdfsdfs"},{"n_id":"1.2","n_name":"sdfsdfd"}];
