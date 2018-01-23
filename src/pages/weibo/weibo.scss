@@ -67,7 +67,11 @@ page-weibo {
     overflow-y: hidden;
     font-size: 18px;
     width: 86%;
+    text-align: justify;
+  }
 
+  .toolbar-content{
+    height: 50px
   }
   .ss {
     float: right;

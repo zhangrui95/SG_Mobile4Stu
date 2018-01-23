@@ -16,7 +16,7 @@ page-baidutb {
     overflow-y: hidden;
     font-size: 18px;
     width: 86%;
-
+    text-align: justify;
   }
   .ss {
     float: right;
@@ -36,5 +36,7 @@ page-baidutb {
     font-size: 18px;
     font-weight: 100;
   }
-
+.toolbar-content{
+  height: 50px
+}
 }
