@@ -19,6 +19,12 @@ export class ProxyHttpService {
   }
 
 
+
+
+
+updateRankingData(params){
+  return this._post("/phoneAppController/updateRankingData.do",params)
+}
   login(params){
     return this._post("/userstu/login.do",params)
   }

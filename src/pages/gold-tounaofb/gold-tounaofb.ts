@@ -87,12 +87,12 @@ export class GoldTounaofbPage {
   isLost() {
     this.lost = this.desertService.isGetLost()
     if (this.lost) {
-      if(this.currentStatus.status){
+      if (this.currentStatus.status) {
         for (let statu of  this.currentStatus.status) {
           if (statu.status_type == STATUS_GET_LOST) {
 
             this.lostDuration = statu.status_duration
-            this.stay=true
+            this.stay = true
           }
         }
       }
@@ -137,14 +137,14 @@ export class GoldTounaofbPage {
     this.n_id = this.navParams.data.n_id
     this.g_id = this.navParams.data.g_id
     this.s_data = this.navParams.data.s_data
-    this.isHistory=this.navParams.data.isHistory
+    this.isHistory = this.navParams.data.isHistory
     this.name_position = this.navParams.data.name_position
     // this.sim_id=this.navParams.data.sim_id
 
     this.group_u = this.navParams.data.group_u
 
     this.userData.getSimId().then(value => {
-      this.sim_id=value
+      this.sim_id = value
       this.getAnswerOfStuList();
     })
   }
@@ -182,7 +182,7 @@ export class GoldTounaofbPage {
 
 
   send() {
-    if(this.sendBtn) {
+    if (this.sendBtn) {
       this.sendBtn = false;
       this.param = {
         sim_id: this.sim_id,
@@ -197,12 +197,12 @@ export class GoldTounaofbPage {
           this.inputvalue = '';
           this.sendBtn = true;
           this.showSuccess('bottom', '评论成功');
-        },error2 => {
+        }, error2 => {
           console.log(error2)
           this.sendBtn = true;
           this.showSuccess('bottom', '评论失败');
         });
-      }else{
+      } else {
         this.sendBtn = true;
         this.showSuccess('bottom', '评论不能为空');
       }
@@ -441,7 +441,7 @@ export class GoldTounaofbPage {
   result
   name_position
   already
-  stay=false
+  stay = false
 
   ionViewDidLoad() {
 
@@ -462,19 +462,39 @@ export class GoldTounaofbPage {
       this.content = this.common.content;
 
       let params = {sim_id: this.sim_id, n_id: this.n_id, g_id: this.g_id}
-      this.userData.getCurrentDays().then(v=>{
+      this.userData.getCurrentDays().then(v => {
 
         this.http.getGoldStatus(params).subscribe(res => {
           console.log(res['listGDK'])
 
           if (this.name_position.indexOf('-') != -1) {
             let arr = this.name_position.split('-')
+            if (res['listGDK'].length > 0) {
+              this.desertService.setCurrState(JSON.parse(res['listGDK'][0]['current_status']), arr[0], arr[1].split('.')[0])
+            } else {
+              this.desertService.setCurrState({
+                position: '1',
+                place: '营地',
+                money: 900,
+                weight: 900,
+                food: 0,
+                days: 1,
+                water: 0,
+                tent: 0,
+                compass: 0,
+                gold: 0,
+                asked: false,
+                isSuccess: false,
+                isDead: false,
+                status: [],
+                events: []
+              }, arr[0], arr[1].split('.')[0])
+            }
 
-            this.desertService.setCurrState(JSON.parse(res['listGDK'][0]['current_status']), arr[0], arr[1].split('.')[0])
           }
           this.messages = this.desertService.getMessagesFromOlder()
-          if(this.currentStatus){
-            this.desertService.currState.days=v;
+          if (this.currentStatus) {
+            this.desertService.currState.days = v;
           }
           this.currentStatus = this.desertService.getCurrState()
           this.desertService.updateStatus()
@@ -538,7 +558,7 @@ export class GoldTounaofbPage {
           if (action === "phone_call") {
             this.showToast('bottom', msgs);
           } else if (action === "exercises_end") {
-            if(this.sim_id == JSON.parse(message)['sim_id']){
+            if (this.sim_id == JSON.parse(message)['sim_id']) {
               this.showToast('bottom', '本次演练终止');
             }
           }
@@ -548,6 +568,7 @@ export class GoldTounaofbPage {
       })
     }
   }
+
   isHistory
   askItems
   // ionViewDidLoad() {
@@ -590,7 +611,9 @@ export class GoldTounaofbPage {
   }
 
   ionViewWillLeave() {
-    if(this.isHistory){
+
+
+    if (this.isHistory) {
       return
     }
     if (!this.group_u) {
@@ -604,16 +627,30 @@ export class GoldTounaofbPage {
       }
     }
 
+
     this.userData.setIsStay(this.stay)
     this.userData.getHasConsume(this.sim_id + this.n_id + this.currentStatus.days).then(res => {
-      if(!res){
-        if(this.currentStatus.days==1){
+      if (!res) {
+        if (this.currentStatus.days == 1) {
           return
         }
 
         if (!this.desertService.consume(this.weather, this.useTent).isSuccess) {
           this.goDead();
         } else {
+          let pa = {
+            current_status: this.currentStatus,
+            gdkstate: "0",
+            money: '0',
+            sim_id: this.sim_id,
+            n_id: this.n_id,
+            g_id: this.g_id
+          }
+          this.http.updateRankingData(pa).subscribe(res => {
+            console.log(res)
+          })
+
+
           this.userData.setHasConsume(this.sim_id + this.n_id + this.currentStatus.days, true)
           this.userData.getIsSuccess().then(v => {
             {
