@@ -78,17 +78,6 @@ export class ClassroomPage {
         this.getProcessOfStu();
       });
     });
-    //
-    // setInterval(() => {
-    //   if (!this.ws.messages) {
-    //     this.ws.connect();
-    //
-    //   }
-    //   if(this.ws.messages &&!this.messagesSubscription){
-    //     this.registeReciever()
-    //   }
-    //
-    // }, 5000)
 
     if(this.ws.messages ){
       this.registeReciever()
@@ -97,7 +86,6 @@ export class ClassroomPage {
   }
 
   registeReciever() {
-
     this.messagesSubscription = this.ws.messages.subscribe(msg => {
       console.log('+++++++++++++++++++++++++++++++++++++++++');
       console.log(msg);
@@ -148,6 +136,7 @@ export class ClassroomPage {
 
   ionViewDidLeave() {
     this.messagesSubscription.unsubscribe()
+
   }
 
   // getPushFreeGroListForPhone(){
