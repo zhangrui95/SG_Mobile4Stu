@@ -26,7 +26,9 @@ src;
   common
 
   showPhoto(){
-    this.photoViewer.show(this.src)
+    console.log(this.src)
+    this.src=this.src.replace('\\','/')
+    this.photoViewer.show( this.src)
   }
   ngOnInit(): void {
     // console.log(this.s_data.s_data.componentList)
