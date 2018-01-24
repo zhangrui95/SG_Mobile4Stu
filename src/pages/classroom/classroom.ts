@@ -86,6 +86,7 @@ export class ClassroomPage {
   }
 
   registeReciever() {
+
     this.messagesSubscription = this.ws.messages.subscribe(msg => {
       console.log('+++++++++++++++++++++++++++++++++++++++++');
       console.log(msg);
@@ -108,7 +109,7 @@ export class ClassroomPage {
 
           }
           if (action === "phone_process_update") {
-            this.vibration.vibrate(1000);
+            this.vibration.vibrate(500);
             this.getProcessOfStu();
             this.scrollToBottom();
           } else if (action === "phone_group") {
@@ -135,7 +136,8 @@ export class ClassroomPage {
   }
 
   ionViewDidLeave() {
-    this.messagesSubscription.unsubscribe()
+    if(this.messagesSubscription)
+      this.messagesSubscription.unsubscribe()
 
   }
 

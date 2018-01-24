@@ -87,7 +87,10 @@ export class QQPage{
 
     this.http.getAnswerOfStuList(this.param).subscribe(res => {
       this.items = res['list']
+      setTimeout(()=>{
 
+        this.ioncontent.scrollToBottom(500);
+      },1000)
     });
   }
 
@@ -144,19 +147,7 @@ export class QQPage{
     this.title = this.common.fillName;
     this.content = this.common.content;
 
-    // this.title='范德萨的发生非法违法文文';
-    // this.content='范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文';
 
-    // this.intervalTimer = setInterval(() => {
-    //   if (!this.ws.messages) {
-    //     this.ws.connect();
-    //
-    //   }
-    //   if (this.ws.messages && !this.messagesSubscription) {
-    //     this.registeReciever()
-    //   }
-    //
-    // }, 5000)
     if (this.ws.messages ) {
       this.registeReciever()
     }
@@ -174,9 +165,10 @@ export class QQPage{
             return ;
           }
           let item = this.items.concat(JSON.parse(message)['list'])
-
-          console.log('---------------------------this.items.length----------------------'+this.items.length)
+          //
+          // console.log('---------------------------this.items.length----------------------'+this.items.length)
           this.items=item
+          // this.getAnswerOfStuList()
           setTimeout(()=>{
 
             this.ioncontent.scrollToBottom(500);

@@ -59,13 +59,14 @@ export class WeiBoPage{
 
               public sanitizer: DomSanitizer,
               public toastCtrl: ToastController) {
-    this.ws.connect()
+
     this.userData.getUserID().then(value => this.userId = value)
     // this.getScenesById();
     this.n_id=this.navParams.data.n_id
     this.g_id=this.navParams.data.g_id
     this.s_data=this.navParams.data.s_data
     this.sim_id=this.navParams.data.sim_id
+    this.ws.connect()
     this.getAnswerOfStuList();
   }
   showToast(position: string, text: string) {
@@ -88,7 +89,10 @@ export class WeiBoPage{
 
     this.http.getAnswerOfStuList(this.param).subscribe(res => {
       this.items = res['list']
+      setTimeout(()=>{
 
+        this.ioncontent.scrollToBottom(500);
+      },1000)
     });
   }
 
@@ -145,19 +149,6 @@ export class WeiBoPage{
     this.title=this.common.fillName;
     this.content=this.common.content;
 
-    // this.title='范德萨的发生非法违法文文';
-    // this.content='范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文';
-
-    // this.intervalTimer = setInterval(() => {
-    //   if (!this.ws.messages) {
-    //     this.ws.connect();
-    //
-    //   }
-    //   if (this.ws.messages && !this.messagesSubscription) {
-    //     this.registeReciever()
-    //   }
-    //
-    // }, 5000)
     if (this.ws.messages ) {
       this.registeReciever()
     }
@@ -178,7 +169,7 @@ export class WeiBoPage{
             }
             let item = this.items.concat(JSON.parse(message)['list'])
             this.items=item
-
+            // this.getAnswerOfStuList()
             setTimeout(()=>{
 
               this.ioncontent.scrollToBottom(500);

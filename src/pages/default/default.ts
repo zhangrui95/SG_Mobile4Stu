@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {ServerSocket} from "../../providers/ws.service";
-import {Subscription} from "rxjs/Subscription";
 import {ProxyHttpService} from "../../providers/proxy.http.service";
 import {PhotoViewer} from "@ionic-native/photo-viewer";
 
@@ -26,27 +25,14 @@ src;
   result
   common
 
-  private socketSubscription: Subscription
   showPhoto(){
     this.photoViewer.show(this.src)
   }
   ngOnInit(): void {
     // console.log(this.s_data.s_data.componentList)
     // this.datas = this.s_data.s_data.componentList;
-    this.ws.connect();
-    this.intervalTimer = setInterval(() => {
-      if (!this.ws.messages) {
-        this.ws.connect();
+    // this.ws.connect();
 
-      }
-      if (this.ws.messages && !this.messagesSubscription) {
-        this.registeReciever()
-      }
-
-    }, 5000)
-    if (this.ws.messages && !this.messagesSubscription) {
-      this.registeReciever()
-    }
 
 // this.name='img'
 //     this.title = 'jdsiajdoi';
@@ -92,20 +78,12 @@ src;
   getFullpath(path){
     return  this.http.getBaseurl()+path
   }
-  registeReciever() {
-    console.log(this.ws.messages)
-    this.ws.messages.subscribe(res => {
-      console.log("2$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-      console.log(res)
-      //{"action":"push_content_start","content":"11111"}
-    })
-  }
+
   // getFullPath(path){
   //   return this.http.getBaseurl()+path
   // }
   ngOnDestroy() {
-    if (this.socketSubscription)
-      this.socketSubscription.unsubscribe();
+
   }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public ws: ServerSocket,

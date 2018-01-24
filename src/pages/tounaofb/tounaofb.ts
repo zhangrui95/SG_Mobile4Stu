@@ -90,7 +90,10 @@ export class TounaofbPage {
 
     this.http.getAnswerOfStuList(this.param).subscribe(res => {
       this.items = res['list']
+      setTimeout(()=>{
 
+        this.ioncontent.scrollToBottom(500);
+      },1000)
     });
   }
 
@@ -149,20 +152,8 @@ export class TounaofbPage {
     this.title=this.common.title;
     this.content=this.common.content;
 
-    // this.title='范德萨的发生非法违法文文';
-    // this.content='范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文范德萨的发生非法违法文文';
 
-    this.intervalTimer = setInterval(() => {
-      if (!this.ws.messages) {
-        this.ws.connect();
-
-      }
-      if (this.ws.messages && !this.messagesSubscription) {
-        this.registeReciever()
-      }
-
-    }, 5000)
-    if (this.ws.messages && !this.messagesSubscription) {
+    if (this.ws.messages) {
       this.registeReciever()
     }
 
@@ -182,6 +173,7 @@ export class TounaofbPage {
           }
           let item = this.items.concat(JSON.parse(message)['list'])
           this.items=item
+          // this.getAnswerOfStuList()
           setTimeout(()=>{
             this.ioncontent.scrollToBottom(500);
           },1000)
