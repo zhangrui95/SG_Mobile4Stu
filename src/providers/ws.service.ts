@@ -25,7 +25,6 @@ export class ServerSocket {
     // observer subscribes. This socket is shared with subsequent observers
     // and closed when the observer count falls to zero.
     if (this.userData.userToken) {
-
       this.messages = websocketConnect(
         'ws://139.196.189.173:8080/VisualizationMgt/websocket.do?token=' + this.userData.userToken + "&type=phone",
         this.inputStream = new QueueingSubject<string>()

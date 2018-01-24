@@ -84,7 +84,7 @@ export class ClassroomPage {
     }
 
   }
-
+  isVib
   registeReciever() {
 
     this.messagesSubscription = this.ws.messages.subscribe(msg => {
@@ -109,7 +109,19 @@ export class ClassroomPage {
 
           }
           if (action === "phone_process_update") {
-            this.vibration.vibrate(500);
+            if(!this.isVib){
+              this.isVib=true
+              this.vibration.vibrate(1000);
+              setTimeout(()=>{
+                this.isVib=false
+
+              },5000)
+            }
+
+
+
+
+
             this.getProcessOfStu();
             this.scrollToBottom();
           } else if (action === "phone_group") {
