@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {ServerSocket} from "../../providers/ws.service";
 import {ProxyHttpService} from "../../providers/proxy.http.service";
 import {PhotoViewer} from "@ionic-native/photo-viewer";
 
@@ -28,7 +27,7 @@ src;
   showPhoto(){
     console.log(this.src)
     this.src=this.src.replace('\\','/')
-    this.photoViewer.show( this.src)
+    this.photoViewer.show( 'https://139.196.189.173:8080/files/Image/20180123175517_612.png')
   }
   ngOnInit(): void {
     // console.log(this.s_data.s_data.componentList)
@@ -88,7 +87,7 @@ src;
 
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public ws: ServerSocket,
+  constructor(public navCtrl: NavController, public navParams: NavParams,
               public http: ProxyHttpService,private photoViewer: PhotoViewer) {
     this.n_id=this.navParams.data.n_id
     this.g_id=this.navParams.data.g_id

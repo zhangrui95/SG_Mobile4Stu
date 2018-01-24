@@ -74,6 +74,7 @@ import {GoldSupplyPage} from "../pages/gold-supply/gold-supply";
 import {DesertService} from "../providers/desert.service";
 import {Vibration} from "@ionic-native/vibration";
 import {PhotoViewer} from "@ionic-native/photo-viewer";
+import {IonicImageViewerModule} from "ionic-img-viewer";
 @NgModule({
   declarations: [
     ConferenceApp,
@@ -130,6 +131,7 @@ import {PhotoViewer} from "@ionic-native/photo-viewer";
   ],
   imports: [
     BrowserModule,
+    IonicImageViewerModule,
     HttpClientModule,
     IonicModule.forRoot(ConferenceApp, {}, {
       links: [

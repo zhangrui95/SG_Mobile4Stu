@@ -8,7 +8,7 @@
 <div class="center">
   <div class="img-box" >
     <div *ngIf="name=='img'">
-      <img src="{{src}}" style="width: 90%;margin: 0 5%;border:1px solid #aaa;" (click)="showPhoto()"/>
+      <img src="{{src}}" style="width: 90%;margin: 0 5%;border:1px solid #aaa;"  imageViewer/>
     </div>
     <div *ngIf="name=='video'">
       <video controls="controls" src="{{src}}"></video>
