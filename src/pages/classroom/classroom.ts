@@ -345,7 +345,7 @@ export class ClassroomPage {
   showAlwaysToast(position: string, text: string) {
     let toast = this.toastCtrl.create({
       message: text,
-      duration: 99999000,
+      duration: 5000,
       position: position
     });
 

@@ -14,7 +14,7 @@
     </div>
   </div>
   <div style="padding-top: 30px;padding-left: 5%;padding-right: 5%;padding-bottom: 30px;">
-    <div class="place-name">营地<span style="font-size: 14px" *ngIf="lost&&lostDuration>0">({{'迷路-剩余'+lostDuration+'天'}})</span></div>
+    <div class="place-name">{{getPlace()}}<span style="font-size: 14px" *ngIf="lost&&lostDuration>0">({{'迷路-剩余'+lostDuration+'天'}})</span></div>
     <div class="place-name time">第{{currentStatus.days}}天</div>
     <div class="tnfb-tilte">
       <!--{{title}}-->

@@ -152,7 +152,20 @@ export class GoldTounaofbPage {
   }
 
   getPlace() {
-
+    switch (this.currentStatus.place){
+      case PLACE_START:
+        return '营地'
+      case PLACE_DESERT:
+        return '沙漠'
+      case PLACE_TOMBS:
+        return '王陵'
+      case PLACE_OASIS:
+        return '绿洲'
+      case PLACE_END:
+        return '矿山'
+      case PLACE_VILLIGE:
+        return '村庄'
+    }
   }
 
   showToast(position: string, text: string) {

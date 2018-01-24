@@ -156,6 +156,7 @@ export class UsersPage {
       let filePath: string = this.avatar
 
       this.base64.encodeFile(filePath).then((base64File: string) => {
+        console.log('Image data: ' + base64File);
         this.imgAdd(base64File);
       }, (err) => {
         console.log(err);
@@ -181,6 +182,7 @@ export class UsersPage {
         this.avatar = images[0].slice(7);
         let filePath: string = this.avatar
         this.base64.encodeFile(filePath).then((base64File: string) => {
+          console.log('Image data: ' + base64File);
           this.imgAdd(base64File);
         }, (err) => {
           console.log(err);
