@@ -31,7 +31,7 @@ export class ClassroomPage {
   sim_id;
   indexNs = [];
   g_id = "-1"
-  group_u = true;
+  group_u = false;
 
   action;
 

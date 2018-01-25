@@ -15,12 +15,12 @@ const ITEM_FOOD = 103;
 const ITEM_COMPASS = 104;
 const ITEM_GOLD = 105;
 const ITEM_MONEY = 106;
-const PLACE_START = 1101;
-const PLACE_DESERT = 1102;
-const PLACE_OASIS = 1103;
-const PLACE_VILLIGE = 1104;
-const PLACE_TOMBS = 1105;
-const PLACE_END = 1106;
+const PLACE_START = '营地';
+const PLACE_DESERT = '沙漠';
+const PLACE_OASIS = '绿洲';
+const PLACE_VILLIGE = '村庄';
+const PLACE_TOMBS = '王陵';
+const PLACE_END = '矿山';
 
 const WEATHER_SUNNY = 11101
 const WEATHER_HOT = 11102
@@ -124,7 +124,15 @@ export class DesertService {
     return {weight: weight, price: price}
   }
 
+  public setPlace(position){
+    let index=+position;
+    this.currState.place=this.places[index-1]
+  }
+
   public getPlace(name) {
+
+
+
     if (name.indexOf("村庄") != -1) {
       this.currState.place = PLACE_VILLIGE
     }
@@ -319,6 +327,13 @@ export class DesertService {
       base: WEATHER_SUNNY
     }
 
+  ]
+
+
+  public places = [
+   '营地','沙漠','村庄','沙漠','沙漠','沙漠','沙漠','村庄','沙漠'
+    ,'沙漠','沙漠','绿洲','沙漠','村庄','绿洲','王陵','沙漠'
+    ,'沙漠','沙漠','沙漠','沙漠','村庄','沙漠','沙漠','矿山'
   ]
 
   public events =
@@ -582,12 +597,12 @@ export class DesertService {
   }
 
   public setCurrState(state, name, pos) {
-    if (state && state.length > 0) {
+    console.log(name)
+    if (state) {
       this.currState = state;
-
     }
     this.currState.position = pos
-    this.getPlace(name)
+    this.setPlace(pos)
   }
 
   public getCurrState() {
