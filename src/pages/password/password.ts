@@ -32,10 +32,9 @@ export class PasswordPage {
     let loading = this.loadingCtrl.create({
       content: '修改中...'
     });
-    if(this.oldpwd==null||this.newpwd==null||this.newpwds==null){
+    if(this.oldpwd==null||this.newpwd==null){
       this.showToast('bottom', '密码不能为空');
     }else{
-      if(this.newpwd === this.newpwds){
         const params = {userid:this.userId.toString(),password:this.oldpwd,newPass:this.newpwd}
         this.http.updatePass(params).subscribe(res => {
           if(res['code'] == 0){
@@ -46,9 +45,6 @@ export class PasswordPage {
             this.showToast('bottom',res['msg']);
           }
         });
-      } else {
-        this.showToast('bottom', '两次密码输入不一致，请重新输入！');
-      }
     }
 
 
