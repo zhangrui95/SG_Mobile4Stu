@@ -101,6 +101,15 @@ export class UserData {
       return value;
     });
   };
+  setIsLeader(token: boolean): void {
+    this.storage.set('isLeader', token);
+  };
+
+  getIsLeader(): Promise<boolean> {
+    return this.storage.get('isLeader').then((value) => {
+      return value;
+    });
+  };
   setIsSuccess(token: boolean): void {
     this.storage.set('isSuccess', token);
   };

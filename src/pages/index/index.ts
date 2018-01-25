@@ -10,6 +10,7 @@ import {UserData} from "../../providers/user-data";
 import {StatisticsPage} from "../statistics/statistics";
 import {ProxyHttpService} from "../../providers/proxy.http.service";
 import {ServerSocket} from "../../providers/ws.service";
+import {DesertService} from "../../providers/desert.service";
 
 @IonicPage()
 @Component({
@@ -61,7 +62,7 @@ export class IndexPage {
 
   constructor(public ws: ServerSocket, public ionicApp: IonicApp, public navCtrl: NavController, public barcodeScanner: BarcodeScanner, public navParams: NavParams, public keyboard: Keyboard, public toastCtrl: ToastController,
               public platform: Platform, public userData: UserData,
-              public http: ProxyHttpService,) {
+              public http: ProxyHttpService, public desert: DesertService) {
     this.userData.getUserID().then(value => this.userId = value)
     this.registerBackEvent = this.platform.registerBackButtonAction(() => {
 
@@ -127,7 +128,27 @@ export class IndexPage {
                 this.userData.setAction('')
                 this.userData.setIsDead(false)
                 this.userData.setIsSuccess(false)
+                this.userData.setIsLeader( false)
                 this.userData.setCurrentDays(1)
+                this.desert.setCurrState({
+                  position: '1',
+                  place: '营地',
+                  money: 900,
+                  weight: 900,
+                  food: 0,
+                  days: 1,
+                  water: 0,
+                  tent: 0,
+                  compass: 0,
+                  gold: 0,
+                  useTent:false,
+                  useCompass:false,
+                  asked: false,
+                  isSuccess: false,
+                  isDead: false,
+                  status: [],
+                  events: []
+                }, '1', '1')
               } else {
                 // this.showToast('bottom', res['msg']);
               }
@@ -138,7 +159,27 @@ export class IndexPage {
               this.userData.setAction('')
               this.userData.setIsDead(false)
               this.userData.setIsSuccess(false)
+            this.userData.setIsLeader( false)
               this.userData.setCurrentDays(1)
+              this.desert.setCurrState({
+                position: '1',
+                place: '营地',
+                money: 900,
+                weight: 900,
+                food: 0,
+                days: 1,
+                water: 0,
+                tent: 0,
+                compass: 0,
+                gold: 0,
+                useTent:false,
+                useCompass:false,
+                asked: false,
+                isSuccess: false,
+                isDead: false,
+                status: [],
+                events: []
+              }, '1', '1')
             }
           );
         } else {

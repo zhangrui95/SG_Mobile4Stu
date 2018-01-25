@@ -13,7 +13,10 @@ import {QQPage} from "../qq/qq";
 import {DefaultPage} from "../default/default";
 import {GoldTounaofbPage} from "../gold-tounaofb/gold-tounaofb";
 import {Vibration} from "@ionic-native/vibration";
+import {DesertService} from "../../providers/desert.service";
 
+const WEATHER_SANDSTORM = 11103
+const WEATHER_HOT_SANDSTORM = 11104
 
 @IonicPage()
 @Component({
@@ -41,9 +44,11 @@ export class ClassroomPage {
               public http: ProxyHttpService,
               public userData: UserData,
               public vibration: Vibration,
+              public desert: DesertService,
               public ws: ServerSocket) {
-
-
+    this.userData.getIsLeader().then(v => {
+      this.group_u=v;
+    })
 
   }
 
@@ -79,12 +84,14 @@ export class ClassroomPage {
       });
     });
 
-    if(this.ws.messages ){
+    if (this.ws.messages) {
       this.registeReciever()
     }
 
   }
+
   isVib
+
   registeReciever() {
 
     this.messagesSubscription = this.ws.messages.subscribe(msg => {
@@ -109,17 +116,14 @@ export class ClassroomPage {
 
           }
           if (action === "phone_process_update") {
-            if(!this.isVib){
-              this.isVib=true
+            if (!this.isVib) {
+              this.isVib = true
               this.vibration.vibrate(1000);
-              setTimeout(()=>{
-                this.isVib=false
+              setTimeout(() => {
+                this.isVib = false
 
-              },5000)
+              }, 5000)
             }
-
-
-
 
 
             this.getProcessOfStu();
@@ -148,7 +152,7 @@ export class ClassroomPage {
   }
 
   ionViewDidLeave() {
-    if(this.messagesSubscription)
+    if (this.messagesSubscription)
       this.messagesSubscription.unsubscribe()
 
   }
@@ -162,20 +166,21 @@ export class ClassroomPage {
   refresh() {
 
 
-    if(this.messagesSubscription){
+    if (this.messagesSubscription) {
       this.messagesSubscription.unsubscribe()
     }
-    setTimeout(()=>{
+    setTimeout(() => {
       this.ws.connect()
       this.registeReciever();
       this.getProcessOfStu()
-    },1000)
-
+    }, 1000)
 
 
   }
 
   getProcessOfStu() {
+
+
     this.userData.getIsDead().then(v => {
       this.userData.getIsSuccess().then(e => {
         if (!v && !e) {
@@ -188,7 +193,25 @@ export class ClassroomPage {
             //   res['list'][0].ns = '';
             //   res['list'][i].ns = [{"n_id":"1.1","n_name":"sdfsdfs"},{"n_id":"1.2","n_name":"sdfsdfd"}];
             // }
+            const count = this.items.length
+
             this.items = res['list'];
+
+
+            if (this.items.length > this.preCount) {
+              this.desert.setDays(Math.ceil((this.items.length - this.preCount) / 2))
+            }
+
+
+            if (this.items) {
+              if (this.items.length > count) {
+                if (this.group_u) {
+                  this.consume()
+                }
+
+              }
+
+            }
             console.log("*-*-*-*-*-*-*-*-*-*" + JSON.stringify(res));
             console.log(JSON.stringify(res));
             for (let n in this.items) {
@@ -204,6 +227,7 @@ export class ClassroomPage {
             } else {
               if (res['groOfStu'].u_position == 1) {
                 this.group_u = true;
+                this.userData.setIsLeader(this.group_u)
               }
               this.userData.setUposition(res['groOfStu'].u_position);
               this.userData.setAction('')
@@ -218,6 +242,89 @@ export class ClassroomPage {
 
   }
 
+  preCount = 2
+  currNode;
+  consume() {
+    if((this.items.length-this.preCount)%2==1){
+      return
+    }
+    if (this.items.length > (this.preCount + 1)) {
+
+      let currN;
+      for (let i = this.items.length - 1; i >= 0; i--) {
+
+        if (this.items[i].n_name.indexOf('.') == -1) {
+          currN = this.items[i]
+          this.currNode=this.items[i]
+          break;
+        }
+      }
+      let params = {sim_id: this.sim_id, n_id: currN.n_id, g_id: this.g_id}
+      this.http.getGoldStatus(params).subscribe(res => {
+        console.log(res)
+        if (currN.n_name.indexOf('-') != -1) {
+          let arr = currN.n_name.split('-')
+          if (res['listGDK'].length > 0) {
+            this.desert.setCurrState(JSON.parse(res['listGDK'][0]['current_status']), arr[0], arr[1].split('.')[0])
+          }
+
+
+          switch (this.desert.getWeather()) {
+            case WEATHER_HOT_SANDSTORM:
+              if (!this.desert.getCurrState().useTent && !this.desert.getCurrState().useCompass) {
+                this.desert.setLostStatus()
+                this.userData.setIsStay(true)
+              }
+              break
+            case WEATHER_SANDSTORM:
+              if (!this.desert.getCurrState().useTent && !this.desert.getCurrState().useCompass) {
+                this.desert.setLostStatus()
+                this.userData.setIsStay(true)
+              }
+              break
+          }
+
+          //todo consume
+          let result = this.desert.consume(this.desert.getWeather(), this.desert.getCurrState().useTent);
+          this.showToast('bottom','消耗水:'+this.desert.reduce.water+'消耗食物:'+this.desert.reduce.food)
+          if (!result.isSuccess) {
+            this.goDead()
+            this.showToast('bottom', result.msg)
+          }
+
+          let pas = {
+            current_status: this.desert.getCurrState(),
+            gdkstate: "0",
+            money: '0',
+            sim_id: this.sim_id,
+            n_id: currN.n_id,
+            g_id: this.g_id
+          }
+          this.http.updateRankingData(pas).subscribe(res => {
+            console.log(res)
+          })
+        }
+      })
+    }
+  }
+  goDead() {
+    this.userData.setIsDead(true)
+    let params = {
+      g_id: this.g_id,
+      sim_id: this.sim_id,
+      datas: {
+        type: 'dead',
+        n_id: this.currNode.n_id,
+        g_id: this.g_id
+      }
+
+    }
+    this.http.getPushDeathNoticeByGro(params).subscribe(res => {
+      console.log(res)
+    })
+  }
+
+
   action_name = "";
 
   getFullPath(path) {
@@ -226,17 +333,17 @@ export class ClassroomPage {
 
   itemClicked = false
 
-  getScenesById(nid, index?) {
+  getScenesById(nid, index ?) {
 
     if (this.itemClicked) {
       return
     }
     this.itemClicked = true
-    let count = 0;
+    let count = 2;
 
     if (index > count) {
 
-      this.userData.setCurrentDays(Math.ceil((index - count) / 2))
+      this.userData.setCurrentDays(Math.ceil((index - count) / 2)+1)
     }
     let param = {
       n_id: nid
@@ -327,7 +434,7 @@ export class ClassroomPage {
     this.navCtrl.push(GroupingPage, {sim_id: this.sim_id});
   }
 
-  goPage(n_id, index?) {
+  goPage(n_id, index ?) {
 
     this.getScenesById(n_id, index)
 

@@ -36,7 +36,13 @@ export class DecisionPage {
     {option: 'D'},
     {option: 'E'},
     {option: 'F'},
-    {option: 'G'}
+    {option: 'G'},
+    {option: 'H'},
+    {option: 'I'},
+    {option: 'J'},
+    {option: 'K'},
+    {option: 'L'},
+
   ]
   selectvalue;
   group_u
@@ -122,6 +128,10 @@ export class DecisionPage {
   send() {
     if(this.btnClick){
       this.btnClick = false;
+      if(!this.selectvalue){
+        this.showToast('bottom','请选择答案')
+        return;
+      }
       this.userData.getSimData('simdata').then(res=>{
         this.param = {
           sim_id: this.sim_id,

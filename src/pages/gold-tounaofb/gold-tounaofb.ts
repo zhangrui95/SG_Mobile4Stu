@@ -489,7 +489,27 @@ export class GoldTounaofbPage {
 
 
     }
+
     this.currentStatus = this.desertService.getCurrState()
+    for (let good of this.goods) {
+
+      switch (good.type) {
+        case ITEM_FOOD:
+          good.remain = this.currentStatus.food
+          break;
+        case ITEM_WATER:
+          good.remain = this.currentStatus.water
+          break;
+        case ITEM_COMPASS:
+          good.remain = this.currentStatus.compass
+          break;
+        case ITEM_TENT:
+          good.remain = this.currentStatus.tent
+          break;
+
+      }
+
+    }
   }
 
   currentStatus = {
@@ -538,7 +558,6 @@ export class GoldTounaofbPage {
 
         this.http.getGoldStatus(params).subscribe(res => {
           console.log(res['listGDK'])
-
           if (this.name_position.indexOf('-') != -1) {
             let arr = this.name_position.split('-')
             if (res['listGDK'].length > 0) {
@@ -555,6 +574,8 @@ export class GoldTounaofbPage {
                 tent: 0,
                 compass: 0,
                 gold: 0,
+                useTent: false,
+                useCompass: false,
                 asked: false,
                 isSuccess: false,
                 isDead: false,
@@ -575,130 +596,6 @@ export class GoldTounaofbPage {
           this.getImgBg();
           this.setWeather()
           this.isLost();
-
-          if (this.currentStatus.place == PLACE_TOMBS) {
-            //若在王陵 获得随机事件
-            if (this.group_u) {
-              this.userData.getAlready(this.sim_id + this.n_id + this.currentStatus.days).then(res => {
-                if (!res) {
-                  let result = this.desertService.trigRandomEvent()
-                  if (result.isSuccess) {
-                    this.showToast('bottom', result.msg)
-                  }
-                  this.userData.setAlready(this.sim_id + this.n_id + this.currentStatus.days, true)
-                } else {
-
-                }
-
-              })
-
-            }
-          }
-
-        })
-
-      })
-
-
-    })
-    this.registeReciever();
-  }
-
-  isHistory
-  askItems
-  // ionViewDidLoad() {
-  //   console.log('ionViewDidLoad BaidutbPage');
-  // }
-
-
-  goDead() {
-    this.userData.setIsDead(true)
-    let params = {
-      g_id: this.g_id,
-      sim_id: this.sim_id,
-      datas: {
-        type: 'dead',
-        n_id: this.n_id,
-        g_id: this.g_id
-      }
-
-    }
-    this.http.getPushDeathNoticeByGro(params).subscribe(res => {
-      console.log(res)
-    })
-  }
-
-  goSuccess() {
-    this.userData.setIsSuccess(true)
-    let params = {
-      g_id: this.g_id,
-      sim_id: this.sim_id,
-      datas: {
-        type: 'success',
-        n_id: this.n_id,
-        g_id: this.g_id
-      }
-
-    }
-    this.http.getPushDeathNoticeByGro(params).subscribe(res => {
-      console.log(res)
-    })
-  }
-
-  ionViewWillLeave() {
-
-
-    if (this.isHistory) {
-      return
-    }
-    if (!this.group_u) {
-      return
-    }
-
-    if (this.weather == WEATHER_SANDSTORM || this.weather == WEATHER_HOT_SANDSTORM) {
-      if (!this.useCompass) {
-        this.desertService.setLostStatus()
-        this.stay = true
-      }
-    }
-
-
-    this.userData.setIsStay(this.stay)
-
-    this.userData.getHasConsume(this.sim_id + this.n_id + this.currentStatus.days).then(res => {
-      if (!res) {
-        if (this.currentStatus.days == 1) {
-          let pas = {
-            current_status: this.currentStatus,
-            gdkstate: "0",
-            money: '0',
-            sim_id: this.sim_id,
-            n_id: this.n_id,
-            g_id: this.g_id
-          }
-          this.http.updateRankingData(pas).subscribe(res => {
-            console.log(res)
-          })
-          return
-        }
-
-        if (!this.desertService.consume(this.weather, this.useTent).isSuccess) {
-          this.goDead();
-        } else {
-          let pa = {
-            current_status: this.currentStatus,
-            gdkstate: "0",
-            money: '0',
-            sim_id: this.sim_id,
-            n_id: this.n_id,
-            g_id: this.g_id
-          }
-          this.http.updateRankingData(pa).subscribe(res => {
-            console.log(res)
-          })
-
-
-          this.userData.setHasConsume(this.sim_id + this.n_id + this.currentStatus.days, true)
           this.userData.getIsSuccess().then(v => {
             {
               this.userData.getIsDead().then(e => {
@@ -745,6 +642,7 @@ export class GoldTounaofbPage {
                             n_id: this.n_id,
                             current_status: this.currentStatus,
                             money: money + '',
+                            answer: ''
                           }
                           console.log(p)
                           this.http.addGDKAnswer(p).subscribe(res => {
@@ -790,16 +688,71 @@ export class GoldTounaofbPage {
 
             }
           })
+          if (this.currentStatus.place == PLACE_TOMBS) {
+            //若在王陵 获得随机事件
+            if (this.group_u) {
+              this.userData.getAlready(this.sim_id + this.n_id + this.currentStatus.days).then(res => {
+                if (!res) {
+                  let result = this.desertService.trigRandomEvent()
+                  if (result.isSuccess) {
+                    this.showToast('bottom', result.msg)
+                  }
+                  this.userData.setAlready(this.sim_id + this.n_id + this.currentStatus.days, true)
+                } else {
 
+                }
 
-        }
-      }
+              })
+
+            }
+          }
+
+        })
+
+      })
 
 
     })
+    this.registeReciever();
+  }
+
+  isHistory
+  askItems
+  // ionViewDidLoad() {
+  //   console.log('ionViewDidLoad BaidutbPage');
+  // }
 
 
+  ionViewWillLeave() {
+    if (this.socketSubscription) {
+      this.socketSubscription.unsubscribe()
+    }
+
+
+    if (this.isHistory) {
+      return
+    }
+    if (!this.group_u) {
+      return
+    }
     this.userData.setSimData('simdata', this.currentStatus);
+  }
+
+  goSuccess() {
+    this.userData.setIsSuccess(true)
+    let params = {
+      g_id: this.g_id,
+      sim_id: this.sim_id,
+      datas: {
+        type: 'success',
+        n_id: this.n_id,
+        g_id: this.g_id
+      }
+
+    }
+    this.http.getPushDeathNoticeByGro(params).subscribe(res => {
+      console.log(res)
+    })
   }
 
   ionViewDidLeave() {

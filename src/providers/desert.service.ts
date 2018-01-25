@@ -620,6 +620,8 @@ export class DesertService {
     tent: 0,
     compass: 0,
     gold: 0,
+    useTent:false,
+    useCompass:false,
     asked: false,
     isSuccess: false,
     isDead: false,
@@ -905,7 +907,9 @@ export class DesertService {
   public setStatus(statu, durations) {
     this.currState.status.push({status_type: statu, status_duration: durations})
   }
-
+  setDays(days){
+    this.currState.days=days
+  }
 
   public setLostStatus() {
     let flag = false;
