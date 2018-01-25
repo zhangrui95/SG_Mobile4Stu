@@ -67,6 +67,63 @@ export class GoldTounaofbPage {
   group_u;
   sendBtn = true;
 
+  refreshData() {
+
+
+    if (this.socketSubscription) {
+      this.socketSubscription.unsubscribe()
+    }
+    setTimeout(() => {
+      this.ws.connect()
+      this.registeReciever();
+      this.getAnswerOfStuList()
+    }, 1000)
+
+
+  }
+
+
+  registeReciever() {
+
+    this.socketSubscription = this.ws.messages.subscribe(message => {
+      let action = JSON.parse(message)['action'];
+      let msgs = JSON.parse(message)['msg'];
+      if (action != null) {
+        if (action == 'phone_scene_answers_update') {
+          let item = this.items.concat(JSON.parse(message)['list'])
+          this.items = item
+          setTimeout(() => {
+
+            this.ioncontent.scrollToBottom(500);
+          }, 1000)
+
+        } else if (action === "phone_group") {
+          this.userData.setAction(action);
+        }
+
+        if (action == 'phone_Death') {
+          this.vibration.vibrate(1000);
+          if (JSON.parse(message)['datas']['type'] == 'dead') {
+            this.userData.setIsDead(true)
+          } else if (JSON.parse(message)['datas']['type'] == 'success') {
+            this.userData.setIsSuccess(true)
+          }
+          this.navCtrl.pop()
+        }
+        if (action === "phone_call") {
+          this.vibration.vibrate(1000);
+          this.showToast('bottom', msgs);
+        } else if (action === "exercises_end") {
+          if (this.sim_id == JSON.parse(message)['sim_id']) {
+            this.showToast('bottom', '本次演练终止');
+          }
+        }
+
+      }
+
+    })
+  }
+
   setWeather() {
     this.weather = this.desertService.getWeather()
     switch (this.weather) {
@@ -152,7 +209,7 @@ export class GoldTounaofbPage {
   }
 
   getPlace() {
-    switch (this.currentStatus.place){
+    switch (this.currentStatus.place) {
       case PLACE_START:
         return '营地'
       case PLACE_DESERT:
@@ -544,46 +601,7 @@ export class GoldTounaofbPage {
 
 
     })
-    if (this.ws.messages) {
-
-      this.socketSubscription = this.ws.messages.subscribe(message => {
-        let action = JSON.parse(message)['action'];
-        let msgs = JSON.parse(message)['msg'];
-        if (action != null) {
-          if (action == 'phone_scene_answers_update') {
-            let item = this.items.concat(JSON.parse(message)['list'])
-            this.items = item
-            setTimeout(() => {
-
-              this.ioncontent.scrollToBottom(500);
-            }, 1000)
-
-          } else if (action === "phone_group") {
-            this.userData.setAction(action);
-          }
-
-          if (action == 'phone_Death') {
-            this.vibration.vibrate(1000);
-            if (JSON.parse(message)['datas']['type'] == 'dead') {
-              this.userData.setIsDead(true)
-            } else if (JSON.parse(message)['datas']['type'] == 'success') {
-              this.userData.setIsSuccess(true)
-            }
-            this.navCtrl.pop()
-          }
-          if (action === "phone_call") {
-            this.vibration.vibrate(1000);
-            this.showToast('bottom', msgs);
-          } else if (action === "exercises_end") {
-            if (this.sim_id == JSON.parse(message)['sim_id']) {
-              this.showToast('bottom', '本次演练终止');
-            }
-          }
-
-        }
-
-      })
-    }
+    this.registeReciever();
   }
 
   isHistory

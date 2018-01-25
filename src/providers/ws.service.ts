@@ -18,7 +18,9 @@ export class ServerSocket {
 
   // constructor(private token :TokenService){}
   public connect() {
-
+  if(this.messages){
+    return
+  }
     // Using share() causes a single websocket to be created when the first
     // observer subscribes. This socket is shared with subsequent observers
     // and closed when the observer count falls to zero.

@@ -93,7 +93,18 @@ export class QQPage{
       },1000)
     });
   }
+  refreshData(){
 
+    if(this.messagesSubscription){
+      this.messagesSubscription.unsubscribe()
+    }
+    setTimeout(()=>{
+      this.ws.connect()
+      this.registeReciever();
+      this.getAnswerOfStuList()
+    },1000)
+
+  }
   send() {
     if(this.sendBtn) {
       this.sendBtn = false;

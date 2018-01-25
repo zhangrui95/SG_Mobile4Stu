@@ -81,7 +81,21 @@ export class DanmuPage {
 
     toast.present(toast);
   }
+  refresh() {
 
+
+    if(this.messagesSubscription){
+      this.messagesSubscription.unsubscribe()
+    }
+    setTimeout(()=>{
+      this.ws.connect()
+      this.registeReciever();
+      this.getAnswerOfStuList()
+    },1000)
+
+
+
+  }
   getAnswerOfStuList() {
     this.param = {
       n_id: this.n_id,

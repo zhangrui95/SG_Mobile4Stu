@@ -160,9 +160,19 @@ export class ClassroomPage {
   //   });
   // }
   refresh() {
-    this.ws.connect()
-    this.registeReciever();
-    this.getProcessOfStu()
+
+
+    if(this.messagesSubscription){
+      this.messagesSubscription.unsubscribe()
+    }
+    setTimeout(()=>{
+      this.ws.connect()
+      this.registeReciever();
+      this.getProcessOfStu()
+    },1000)
+
+
+
   }
 
   getProcessOfStu() {

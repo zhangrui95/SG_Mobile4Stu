@@ -182,7 +182,18 @@ export class BaidutbPage {
 
   intervalTimer
   messagesSubscription;
+  refreshData(){
 
+    if(this.messagesSubscription){
+      this.messagesSubscription.unsubscribe()
+    }
+    setTimeout(()=>{
+      this.ws.connect()
+      this.registeReciever();
+      this.getAnswerOfStuList()
+    },1000)
+
+  }
   registeReciever() {
     this.socketSubscription = this.ws.messages.subscribe(message => {
       let action = JSON.parse(message)['action'];

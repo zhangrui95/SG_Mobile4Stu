@@ -153,7 +153,18 @@ export class WeiBoPage{
       this.registeReciever()
     }
   }
+  refreshData(){
 
+    if(this.messagesSubscription){
+      this.messagesSubscription.unsubscribe()
+    }
+    setTimeout(()=>{
+      this.ws.connect()
+      this.registeReciever();
+      this.getAnswerOfStuList()
+    },1000)
+
+  }
   intervalTimer
   messagesSubscription;
 
