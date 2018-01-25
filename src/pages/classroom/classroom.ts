@@ -31,7 +31,7 @@ export class ClassroomPage {
   sim_id;
   indexNs = [];
   g_id = "-1"
-  group_u = true;
+  group_u = false;
 
   action;
 
@@ -345,7 +345,7 @@ export class ClassroomPage {
   showAlwaysToast(position: string, text: string) {
     let toast = this.toastCtrl.create({
       message: text,
-      duration: 99999000,
+      duration: 5000,
       position: position
     });
 

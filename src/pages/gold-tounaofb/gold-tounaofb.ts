@@ -13,12 +13,12 @@ const ITEM_WATER = 102;
 const ITEM_FOOD = 103;
 const ITEM_COMPASS = 104;
 const ITEM_GOLD = 105;
-const PLACE_START = 1101;
-const PLACE_DESERT = 1102;
-const PLACE_OASIS = 1103;
-const PLACE_VILLIGE = 1104;
-const PLACE_TOMBS = 1105;
-const PLACE_END = 1106;
+const PLACE_START = '营地';
+const PLACE_DESERT = '沙漠';
+const PLACE_OASIS = '绿洲';
+const PLACE_VILLIGE = '村庄';
+const PLACE_TOMBS = '王陵';
+const PLACE_END = '矿山';
 const STATUS_GET_LOST = 1111101
 const STATUS_CAN_DIG_IN_MOUNTAIN = 1111103
 const WEATHER_SUNNY = 11101
@@ -152,7 +152,20 @@ export class GoldTounaofbPage {
   }
 
   getPlace() {
-
+    switch (this.currentStatus.place){
+      case PLACE_START:
+        return '营地'
+      case PLACE_DESERT:
+        return '沙漠'
+      case PLACE_TOMBS:
+        return '王陵'
+      case PLACE_OASIS:
+        return '绿洲'
+      case PLACE_END:
+        return '矿山'
+      case PLACE_VILLIGE:
+        return '村庄'
+    }
   }
 
   showToast(position: string, text: string) {
@@ -633,9 +646,21 @@ export class GoldTounaofbPage {
 
 
     this.userData.setIsStay(this.stay)
+
     this.userData.getHasConsume(this.sim_id + this.n_id + this.currentStatus.days).then(res => {
       if (!res) {
         if (this.currentStatus.days == 1) {
+          let pas = {
+            current_status: this.currentStatus,
+            gdkstate: "0",
+            money: '0',
+            sim_id: this.sim_id,
+            n_id: this.n_id,
+            g_id: this.g_id
+          }
+          this.http.updateRankingData(pas).subscribe(res => {
+            console.log(res)
+          })
           return
         }
 

@@ -14,7 +14,7 @@
     </div>
   </div>
   <div style="padding-top: 30px;padding-left: 5%;padding-right: 5%;padding-bottom: 30px;">
-    <div class="place-name">营地<span style="font-size: 14px" *ngIf="lost&&lostDuration>0">({{'迷路-剩余'+lostDuration+'天'}})</span></div>
+    <div class="place-name">{{getPlace()}}<span style="font-size: 14px" *ngIf="lost&&lostDuration>0">({{'迷路-剩余'+lostDuration+'天'}})</span></div>
     <div class="place-name time">第{{currentStatus.days}}天</div>
     <div class="tnfb-tilte">
       <!--{{title}}-->
@@ -74,7 +74,7 @@
       <ion-icon name="arrow-dropup"></ion-icon>
     </button>
     <ion-fab-list side="top">
-      <div style="position: relative;" *ngIf="currentStatus.place==1101">
+      <div style="position: relative;" *ngIf="currentStatus.place=='营地'">
         <button ion-fab (click)="lrPop()"><img src="assets/img/bot3.png"/></button>
         <span class="fab-name">老人解答</span>
       </div>
@@ -87,7 +87,7 @@
         <span class="fab-name">背包</span>
       </div>
       <div style="position: relative;"
-           *ngIf="currentStatus.place==1101||currentStatus.place==1103||currentStatus.place==1104||(currentStatus.place==1106&&canDigInMountain())">
+           *ngIf="currentStatus.place=='营地'||currentStatus.place=='村庄'||currentStatus.place=='绿洲'||(currentStatus.place=='矿山'&&canDigInMountain())">
         <button ion-fab (click)="bjPop()"><img src="assets/img/bot2.png"/></button>
         <span class="fab-name">补给</span>
       </div>
