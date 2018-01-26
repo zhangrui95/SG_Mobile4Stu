@@ -74,11 +74,13 @@ export class IndexPage {
     const params = {}
 
     this.http.getIsExistEndCour(params).subscribe(res => {
-      if (res['list'].length != 0) {
+      if (res['list'].state == 0) {
         console.log("+-+---+-+-+-++--+-+-++--+-+" + JSON.stringify(res))
         this.simId = res['list'][0].sim_id;
         this.userData.setSimId(this.simId)
         this.btnShow = true;
+      }else{
+        this.btnShow = false;
       }
     })
   }
