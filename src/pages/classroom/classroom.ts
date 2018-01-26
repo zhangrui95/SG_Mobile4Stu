@@ -132,8 +132,8 @@ export class ClassroomPage {
           } else if (action === "phone_group") {
             if (this.sim_id == JSON.parse(msg)['sim_id']) {
               this.vibration.vibrate(1000);
-              this.getProcessOfStu();
-              this.allocation = true;
+              // this.getProcessOfStu();
+              // this.allocation = true;
               this.userData.setAction(action);
             }
           } else if (action === "phone_call") {
@@ -189,7 +189,7 @@ export class ClassroomPage {
     this.timer = setTimeout(() => {
       this.getProcessOfStu()
       this.polling()
-    }, 5000)
+    }, 3000)
   }
 
   isGrouping = false;
