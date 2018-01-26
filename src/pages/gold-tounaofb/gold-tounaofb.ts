@@ -864,5 +864,11 @@ export class GoldTounaofbPage {
       this.ImgBg = 'assets/img/bj5.png';
     }
   }
+  back(){
+    this.navCtrl.pop();
+  }
+  getSx(){
+
+  }
 
 }
