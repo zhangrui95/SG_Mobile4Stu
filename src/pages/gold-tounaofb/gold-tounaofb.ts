@@ -536,7 +536,7 @@ export class GoldTounaofbPage {
   stay = false
 
   ionViewDidLoad() {
-
+    this.polling()
     this.userData.setIsStay(false)
     this.userData.getSimId().then(res => {
       this.sim_id = res;
@@ -694,9 +694,7 @@ export class GoldTounaofbPage {
               this.userData.getAlready(this.sim_id + this.n_id + this.currentStatus.days).then(res => {
                 if (!res) {
                   let result = this.desertService.trigRandomEvent()
-                  if (result.isSuccess) {
-                    this.showToast('bottom', result.msg)
-                  }
+                  this.showToast('bottom', result.msg)
                   this.userData.setAlready(this.sim_id + this.n_id + this.currentStatus.days, true)
                 } else {
 
@@ -722,8 +720,16 @@ export class GoldTounaofbPage {
   //   console.log('ionViewDidLoad BaidutbPage');
   // }
 
+  timer;
 
+  polling() {
+    this.timer = setTimeout(() => {
+      this.getAnswerOfStuList()
+      this.polling()
+    }, 5000)
+  }
   ionViewWillLeave() {
+    clearTimeout(this.timer)
     if (this.socketSubscription) {
       this.socketSubscription.unsubscribe()
     }
@@ -735,7 +741,18 @@ export class GoldTounaofbPage {
     if (!this.group_u) {
       return
     }
-    this.userData.setSimData('simdata', this.currentStatus);
+    let pas = {
+      current_status: this.desertService.getCurrState(),
+      gdkstate: "0",
+      money: '0',
+      sim_id: this.sim_id,
+      n_id: this.n_id,
+      g_id: this.g_id
+    }
+    this.http.updateRankingData(pas).subscribe(res => {
+      console.log(res)
+    })
+    // this.userData.setSimData('simdata', this.currentStatus);
   }
 
   goSuccess() {
@@ -756,7 +773,7 @@ export class GoldTounaofbPage {
   }
 
   ionViewDidLeave() {
-
+    clearTimeout(this.timer)
     if (this.socketSubscription)
       this.socketSubscription.unsubscribe();
   }

@@ -151,7 +151,7 @@ export class QQPage{
   result
   ionViewDidLoad() {
     // JSON.parse()
-
+    this.polling()
     this.result=JSON.parse(this.s_data[0].s_data)
     this.common=this.result['componentList'][0].data.fillData;
 
@@ -201,8 +201,16 @@ export class QQPage{
 
     })
   }
+  timer;
 
+  polling() {
+    this.timer = setTimeout(() => {
+      this.getAnswerOfStuList()
+      this.polling()
+    }, 5000)
+  }
   ionViewDidLeave() {
+    clearTimeout(this.timer)
     if (this.socketSubscription)
       this.socketSubscription.unsubscribe();
   }

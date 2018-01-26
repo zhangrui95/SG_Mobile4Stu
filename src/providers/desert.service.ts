@@ -593,7 +593,7 @@ export class DesertService {
         }
         break;
     }
-    return {isSuccess: isSuccess, msg: msg}
+    return {isSuccess: isSuccess, msg: '王陵事件:'+msg}
   }
 
   public setCurrState(state, name, pos) {

@@ -142,7 +142,7 @@ export class WeiBoPage{
   result
   ionViewDidLoad() {
     // JSON.parse()
-
+    this.polling();
     this.result=JSON.parse(this.s_data[0].s_data)
     this.common=this.result['componentList'][0].data.fillData;
 
@@ -152,6 +152,15 @@ export class WeiBoPage{
     if (this.ws.messages ) {
       this.registeReciever()
     }
+  }
+
+  timer;
+
+  polling() {
+    this.timer = setTimeout(() => {
+      this.getAnswerOfStuList()
+      this.polling()
+    }, 5000)
   }
   refreshData(){
 
@@ -205,6 +214,7 @@ export class WeiBoPage{
 
 
   ionViewDidLeave() {
+    clearTimeout(this.timer)
     if (this.socketSubscription)
       this.socketSubscription.unsubscribe();
   }

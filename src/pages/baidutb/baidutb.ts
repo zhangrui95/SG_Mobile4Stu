@@ -126,10 +126,10 @@ export class BaidutbPage {
 
     this.http.getAnswerOfStuList(this.param).subscribe(res => {
       this.items = res['list']
-      setTimeout(()=>{
+      setTimeout(() => {
 
         this.ioncontent.scrollToBottom(500);
-      },1000)
+      }, 1000)
     });
   }
 
@@ -174,26 +174,37 @@ export class BaidutbPage {
     this.title = this.common.title;
     this.content = this.common.content;
 
-
-    if (this.ws.messages ) {
+    this.polling()
+    if (this.ws.messages) {
       this.registeReciever()
     }
   }
 
+  timer;
+
+  polling() {
+    this.timer = setTimeout(() => {
+      this.getAnswerOfStuList()
+      this.polling()
+    }, 5000)
+  }
+
   intervalTimer
   messagesSubscription;
-  refreshData(){
 
-    if(this.messagesSubscription){
+  refreshData() {
+
+    if (this.messagesSubscription) {
       this.messagesSubscription.unsubscribe()
     }
-    setTimeout(()=>{
+    setTimeout(() => {
       this.ws.connect()
       this.registeReciever();
       this.getAnswerOfStuList()
-    },1000)
+    }, 1000)
 
   }
+
   registeReciever() {
     this.socketSubscription = this.ws.messages.subscribe(message => {
       let action = JSON.parse(message)['action'];
@@ -233,7 +244,10 @@ export class BaidutbPage {
   }
 
   ionViewDidLeave() {
-    if (this.socketSubscription)
+    if (this.socketSubscription) {
       this.socketSubscription.unsubscribe();
+    }
+
+    clearTimeout(this.timer)
   }
 }

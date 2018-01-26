@@ -52,17 +52,19 @@ export class DecisionPage {
   btnShow = true;
   stay
   btnClick = true;
-  isShowBtn(){
-    if(this.simType=='gold'){
+
+  isShowBtn() {
+    if (this.simType == 'gold') {
       return this.group_u
-    }else{
+    } else {
       return true
     }
   }
-  constructor(public navCtrl: NavController, public navParams: NavParams,public userData: UserData, public http: ProxyHttpService,public toastCtrl: ToastController,) {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userData: UserData, public http: ProxyHttpService, public toastCtrl: ToastController,) {
     this.userData.getUserID().then(value => this.userId = value)
-    this.n_id=this.navParams.data.n_id;
-    this.g_id=this.navParams.data.g_id;
+    this.n_id = this.navParams.data.n_id;
+    this.g_id = this.navParams.data.g_id;
     this.s_data = this.navParams.data.s_data;
     this.result = JSON.parse(this.s_data[0].s_data);
     this.common = this.result['componentList'][0].data.selectData;
@@ -73,28 +75,32 @@ export class DecisionPage {
     this.simData = this.navParams.data.simData
     this.userData.getSimType().then(res => {
       this.simType = res;
-    })
-    this.sim_id=this.navParams.data.sim_id;
-    for(let i in this.common){
-      this.common[i].Checked = false;
-    }
-    this.userData.getIsStay().then(v=>{
-      this.stay=v;
-      if(v){
-        let a =new Array
-        a.push(this.common[0])
-        this.common=a;
+      if (this.simType == 'gold') {
+        this.userData.getIsStay().then(v => {
+          this.stay = v;
+          if (v) {
+            let a = new Array
+            a.push(this.common[0])
+            this.common = a;
+          }
+
+        })
       }
 
     })
+    this.sim_id = this.navParams.data.sim_id;
+    for (let i in this.common) {
+      this.common[i].Checked = false;
+    }
+
     this.userData.getUserID().then(value => {
       this.u_id = value
-      let param = {sim_id:this.sim_id,n_id:this.n_id,u_id:this.u_id}
+      let param = {sim_id: this.sim_id, n_id: this.n_id, u_id: this.u_id}
       this.http.getAnswerByUId(param).subscribe(res => {
         console.log(res);
-        if(res['answer'] == -1){
+        if (res['answer'] == -1) {
           this.btnShow = true;
-        }else{
+        } else {
           this.common[res['answer']].Checked = true;
           this.btnShow = false;
         }
@@ -126,13 +132,13 @@ export class DecisionPage {
   // }
 
   send() {
-    if(this.btnClick){
+    if (this.btnClick) {
       this.btnClick = false;
-      if(!this.selectvalue){
-        this.showToast('bottom','请选择答案')
+      if (!this.selectvalue) {
+        this.showToast('bottom', '请选择答案')
         return;
       }
-      this.userData.getSimData('simdata').then(res=>{
+      this.userData.getSimData('simdata').then(res => {
         this.param = {
           sim_id: this.sim_id,
           g_id: this.g_id,

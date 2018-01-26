@@ -47,7 +47,7 @@ export class ClassroomPage {
               public desert: DesertService,
               public ws: ServerSocket) {
     this.userData.getIsLeader().then(v => {
-      this.group_u=v;
+      this.group_u = v;
     })
 
   }
@@ -57,6 +57,7 @@ export class ClassroomPage {
   simType
 
   ionViewDidEnter() {
+    this.polling()
     this.ws.connect();
     this.userData.getIsDead().then(v => {
       this.userData.getIsSuccess().then(e => {
@@ -118,11 +119,11 @@ export class ClassroomPage {
           if (action === "phone_process_update") {
             if (!this.isVib) {
               this.isVib = true
-              this.vibration.vibrate(1000);
-              setTimeout(() => {
-                this.isVib = false
-
-              }, 5000)
+              // this.vibration.vibrate(1000);
+              // setTimeout(() => {
+              //   this.isVib = false
+              //
+              // }, 5000)
             }
 
 
@@ -155,6 +156,9 @@ export class ClassroomPage {
     if (this.messagesSubscription)
       this.messagesSubscription.unsubscribe()
 
+
+    clearTimeout(this.timer)
+
   }
 
   // getPushFreeGroListForPhone(){
@@ -178,8 +182,19 @@ export class ClassroomPage {
 
   }
 
-  getProcessOfStu() {
 
+  timer;
+
+  polling() {
+    this.timer = setTimeout(() => {
+      this.getProcessOfStu()
+      this.polling()
+    }, 5000)
+  }
+
+  isGrouping = false;
+
+  getProcessOfStu() {
 
     this.userData.getIsDead().then(v => {
       this.userData.getIsSuccess().then(e => {
@@ -193,6 +208,8 @@ export class ClassroomPage {
             //   res['list'][0].ns = '';
             //   res['list'][i].ns = [{"n_id":"1.1","n_name":"sdfsdfs"},{"n_id":"1.2","n_name":"sdfsdfd"}];
             // }
+
+
             const count = this.items.length
 
             this.items = res['list'];
@@ -205,7 +222,8 @@ export class ClassroomPage {
 
             if (this.items) {
               if (this.items.length > count) {
-                if (this.group_u) {
+                this.vibration.vibrate(1000);
+                if (this.simType == 'gold' && this.group_u) {
                   this.consume()
                 }
 
@@ -224,7 +242,12 @@ export class ClassroomPage {
             this.groOfStu = res['groOfStu'];
             if (res['groOfStu'] === '') {
               this.GroupNews = false;
+              if (res['freeGro'] == '1') {
+                this.isGrouping = true
+              }
+
             } else {
+              this.isGrouping = false
               if (res['groOfStu'].u_position == 1) {
                 this.group_u = true;
                 this.userData.setIsLeader(this.group_u)
@@ -244,8 +267,9 @@ export class ClassroomPage {
 
   preCount = 2
   currNode;
+
   consume() {
-    if((this.items.length-this.preCount)%2==1){
+    if ((this.items.length - this.preCount) % 2 == 1) {
       return
     }
     if (this.items.length > (this.preCount + 1)) {
@@ -255,7 +279,7 @@ export class ClassroomPage {
 
         if (this.items[i].n_name.indexOf('.') == -1) {
           currN = this.items[i]
-          this.currNode=this.items[i]
+          this.currNode = this.items[i]
           break;
         }
       }
@@ -286,12 +310,12 @@ export class ClassroomPage {
 
           //todo consume
           let result = this.desert.consume(this.desert.getWeather(), this.desert.getCurrState().useTent);
-          this.showToast('bottom','消耗水:'+this.desert.reduce.water+'消耗食物:'+this.desert.reduce.food)
+          this.showToast('bottom', '消耗水:' + this.desert.reduce.water + '消耗食物:' + this.desert.reduce.food)
           if (!result.isSuccess) {
             this.goDead()
             this.showToast('bottom', result.msg)
           }
-
+          this.userData.setSimData('simdata', this.desert.getCurrState())
           let pas = {
             current_status: this.desert.getCurrState(),
             gdkstate: "0",
@@ -307,6 +331,7 @@ export class ClassroomPage {
       })
     }
   }
+
   goDead() {
     this.userData.setIsDead(true)
     let params = {
@@ -343,7 +368,7 @@ export class ClassroomPage {
 
     if (index > count) {
 
-      this.userData.setCurrentDays(Math.ceil((index - count) / 2)+1)
+      this.userData.setCurrentDays(Math.ceil((index - count) / 2) + 1)
     }
     let param = {
       n_id: nid

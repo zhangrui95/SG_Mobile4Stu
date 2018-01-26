@@ -28,7 +28,7 @@ export class ServerSocket {
       this.messages = websocketConnect(
         'ws://139.196.189.173:8080/VisualizationMgt/websocket.do?token=' + this.userData.userToken + "&type=phone",
         this.inputStream = new QueueingSubject<string>()
-      ,[]).messages.retryWhen(errors => errors.delay(1000)).share()
+      ,[]).messages.share()
 
     }
   }
