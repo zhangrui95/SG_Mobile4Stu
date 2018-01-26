@@ -454,6 +454,7 @@ export class GoldTounaofbPage {
           if (this.desertService.useItem(limType)) {
             this.showToast('bottom', '使用成功')
             this.useCompass = true;
+
           } else {
             this.showToast('bottom', '使用失败')
           }
@@ -744,6 +745,8 @@ export class GoldTounaofbPage {
     if (!this.group_u) {
       return
     }
+    this.desertService.getCurrState().useCompass=this.useCompass
+    this.desertService.getCurrState().useTent=this.useTent
     let pas = {
       current_status: this.desertService.getCurrState(),
       gdkstate: "0",
@@ -752,6 +755,7 @@ export class GoldTounaofbPage {
       n_id: this.n_id,
       g_id: this.g_id
     }
+
     this.http.updateRankingData(pas).subscribe(res => {
       console.log(res)
     })
