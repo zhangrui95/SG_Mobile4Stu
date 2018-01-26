@@ -91,6 +91,10 @@
         <button ion-fab (click)="bjPop()"><img src="assets/img/bot2.png"/></button>
         <span class="fab-name">补给</span>
       </div>
+      <div style="position: relative;">
+        <button ion-fab (click)="getSx()"><img src="assets/img/sx11.png"/></button>
+        <span class="fab-name">刷新</span>
+      </div>
     </ion-fab-list>
   </ion-fab>
   <div class="pop-item" *ngIf="bjPopShow">
@@ -248,5 +252,8 @@
       </div>
     </div>
     <img src="assets/img/close.png" class="close-btn" (click)="bjPopHide()"/>
+  </div>
+  <div class="back-btn-left">
+    <img src="assets/img/back.png" style="margin: 12px;" (click)="back()" />
   </div>
 </ion-content>
