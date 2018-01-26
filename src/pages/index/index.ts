@@ -74,14 +74,19 @@ export class IndexPage {
     const params = {}
 
     this.http.getIsExistEndCour(params).subscribe(res => {
-      if (res['list'].state == 0) {
-        console.log("+-+---+-+-+-++--+-+-++--+-+" + JSON.stringify(res))
-        this.simId = res['list'][0].sim_id;
-        this.userData.setSimId(this.simId)
-        this.btnShow = true;
-      }else{
+      if(res['list'].length==0){
         this.btnShow = false;
+      }else{
+        if (res['list'][0].state == 0) {
+          console.log("+-+---+-+-+-++--+-+-++--+-+" + JSON.stringify(res))
+          this.simId = res['list'][0].sim_id;
+          this.userData.setSimId(this.simId)
+          this.btnShow = true;
+        }else{
+          this.btnShow = false;
+        }
       }
+
     })
   }
 
@@ -131,6 +136,7 @@ export class IndexPage {
                 this.userData.setIsDead(false)
                 this.userData.setIsSuccess(false)
                 this.userData.setIsLeader( false)
+                this.userData.setIsStay(false)
                 this.userData.setCurrentDays(1)
                 this.desert.setCurrState({
                   position: '1',
@@ -160,7 +166,8 @@ export class IndexPage {
               this.navCtrl.push(ClassroomPage, {sim_id: data.sim_id});
               this.userData.setAction('')
               this.userData.setIsDead(false)
-              this.userData.setIsSuccess(false)
+            this.userData.setIsStay(false)
+            this.userData.setIsSuccess(false)
             this.userData.setIsLeader( false)
               this.userData.setCurrentDays(1)
               this.desert.setCurrState({
