@@ -720,9 +720,9 @@ export class DesertService {
     return false;
   }
 
-  public
 
-  isAlive(flag) {
+
+  public isAlive(flag) {
     return flag
   }
 
