@@ -244,7 +244,12 @@ export class GoldTounaofbPage {
 
     this.http.getAnswerOfStuList(this.param).subscribe(res => {
       this.items = res['list']
-
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
+      this.timer = setTimeout(() => {
+        this.polling()
+      }, 5000)
     });
   }
 
@@ -723,10 +728,8 @@ export class GoldTounaofbPage {
   timer;
 
   polling() {
-    this.timer = setTimeout(() => {
-      this.getAnswerOfStuList()
-      this.polling()
-    }, 5000)
+    this.getAnswerOfStuList()
+
   }
   ionViewWillLeave() {
     clearTimeout(this.timer)

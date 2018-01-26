@@ -126,8 +126,14 @@ export class BaidutbPage {
 
     this.http.getAnswerOfStuList(this.param).subscribe(res => {
       this.items = res['list']
-      setTimeout(() => {
 
+      if(this.timer){
+        clearTimeout(this.timer)
+      }
+      this.timer = setTimeout(() => {
+        this.polling()
+      }, 5000)
+      setTimeout(() => {
         this.ioncontent.scrollToBottom(500);
       }, 1000)
     });
@@ -183,10 +189,8 @@ export class BaidutbPage {
   timer;
 
   polling() {
-    this.timer = setTimeout(() => {
-      this.getAnswerOfStuList()
-      this.polling()
-    }, 5000)
+    this.getAnswerOfStuList()
+
   }
 
   intervalTimer

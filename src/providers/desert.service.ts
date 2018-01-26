@@ -450,7 +450,7 @@ export class DesertService {
   ]
 
   public getRandomEventInTombs() {
-    let index = Math.random() * this.eventInTombs.length
+    let index = Math.floor(Math.random() * this.eventInTombs.length)
     return this.eventInTombs[index]
   }
 

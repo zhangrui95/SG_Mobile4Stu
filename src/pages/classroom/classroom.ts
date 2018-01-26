@@ -186,10 +186,7 @@ export class ClassroomPage {
   timer;
 
   polling() {
-    this.timer = setTimeout(() => {
-      this.getProcessOfStu()
-      this.polling()
-    }, 3000)
+   this.getProcessOfStu()
   }
 
   isGrouping = false;
@@ -203,6 +200,13 @@ export class ClassroomPage {
           console.log("*-*-*-*-*-*-*-*-*-*");
           console.log(JSON.stringify(params));
           this.http.getProcessOfStu(params).subscribe(res => {
+
+            if(this.timer){
+              clearTimeout(this.timer)
+            }
+            this.timer = setTimeout(() => {
+              this.polling()
+            }, 3000)
             // this.registeReciever()
             // for(let i in res['list']){
             //   res['list'][0].ns = '';
