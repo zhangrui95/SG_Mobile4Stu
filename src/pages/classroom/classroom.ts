@@ -15,6 +15,7 @@ import {GoldTounaofbPage} from "../gold-tounaofb/gold-tounaofb";
 import {Vibration} from "@ionic-native/vibration";
 import {DesertService} from "../../providers/desert.service";
 
+const PLACE_END = '矿山';
 const WEATHER_SANDSTORM = 11103
 const WEATHER_HOT_SANDSTORM = 11104
 
@@ -35,7 +36,7 @@ export class ClassroomPage {
   indexNs = [];
   g_id = "-1"
   group_u = false;
-
+  isComeback = true
   action;
 
   constructor(public navCtrl: NavController,
@@ -57,12 +58,13 @@ export class ClassroomPage {
   simType
 
   ionViewDidEnter() {
+    this.isComeback = true;
     this.polling()
     this.ws.connect();
     this.userData.getIsDead().then(v => {
       this.userData.getIsSuccess().then(e => {
         if (v || e) {
-          this.showAlwaysToast('bottom', '演练结束，请等待结算')
+          // this.showAlwaysToast('bottom', '演练结束，请等待结算')
         }
       })
     })
@@ -186,7 +188,7 @@ export class ClassroomPage {
   timer;
 
   polling() {
-   this.getProcessOfStu()
+    this.getProcessOfStu()
   }
 
   isGrouping = false;
@@ -201,7 +203,7 @@ export class ClassroomPage {
           console.log(JSON.stringify(params));
           this.http.getProcessOfStu(params).subscribe(res => {
 
-            if(this.timer){
+            if (this.timer) {
               clearTimeout(this.timer)
             }
             this.timer = setTimeout(() => {
@@ -234,6 +236,7 @@ export class ClassroomPage {
               }
 
             }
+            this.isComeback = false;
             console.log("*-*-*-*-*-*-*-*-*-*" + JSON.stringify(res));
             console.log(JSON.stringify(res));
             for (let n in this.items) {
@@ -273,6 +276,10 @@ export class ClassroomPage {
   currNode;
 
   consume() {
+    if (this.isComeback) {
+      return
+    }
+
     if ((this.items.length - this.preCount) % 2 == 1) {
       return
     }
@@ -290,12 +297,27 @@ export class ClassroomPage {
       let params = {sim_id: this.sim_id, n_id: currN.n_id, g_id: this.g_id}
       this.http.getGoldStatus(params).subscribe(res => {
         console.log(res)
+
         if (currN.n_name.indexOf('-') != -1) {
           let arr = currN.n_name.split('-')
           if (res['listGDK'].length > 0) {
             this.desert.setCurrState(JSON.parse(res['listGDK'][0]['current_status']), arr[0], arr[1].split('.')[0])
           }
-
+          if (this.desert.getCurrState().isSuccess) {
+            this.showAlwaysToast('bottom', '演练结束，请等待结算')
+          }
+          if (this.desert.getCurrState().isDead) {
+            this.showAlwaysToast('bottom', '演练结束，请等待结算')
+          }
+          let digging = 0;
+          if (this.desert.currState.place == PLACE_END) {
+            //若在结束位置 次日得一单位金
+            if (this.desert.digging()) {
+              digging = 1
+            } else {
+              digging = 2
+            }
+          }
 
           switch (this.desert.getWeather()) {
             case WEATHER_HOT_SANDSTORM:
@@ -314,9 +336,17 @@ export class ClassroomPage {
 
           //todo consume
           let result = this.desert.consume(this.desert.getWeather(), this.desert.getCurrState().useTent);
-          this.showToast('bottom', '消耗水:' + this.desert.reduce.water + '消耗食物:' + this.desert.reduce.food)
+          if (digging == 0) {
+            this.showToast('bottom', '消耗水:' + this.desert.reduce.water + '消耗食物:' + this.desert.reduce.food)
+          } else if (digging == 1) {
+            this.showToast('bottom', '消耗水:' + this.desert.reduce.water + '消耗食物:' + this.desert.reduce.food + '，获得1袋金子')
+          } else if (digging == 2) {
+            this.showToast('bottom', '消耗水:' + this.desert.reduce.water + '消耗食物:' + this.desert.reduce.food + '负重已满，无法获得金子')
+          }
+
           if (!result.isSuccess) {
             this.goDead()
+            this.desert.getCurrState().isDead = true
             this.showToast('bottom', result.msg)
           }
           this.userData.setSimData('simdata', this.desert.getCurrState())

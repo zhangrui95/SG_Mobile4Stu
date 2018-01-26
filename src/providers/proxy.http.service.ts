@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {UserData} from "./user-data";
+import {DesertService} from "./desert.service";
 
 
 @Injectable()
@@ -14,7 +15,7 @@ export class ProxyHttpService {
   public static PROJECT_PACKAGE = "/VisualizationMgt"
   public BASE_URL = ProxyHttpService.IP_PORT + ProxyHttpService.PROJECT_PACKAGE
 
-  constructor(public http: HttpClient, public userData: UserData) {
+  constructor(public http: HttpClient, public userData: UserData,public desert: DesertService) {
 
   }
 
@@ -132,6 +133,11 @@ export class ProxyHttpService {
     console.log(this.BASE_URL + url)
     params.deviceType = "phone"
     params.token = this.userData.userToken;
+
+    if(!params.day){
+      params.day=this.desert.currState.days+""
+    }
+
     console.log(JSON.stringify(params))
 
     return this.http.post(this.BASE_URL + url, JSON.stringify(params))
@@ -139,8 +145,15 @@ export class ProxyHttpService {
 
   _get(url, params?: HttpParams) {
     var p = new HttpParams();
+    let hasDay =false;
     for (let key in params) {
+      if(key=='day'){
+        hasDay=true
+      }
       p = p.append(key, params[key])
+    }
+    if(!hasDay){
+      p = p.append('day',this.desert.currState.days+"")
     }
     p = p.append("deviceType", "phone");
     p = p.append("token", this.userData.userToken)

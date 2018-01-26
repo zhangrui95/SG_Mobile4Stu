@@ -746,8 +746,10 @@ export class DesertService {
         break;
       case WEATHER_HOT_SANDSTORM:
         if (!useTent) {
-          tempWaterRatio = hotsandstormWaterConsumeRatio
           tempFoodRatio = hotsandstormFoodConsumeRatio
+          tempWaterRatio = hotsandstormWaterConsumeRatio
+        }else{
+          tempWaterRatio = hotWaterConsumeRatio
         }
 
         break;
@@ -822,6 +824,9 @@ export class DesertService {
     if (tempWeight > 0) {
       this.currState.gold = this.currState.gold + goldDiggedPerDay;
       this.currState.weight = tempWeight
+      return true
+    }else{
+      return false;
     }
   }
 

@@ -308,7 +308,8 @@ export class GoldTounaofbPage {
             num: 0,
             remain: this.currentStatus.water,
             weight: this.getPriceAndWeight(ITEM_WATER).weight,
-            price: this.getPriceAndWeight(ITEM_WATER).price
+            price: this.getPriceAndWeight(ITEM_WATER).price,
+            image:'assets/img/dj1.png'
           },
           {
             type: ITEM_FOOD,
@@ -316,7 +317,8 @@ export class GoldTounaofbPage {
             num: 0,
             remain: this.currentStatus.food,
             weight: this.getPriceAndWeight(ITEM_FOOD).weight,
-            price: this.getPriceAndWeight(ITEM_FOOD).price
+            price: this.getPriceAndWeight(ITEM_FOOD).price,
+            image:'assets/img/dj2.png'
           }
           ,
           {
@@ -325,7 +327,8 @@ export class GoldTounaofbPage {
             num: 0,
             remain: this.currentStatus.compass,
             weight: this.getPriceAndWeight(ITEM_COMPASS).weight,
-            price: this.getPriceAndWeight(ITEM_COMPASS).price
+            price: this.getPriceAndWeight(ITEM_COMPASS).price,
+            image:'assets/img/dj4.png'
           }
           ,
           {
@@ -334,7 +337,8 @@ export class GoldTounaofbPage {
             num: 0,
             remain: this.currentStatus.tent,
             weight: this.getPriceAndWeight(ITEM_TENT).weight,
-            price: this.getPriceAndWeight(ITEM_TENT).price
+            price: this.getPriceAndWeight(ITEM_TENT).price,
+            image:'assets/img/dj3.png'
           }
         ]
         break
@@ -346,7 +350,8 @@ export class GoldTounaofbPage {
             num: 0,
             remain: this.currentStatus.water,
             weight: this.getPriceAndWeight(ITEM_WATER).weight,
-            price: this.getPriceAndWeight(ITEM_WATER).price
+            price: this.getPriceAndWeight(ITEM_WATER).price,
+            image:''
           }
 
         ]
@@ -359,7 +364,8 @@ export class GoldTounaofbPage {
             num: 0,
             remain: this.currentStatus.water,
             weight: this.getPriceAndWeight(ITEM_WATER).weight,
-            price: this.getPriceAndWeight(ITEM_WATER).price
+            price: this.getPriceAndWeight(ITEM_WATER).price,
+            image:''
           },
           {
             type: ITEM_FOOD,
@@ -367,7 +373,8 @@ export class GoldTounaofbPage {
             num: 0,
             remain: this.currentStatus.food,
             weight: this.getPriceAndWeight(ITEM_FOOD).weight,
-            price: this.getPriceAndWeight(ITEM_FOOD).price
+            price: this.getPriceAndWeight(ITEM_FOOD).price,
+            image:''
           }
         ]
         break
@@ -379,7 +386,8 @@ export class GoldTounaofbPage {
             num: 0,
             remain: this.currentStatus.water,
             weight: this.getPriceAndWeight(ITEM_WATER).weight,
-            price: this.getPriceAndWeight(ITEM_WATER).price
+            price: this.getPriceAndWeight(ITEM_WATER).price,
+            image:''
           }
         ]
         break
@@ -614,6 +622,7 @@ export class GoldTounaofbPage {
                       if (f) {
                         //todo 推送当前组成员 通知结束
                         this.goSuccess()
+                        this.desertService.getCurrState().isSuccess=true
                         let params = {
                           sim_id: this.sim_id,
                           n_id: '-1'
@@ -672,21 +681,7 @@ export class GoldTounaofbPage {
                         })
                       }
                     }
-                    if (this.currentStatus.place == PLACE_END) {
-                      //若在结束位置 次日得一单位金
 
-                      this.userData.getAlready(this.sim_id + this.n_id + this.currentStatus.days).then(res => {
-                        if (!res) {
-                          this.desertService.digging()
-                          this.userData.setAlready(this.sim_id + this.n_id + this.currentStatus.days, true)
-                        } else {
-
-                        }
-
-                      })
-
-
-                    }
                   }
                 }
               })
@@ -745,6 +740,7 @@ export class GoldTounaofbPage {
     if (!this.group_u) {
       return
     }
+    this.userData.setIsStay(true)
     this.desertService.getCurrState().useCompass=this.useCompass
     this.desertService.getCurrState().useTent=this.useTent
     let pas = {
@@ -774,6 +770,7 @@ export class GoldTounaofbPage {
       }
 
     }
+    this.desertService.getCurrState().isSuccess=true
     this.http.getPushDeathNoticeByGro(params).subscribe(res => {
       console.log(res)
     })
@@ -862,6 +859,8 @@ export class GoldTounaofbPage {
     } else if (this.currentStatus.place == PLACE_DESERT) {
       this.ImgBg = 'assets/img/bj4.png';
     } else if (this.currentStatus.place == PLACE_TOMBS) {
+      this.ImgBg = 'assets/img/bj5.png';
+    }else if(this.currentStatus.place == PLACE_END){
       this.ImgBg = 'assets/img/bj5.png';
     }
   }
