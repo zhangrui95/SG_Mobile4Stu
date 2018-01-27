@@ -77,6 +77,145 @@ export class GoldTounaofbPage {
       this.ws.connect()
       this.registeReciever();
       this.getAnswerOfStuList()
+      this.userData.getCurrentDays().then(v => {
+        console.log(v)
+        let params = {sim_id: this.sim_id, n_id: this.n_id, g_id: this.g_id, day: this.currDay}
+        this.http.getGoldStatus(params).subscribe(res => {
+          console.log(res['listGDK'])
+          if (this.name_position.indexOf('-') != -1) {
+            let arr = this.name_position.split('-')
+            if (res['listGDK'].length > 0) {
+              this.desertService.setCurrState(JSON.parse(res['listGDK'][0]['current_status']), arr[0], arr[1].split('.')[0])
+            } else {
+              this.desertService.setCurrState({
+                position: '1',
+                place: '营地',
+                money: 900,
+                weight: 900,
+                food: 0,
+                days: 1,
+                water: 0,
+                tent: 0,
+                compass: 0,
+                gold: 0,
+                useTent: false,
+                useCompass: false,
+                asked: false,
+                isSuccess: false,
+                isDead: false,
+                status: [],
+                events: []
+              }, arr[0], arr[1].split('.')[0])
+            }
+
+          }
+          this.messages = this.desertService.getMessagesFromOlder()
+          this.desertService.updateStatus()
+
+          this.setGoods();
+          this.getImgBg();
+          this.setWeather()
+          this.isLost();
+          this.userData.getIsSuccess().then(v => {
+            {
+              this.userData.getIsDead().then(e => {
+                {
+
+                  if (!v && !e) {
+                    if (this.desertService.getCurrState().place == PLACE_START && this.desertService.getCurrState().days > 1) {
+                      //若在开始位置且天数>1 判断是否结算
+                      let f = confirm("是否出售所有黄金并等待结算？");
+                      if (f) {
+                        //todo 推送当前组成员 通知结束
+                        this.goSuccess()
+                        this.desertService.getCurrState().isSuccess = true
+                        let params = {
+                          sim_id: this.sim_id,
+                          n_id: '-1'
+                        };
+                        this.http.getDataForRanking(params).subscribe(res => {
+                          console.log(res)
+                          let count = +res['totalRanking']
+                          count = count + 1
+                          let money = this.desertService.getCurrState().money;
+                          switch (count) {
+                            case 1:
+                              money = money + (this.desertService.getCurrState().gold * 50 * 100)
+                              break;
+                            case 2:
+                              money = money + (this.desertService.getCurrState().gold * 50 * 90)
+                              break;
+                            case 3:
+                              money = money + (this.desertService.getCurrState().gold * 50 * 85)
+                              break;
+                            case 4:
+                              money = money + (this.desertService.getCurrState().gold * 50 * 80)
+                              break;
+                            default:
+                              money = money + (this.desertService.getCurrState().gold * 50 * 75)
+                              break;
+
+
+                          }
+                          let p = {
+                            sim_id: this.sim_id,
+                            g_id: this.g_id,
+                            n_id: this.n_id,
+                            current_status: this.desertService.getCurrState(),
+                            money: money + '',
+                            answer: ''
+                          }
+                          console.log(p)
+                          this.http.addGDKAnswer(p).subscribe(res => {
+                            if (res['code'] == 0) {
+                              this.navCtrl.pop();
+                            } else {
+                              this.showToast('bottom', res['msg']);
+                            }
+                            console.log('------addanswer------')
+                            console.log(res)
+                            // console.log('received message from server666: ', res['code']);
+                            // this.value='';
+                            // if (res['code'] == 0) {
+                            //
+                            // }
+                          }, error => {
+                            console.log(error)
+                            this.navCtrl.pop();
+                          });
+
+                        })
+                      }
+                    }
+
+                  }
+                }
+              })
+
+
+            }
+          })
+          if (this.desertService.getCurrState().place == PLACE_TOMBS) {
+            //若在王陵 获得随机事件
+            if (this.group_u) {
+              this.userData.getAlready(this.sim_id + this.n_id + this.desertService.getCurrState().days).then(res => {
+                if (!res) {
+                  let result = this.desertService.trigRandomEvent()
+                  this.showToast('bottom', result.msg)
+                  this.userData.setAlready(this.sim_id + this.n_id + this.desertService.getCurrState().days, true)
+                } else {
+
+                }
+
+              })
+
+            }
+          }
+
+        })
+
+      })
+
     }, 1000)
 
 
@@ -182,6 +321,7 @@ export class GoldTounaofbPage {
   }
 
   currDay
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public userData: UserData,
@@ -311,7 +451,7 @@ export class GoldTounaofbPage {
             remain: this.desertService.getCurrState().water,
             weight: this.getPriceAndWeight(ITEM_WATER).weight,
             price: this.getPriceAndWeight(ITEM_WATER).price,
-            image:'assets/img/dj1.png'
+            image: 'assets/img/dj1.png'
           },
           {
             type: ITEM_FOOD,
@@ -320,7 +460,7 @@ export class GoldTounaofbPage {
             remain: this.desertService.getCurrState().food,
             weight: this.getPriceAndWeight(ITEM_FOOD).weight,
             price: this.getPriceAndWeight(ITEM_FOOD).price,
-            image:'assets/img/dj2.png'
+            image: 'assets/img/dj2.png'
           }
           ,
           {
@@ -330,7 +470,7 @@ export class GoldTounaofbPage {
             remain: this.desertService.getCurrState().compass,
             weight: this.getPriceAndWeight(ITEM_COMPASS).weight,
             price: this.getPriceAndWeight(ITEM_COMPASS).price,
-            image:'assets/img/dj4.png'
+            image: 'assets/img/dj4.png'
           }
           ,
           {
@@ -340,7 +480,7 @@ export class GoldTounaofbPage {
             remain: this.desertService.getCurrState().tent,
             weight: this.getPriceAndWeight(ITEM_TENT).weight,
             price: this.getPriceAndWeight(ITEM_TENT).price,
-            image:'assets/img/dj3.png'
+            image: 'assets/img/dj3.png'
           }
         ]
         break
@@ -350,10 +490,10 @@ export class GoldTounaofbPage {
             type: ITEM_WATER,
             name: '水',
             num: 0,
-            remain:this.desertService.getCurrState().water,
+            remain: this.desertService.getCurrState().water,
             weight: this.getPriceAndWeight(ITEM_WATER).weight,
             price: this.getPriceAndWeight(ITEM_WATER).price,
-            image:''
+            image: ''
           }
 
         ]
@@ -367,16 +507,16 @@ export class GoldTounaofbPage {
             remain: this.desertService.getCurrState().water,
             weight: this.getPriceAndWeight(ITEM_WATER).weight,
             price: this.getPriceAndWeight(ITEM_WATER).price,
-            image:''
+            image: ''
           },
           {
             type: ITEM_FOOD,
             name: '食物',
             num: 0,
-            remain:this.desertService.getCurrState().food,
+            remain: this.desertService.getCurrState().food,
             weight: this.getPriceAndWeight(ITEM_FOOD).weight,
             price: this.getPriceAndWeight(ITEM_FOOD).price,
-            image:''
+            image: ''
           }
         ]
         break
@@ -389,7 +529,7 @@ export class GoldTounaofbPage {
             remain: this.desertService.getCurrState().water,
             weight: this.getPriceAndWeight(ITEM_WATER).weight,
             price: this.getPriceAndWeight(ITEM_WATER).price,
-            image:''
+            image: ''
           }
         ]
         break
@@ -438,7 +578,7 @@ export class GoldTounaofbPage {
             good.num = 0
             switch (good.type) {
               case ITEM_WATER:
-                good.remain =  this.desertService.getCurrState().water
+                good.remain = this.desertService.getCurrState().water
                 break;
               case ITEM_COMPASS:
                 good.remain = this.desertService.getCurrState().compass
@@ -527,7 +667,6 @@ export class GoldTounaofbPage {
   }
 
 
-
   common
   result
   name_position
@@ -535,7 +674,6 @@ export class GoldTounaofbPage {
   stay = false
 
   ionViewDidLoad() {
-    this.polling()
     this.userData.setIsStay(false)
     this.userData.getSimId().then(res => {
       this.sim_id = res;
@@ -552,9 +690,9 @@ export class GoldTounaofbPage {
       this.title = this.common.title;
       this.content = this.common.content;
 
-      let params = {sim_id: this.sim_id, n_id: this.n_id, g_id: this.g_id,day:this.currDay}
+      let params = {sim_id: this.sim_id, n_id: this.n_id, g_id: this.g_id, day: this.currDay}
       this.userData.getCurrentDays().then(v => {
-  console.log(v)
+        console.log(v)
         this.http.getGoldStatus(params).subscribe(res => {
           console.log(res['listGDK'])
           if (this.name_position.indexOf('-') != -1) {
@@ -603,7 +741,7 @@ export class GoldTounaofbPage {
                       if (f) {
                         //todo 推送当前组成员 通知结束
                         this.goSuccess()
-                        this.desertService.getCurrState().isSuccess=true
+                        this.desertService.getCurrState().isSuccess = true
                         let params = {
                           sim_id: this.sim_id,
                           n_id: '-1'
@@ -708,6 +846,7 @@ export class GoldTounaofbPage {
     this.getAnswerOfStuList()
 
   }
+
   ionViewWillLeave() {
     clearTimeout(this.timer)
     if (this.socketSubscription) {
@@ -722,8 +861,8 @@ export class GoldTounaofbPage {
       return
     }
     this.userData.setIsStay(this.stay)
-    this.desertService.getCurrState().useCompass=this.useCompass
-    this.desertService.getCurrState().useTent=this.useTent
+    this.desertService.getCurrState().useCompass = this.useCompass
+    this.desertService.getCurrState().useTent = this.useTent
     let pas = {
       current_status: this.desertService.getCurrState(),
       gdkstate: "0",
@@ -731,7 +870,7 @@ export class GoldTounaofbPage {
       sim_id: this.sim_id,
       n_id: this.n_id,
       g_id: this.g_id,
-      day:this.currDay
+      day: this.currDay
     }
 
     this.http.updateRankingData(pas).subscribe(res => {
@@ -752,7 +891,7 @@ export class GoldTounaofbPage {
       }
 
     }
-    this.desertService.getCurrState().isSuccess=true
+    this.desertService.getCurrState().isSuccess = true
     this.http.getPushDeathNoticeByGro(params).subscribe(res => {
       console.log(res)
     })
@@ -841,15 +980,17 @@ export class GoldTounaofbPage {
       this.ImgBg = 'assets/img/bj4.png';
     } else if (this.desertService.currState.place == PLACE_TOMBS) {
       this.ImgBg = 'assets/img/bj5.png';
-    }else if(this.desertService.currState.place == PLACE_END){
+    } else if (this.desertService.currState.place == PLACE_END) {
       this.ImgBg = 'assets/img/bj66.png';
     }
   }
-  back(){
+
+  back() {
     this.navCtrl.pop();
   }
-  getSx(){
 
+  getSx() {
+    this.refreshData()
   }
 
 }

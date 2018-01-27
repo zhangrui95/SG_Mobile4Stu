@@ -174,20 +174,20 @@ export class ClassroomPage {
           if (action === "phone_process_update") {
             if (!this.isVib) {
               this.isVib = true
-              // this.vibration.vibrate(1000);
-              // setTimeout(() => {
-              //   this.isVib = false
-              //
-              // }, 5000)
+              this.vibration.vibrate(1000);
+              setTimeout(() => {
+                this.isVib = false
+
+              }, 5000)
             }
 
-            // this.getProcessOfStu();
+            this.getProcessOfStu();
             this.scrollToBottom();
           } else if (action === "phone_group") {
             if (this.sim_id == JSON.parse(msg)['sim_id']) {
               this.vibration.vibrate(1000);
-              // this.getProcessOfStu();
-              // this.allocation = true;
+              this.getProcessOfStu();
+              this.allocation = true;
               this.userData.setAction(action);
             }
           } else if (action === "phone_call") {
@@ -211,7 +211,6 @@ export class ClassroomPage {
       this.messagesSubscription.unsubscribe()
 
 
-    clearTimeout(this.timer)
 
   }
 
@@ -230,7 +229,7 @@ export class ClassroomPage {
     setTimeout(() => {
       this.ws.connect()
       this.registeReciever();
-      // this.getProcessOfStu()
+      this.getProcessOfStu()
     }, 1000)
 
 
@@ -255,13 +254,13 @@ export class ClassroomPage {
           console.log(JSON.stringify(params));
           this.http.getProcessOfStu(params).subscribe(res => {
 
-            if (this.timer) {
-              clearTimeout(this.timer)
-            }
-            this.timer = setTimeout(() => {
-              clearTimeout(this.timer)
-              this.polling()
-            }, 3000)
+            // if (this.timer) {
+            //   clearTimeout(this.timer)
+            // }
+            // this.timer = setTimeout(() => {
+            //   clearTimeout(this.timer)
+            //   this.polling()
+            // }, 3000)
             // this.registeReciever()
             // for(let i in res['list']){
             //   res['list'][0].ns = '';
@@ -524,7 +523,8 @@ export class ClassroomPage {
               s_data: s_data,
               sim_id: this.sim_id,
               group_u: this.group_u,
-              lastnid: i.n_id
+              lastnid: i.n_id,
+              day:day
             })
 
           }
@@ -540,13 +540,14 @@ export class ClassroomPage {
 
           break;
       }
-      if (this.timer)
-        clearTimeout(this.timer)
+      // if (this.timer)
+      //   clearTimeout(this.timer)
     });
 
   }
 
   goGrouping() {
+    // clearTimeout(this.timer)
     this.navCtrl.push(GroupingPage, {sim_id: this.sim_id});
   }
 

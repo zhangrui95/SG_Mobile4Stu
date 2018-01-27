@@ -61,7 +61,7 @@ export class DecisionPage {
       return true
     }
   }
-
+  currDay
   constructor(public desert:DesertService,public navCtrl: NavController, public navParams: NavParams, public userData: UserData, public http: ProxyHttpService, public toastCtrl: ToastController,) {
     this.userData.getUserID().then(value => this.userId = value)
     this.n_id = this.navParams.data.n_id;
@@ -69,7 +69,7 @@ export class DecisionPage {
     this.s_data = this.navParams.data.s_data;
     this.result = JSON.parse(this.s_data[0].s_data);
     this.common = this.result['componentList'][0].data.selectData;
-
+    this.currDay = this.navParams.data.day
     this.title = this.result['componentList'][0].data.text;
     this.sim_id = this.navParams.data.sim_id
     this.group_u = this.navParams.data.group_u
@@ -96,8 +96,9 @@ export class DecisionPage {
 
     this.userData.getUserID().then(value => {
       this.userData.getCurrentDays().then(v=>{
+        console.log(v)
         this.u_id = value
-        let param = {sim_id: this.sim_id, n_id: this.n_id, u_id: this.u_id,day:v+''}
+        let param = {sim_id: this.sim_id, n_id: this.n_id, u_id: this.u_id,day:this.currDay}
         this.http.getAnswerByUId(param).subscribe(res => {
           console.log(res);
           if (res['answer'] == -1) {
@@ -143,34 +144,13 @@ export class DecisionPage {
         return;
       }
       this.userData.getSimData('simdata').then(res => {
-        if(!res){
-          res={
-            position: '1',
-            place: '营地',
-            money: 900,
-            weight: 900,
-            food: 0,
-            days: 1,
-            water: 0,
-            tent: 0,
-            compass: 0,
-            gold: 0,
-            useTent: false,
-            useCompass: false,
-            asked: false,
-            isSuccess: false,
-            isDead: false,
-            status: [],
-            events: []
-          }
-        }
-        res.days=res.days+1
+       console.log(res)
         this.param = {
           sim_id: this.sim_id,
           g_id: this.g_id,
           u_id: this.userId,
           answer: this.selectvalue,
-          current_status: res,
+          current_status: this.desert.currState,
           n_id: this.n_id,
           day:this.desert.currState.days+'',
           money: '0'
