@@ -146,7 +146,7 @@ page-gold-tounaofb {
   .shop-sy{
     font-size: 12px;
     color: #666;
-    padding: 2px 8px;
+    padding: 1px 5px;
     background: #eee;
     border: 1px solid #666;
     border-radius: 20px;
@@ -156,10 +156,11 @@ page-gold-tounaofb {
   .shop-name{
     margin: 2px 5px 0 0;
     float: left;
+    font-size: 14px;
   }
   .shop-dj,.shop-zl{
     float: left;
-    font-size: 13px;
+    font-size: 12px;
     color: #666;
   }
   .shop-dj{
@@ -196,6 +197,7 @@ page-gold-tounaofb {
   @media (max-width: 321px) {
     .pop-box{
       top: 80px;
+      z-index: 9999;
     }
     .close-btn {
       width: 40px;
@@ -269,11 +271,13 @@ page-gold-tounaofb {
     font-size: 12px;
     position: absolute;
     bottom: -5px;
-    left: -5px;
-    width: 48px;
+    left: 0;
+    width: 50px;
     text-align: center;
   }
   .fab-in-list{
+    width: 50px;
+    height: 50px;
     margin: 12px 0;
   }
   .bg-btn{
