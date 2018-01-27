@@ -153,6 +153,7 @@ export class ProxyHttpService {
       p = p.append(key, params[key])
     }
     if(!hasDay){
+
       p = p.append('day',this.desert.currState.days+"")
     }
     p = p.append("deviceType", "phone");
