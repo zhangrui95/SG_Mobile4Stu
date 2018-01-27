@@ -143,6 +143,27 @@ export class DecisionPage {
         return;
       }
       this.userData.getSimData('simdata').then(res => {
+        if(!res){
+          res={
+            position: '1',
+            place: '营地',
+            money: 900,
+            weight: 900,
+            food: 0,
+            days: 1,
+            water: 0,
+            tent: 0,
+            compass: 0,
+            gold: 0,
+            useTent: false,
+            useCompass: false,
+            asked: false,
+            isSuccess: false,
+            isDead: false,
+            status: [],
+            events: []
+          }
+        }
         res.days=res.days+1
         this.param = {
           sim_id: this.sim_id,
