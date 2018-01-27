@@ -72,7 +72,6 @@ export class ClassroomPage {
     this.userData.getAction().then(value => {
       this.action = value
       if (this.action === "phone_group") {
-        this.getProcessOfStu();
         this.allocation = true;
       }
     })
@@ -128,8 +127,7 @@ export class ClassroomPage {
               // }, 5000)
             }
 
-
-            this.getProcessOfStu();
+            // this.getProcessOfStu();
             this.scrollToBottom();
           } else if (action === "phone_group") {
             if (this.sim_id == JSON.parse(msg)['sim_id']) {
@@ -178,7 +176,7 @@ export class ClassroomPage {
     setTimeout(() => {
       this.ws.connect()
       this.registeReciever();
-      this.getProcessOfStu()
+      // this.getProcessOfStu()
     }, 1000)
 
 
