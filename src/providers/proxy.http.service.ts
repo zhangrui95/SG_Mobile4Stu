@@ -11,7 +11,7 @@ import {DesertService} from "./desert.service";
 @Injectable()
 export class ProxyHttpService {
 
-  public static IP_PORT = "http://139.196.189.173:8080";
+  public static IP_PORT = "http://192.168.0.52:8080";
   public static PROJECT_PACKAGE = "/VisualizationMgt"
   public BASE_URL = ProxyHttpService.IP_PORT + ProxyHttpService.PROJECT_PACKAGE
 
