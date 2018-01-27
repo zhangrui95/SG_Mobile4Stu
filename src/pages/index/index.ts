@@ -137,6 +137,7 @@ export class IndexPage {
                 this.userData.setIsSuccess(false)
                 this.userData.setIsLeader( false)
                 this.userData.setIsStay(false)
+                this.userData.setSimData('simdata','')
                 this.userData.setCurrentDays(1)
                 this.desert.setCurrState({
                   position: '1',
@@ -169,7 +170,7 @@ export class IndexPage {
             this.userData.setIsStay(false)
             this.userData.setIsSuccess(false)
             this.userData.setIsLeader( false)
-              this.userData.setCurrentDays(1)
+            this.userData.setSimData('simdata','')
               this.desert.setCurrState({
                 position: '1',
                 place: '营地',
