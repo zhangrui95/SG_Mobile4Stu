@@ -220,10 +220,12 @@ export class ClassroomPage {
 
             this.items = res['list'];
 
-
-            if (this.items.length > this.preCount) {
-              this.desert.setDays(Math.ceil((this.items.length - this.preCount) / 2))
+            if(this.simType=='gold'){
+              if (this.items.length > this.preCount) {
+                this.desert.setDays(Math.ceil((this.items.length - this.preCount) / 2))
+              }
             }
+
 
 
             if (this.items) {

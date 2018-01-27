@@ -569,7 +569,7 @@ export class GoldTounaofbPage {
 
       let params = {sim_id: this.sim_id, n_id: this.n_id, g_id: this.g_id}
       this.userData.getCurrentDays().then(v => {
-
+  console.log(v)
         this.http.getGoldStatus(params).subscribe(res => {
           console.log(res['listGDK'])
           if (this.name_position.indexOf('-') != -1) {
@@ -600,9 +600,7 @@ export class GoldTounaofbPage {
 
           }
           this.messages = this.desertService.getMessagesFromOlder()
-          if (this.currentStatus) {
-            this.desertService.currState.days = v;
-          }
+
           this.currentStatus = this.desertService.getCurrState()
           this.desertService.updateStatus()
 
@@ -740,7 +738,7 @@ export class GoldTounaofbPage {
     if (!this.group_u) {
       return
     }
-    this.userData.setIsStay(true)
+    this.userData.setIsStay(this.stay)
     this.desertService.getCurrState().useCompass=this.useCompass
     this.desertService.getCurrState().useTent=this.useTent
     let pas = {

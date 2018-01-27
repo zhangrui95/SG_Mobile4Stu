@@ -3,6 +3,7 @@ import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angula
 import {UsersPage} from "../users/users";
 import {ProxyHttpService} from "../../providers/proxy.http.service";
 import {UserData} from "../../providers/user-data";
+import {DesertService} from "../../providers/desert.service";
 
 @IonicPage()
 @Component({
@@ -61,7 +62,7 @@ export class DecisionPage {
     }
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userData: UserData, public http: ProxyHttpService, public toastCtrl: ToastController,) {
+  constructor(public desert:DesertService,public navCtrl: NavController, public navParams: NavParams, public userData: UserData, public http: ProxyHttpService, public toastCtrl: ToastController,) {
     this.userData.getUserID().then(value => this.userId = value)
     this.n_id = this.navParams.data.n_id;
     this.g_id = this.navParams.data.g_id;
@@ -94,17 +95,20 @@ export class DecisionPage {
     }
 
     this.userData.getUserID().then(value => {
-      this.u_id = value
-      let param = {sim_id: this.sim_id, n_id: this.n_id, u_id: this.u_id}
-      this.http.getAnswerByUId(param).subscribe(res => {
-        console.log(res);
-        if (res['answer'] == -1) {
-          this.btnShow = true;
-        } else {
-          this.common[res['answer']].Checked = true;
-          this.btnShow = false;
-        }
+      this.userData.getCurrentDays().then(v=>{
+        this.u_id = value
+        let param = {sim_id: this.sim_id, n_id: this.n_id, u_id: this.u_id,day:v+''}
+        this.http.getAnswerByUId(param).subscribe(res => {
+          console.log(res);
+          if (res['answer'] == -1) {
+            this.btnShow = true;
+          } else {
+            this.common[res['answer']].Checked = true;
+            this.btnShow = false;
+          }
+        })
       })
+
     })
     // this.getAnswerOfStuList();
   }
@@ -146,7 +150,8 @@ export class DecisionPage {
           answer: this.selectvalue,
           current_status: res,
           n_id: this.n_id,
-          money: ''
+          day:this.desert.currState.days+'',
+          money: '0'
         };
         if (this.selectvalue != '') {
           if (this.simType == 'gold') {
