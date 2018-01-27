@@ -15,7 +15,7 @@
   </div>
   <div style="padding-top: 30px;padding-left: 5%;padding-right: 5%;padding-bottom: 30px;">
     <div class="place-name">{{getPlace()}}<span style="font-size: 14px" *ngIf="lost&&lostDuration>0">({{'迷路-剩余'+lostDuration+'天'}})</span></div>
-    <div class="place-name time">第{{currentStatus.days}}天</div>
+    <div class="place-name time">第{{desertService.currState.days}}天</div>
     <div class="tnfb-tilte">
       <!--{{title}}-->
       接下来该做什么
@@ -74,7 +74,7 @@
       <ion-icon name="arrow-dropup"></ion-icon>
     </button>
     <ion-fab-list side="top">
-      <div style="position: relative;" *ngIf="currentStatus.place=='营地'">
+      <div style="position: relative;" *ngIf="desertService.currState.place=='营地'">
         <button ion-fab (click)="lrPop()"><img src="assets/img/bot3.png"/></button>
         <span class="fab-name">老人解答</span>
       </div>
@@ -87,7 +87,7 @@
         <span class="fab-name">背包</span>
       </div>
       <div style="position: relative;"
-           *ngIf="currentStatus.place=='营地'||currentStatus.place=='村庄'||currentStatus.place=='绿洲'||(currentStatus.place=='矿山'&&canDigInMountain())">
+           *ngIf="desertService.currState.place=='营地'||desertService.currState.place=='村庄'||desertService.currState.place=='绿洲'||(desertService.currState.place=='矿山'&&canDigInMountain())">
         <button ion-fab (click)="bjPop()"><img src="assets/img/bot2.png"/></button>
         <span class="fab-name">补给</span>
       </div>
@@ -107,14 +107,14 @@
           <img src="assets/img/fz.png" class="float-l fz-img"/>
           <div class="float-l syfz">
             <div class="syfz-name">剩余负重</div>
-            <div class="num-fz">{{currentStatus.weight}}</div>
+            <div class="num-fz">{{desertService.currState.weight}}</div>
           </div>
         </div>
         <div class="float-r" style="margin-right: 10px;">
           <img src="assets/img/jq.png" class="float-l fz-img"/>
           <div class="float-l syfz">
             <div class="syfz-name">剩余金钱</div>
-            <div class="num-fz">{{currentStatus.money}}</div>
+            <div class="num-fz">{{desertService.currState.money}}</div>
           </div>
         </div>
       </div>
@@ -183,14 +183,14 @@
           <img src="assets/img/fz.png" class="float-l fz-img"/>
           <div class="float-l syfz">
             <div class="syfz-name">剩余负重</div>
-            <div class="num-fz">{{currentStatus.weight}}</div>
+            <div class="num-fz">{{desertService.currState.weight}}</div>
           </div>
         </div>
         <div class="float-r" style="margin-right: 10px;">
           <img src="assets/img/jq.png" class="float-l fz-img"/>
           <div class="float-l syfz">
             <div class="syfz-name">剩余金钱</div>
-            <div class="num-fz">{{currentStatus.money}}</div>
+            <div class="num-fz">{{desertService.currState.money}}</div>
           </div>
         </div>
       </div>
@@ -199,7 +199,7 @@
           <img src="assets/img/dj1.png"/>
           <div class="w-100">
             <div class="float-l">水</div>
-            <div class="float-r">×{{currentStatus.water}}</div>
+            <div class="float-r">×{{desertService.currState.water}}</div>
           </div>
           <div class="w-100">
             <!--<div class="float-l user-btn" (click)="">使用</div>-->
@@ -210,7 +210,7 @@
           <img src="assets/img/dj2.png"/>
           <div class="w-100">
             <div class="float-l">食物</div>
-            <div class="float-r">×{{currentStatus.food}}</div>
+            <div class="float-r">×{{desertService.currState.food}}</div>
           </div>
           <div class="w-100">
             <!--<div class="float-l user-btn">使用</div>-->
@@ -221,7 +221,7 @@
           <img src="assets/img/dj3.png"/>
           <div class="w-100">
             <div class="float-l">帐篷</div>
-            <div class="float-r">×{{currentStatus.tent}}</div>
+            <div class="float-r">×{{desertService.currState.tent}}</div>
           </div>
           <div class="w-100">
             <div class="float-l user-btn" (click)="userAction('use','tent',1)">使用</div>
@@ -232,7 +232,7 @@
           <img src="assets/img/dj4.png"/>
           <div class="w-100">
             <div class="float-l">指南针</div>
-            <div class="float-r">×{{currentStatus.compass}}</div>
+            <div class="float-r">×{{desertService.currState.compass}}</div>
           </div>
           <div class="w-100">
             <div class="float-l user-btn" (click)="userAction('use','compass',1)">使用</div>
@@ -243,7 +243,7 @@
           <img src="assets/img/dj5.png"/>
           <div class="w-100">
             <div class="float-l">金子</div>
-            <div class="float-r">×{{currentStatus.gold}}</div>
+            <div class="float-r">×{{desertService.currState.gold}}</div>
           </div>
           <div class="w-100">
             <div class="float-r user-btn give-up" (click)="userAction('throw','gold',1)">丢弃</div>

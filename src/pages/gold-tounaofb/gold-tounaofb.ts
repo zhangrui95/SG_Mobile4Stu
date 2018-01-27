@@ -145,8 +145,8 @@ export class GoldTounaofbPage {
   isLost() {
     this.lost = this.desertService.isGetLost()
     if (this.lost) {
-      if (this.currentStatus.status) {
-        for (let statu of  this.currentStatus.status) {
+      if (this.desertService.getCurrState().status) {
+        for (let statu of  this.desertService.getCurrState().status) {
           if (statu.status_type == STATUS_GET_LOST) {
 
             this.lostDuration = statu.status_duration
@@ -173,7 +173,7 @@ export class GoldTounaofbPage {
 
   canDigInMountain() {
 
-    for (let statu of this.currentStatus.status) {
+    for (let statu of this.desertService.getCurrState().status) {
       if (statu.status_type == STATUS_CAN_DIG_IN_MOUNTAIN) {
         return true
       }
@@ -181,7 +181,7 @@ export class GoldTounaofbPage {
     return false
   }
 
-
+  currDay
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public userData: UserData,
@@ -195,6 +195,7 @@ export class GoldTounaofbPage {
     this.userData.getUserID().then(value => this.userId = value)
     this.n_id = this.navParams.data.n_id
     this.g_id = this.navParams.data.g_id
+    this.currDay = this.navParams.data.day
     this.s_data = this.navParams.data.s_data
     this.isHistory = this.navParams.data.isHistory
     this.name_position = this.navParams.data.name_position
@@ -209,7 +210,7 @@ export class GoldTounaofbPage {
   }
 
   getPlace() {
-    switch (this.currentStatus.place) {
+    switch (this.desertService.getCurrState().place) {
       case PLACE_START:
         return '营地'
       case PLACE_DESERT:
@@ -248,6 +249,7 @@ export class GoldTounaofbPage {
         clearTimeout(this.timer)
       }
       this.timer = setTimeout(() => {
+        clearTimeout(this.timer)
         this.polling()
       }, 5000)
     });
@@ -299,14 +301,14 @@ export class GoldTounaofbPage {
   goods = [];
 
   setGoods() {
-    switch (this.currentStatus.place) {
+    switch (this.desertService.getCurrState().place) {
       case PLACE_START:
         this.goods = [
           {
             type: ITEM_WATER,
             name: '水',
             num: 0,
-            remain: this.currentStatus.water,
+            remain: this.desertService.getCurrState().water,
             weight: this.getPriceAndWeight(ITEM_WATER).weight,
             price: this.getPriceAndWeight(ITEM_WATER).price,
             image:'assets/img/dj1.png'
@@ -315,7 +317,7 @@ export class GoldTounaofbPage {
             type: ITEM_FOOD,
             name: '食物',
             num: 0,
-            remain: this.currentStatus.food,
+            remain: this.desertService.getCurrState().food,
             weight: this.getPriceAndWeight(ITEM_FOOD).weight,
             price: this.getPriceAndWeight(ITEM_FOOD).price,
             image:'assets/img/dj2.png'
@@ -325,7 +327,7 @@ export class GoldTounaofbPage {
             type: ITEM_COMPASS,
             name: '指南针',
             num: 0,
-            remain: this.currentStatus.compass,
+            remain: this.desertService.getCurrState().compass,
             weight: this.getPriceAndWeight(ITEM_COMPASS).weight,
             price: this.getPriceAndWeight(ITEM_COMPASS).price,
             image:'assets/img/dj4.png'
@@ -335,7 +337,7 @@ export class GoldTounaofbPage {
             type: ITEM_TENT,
             name: '帐篷',
             num: 0,
-            remain: this.currentStatus.tent,
+            remain: this.desertService.getCurrState().tent,
             weight: this.getPriceAndWeight(ITEM_TENT).weight,
             price: this.getPriceAndWeight(ITEM_TENT).price,
             image:'assets/img/dj3.png'
@@ -348,7 +350,7 @@ export class GoldTounaofbPage {
             type: ITEM_WATER,
             name: '水',
             num: 0,
-            remain: this.currentStatus.water,
+            remain:this.desertService.getCurrState().water,
             weight: this.getPriceAndWeight(ITEM_WATER).weight,
             price: this.getPriceAndWeight(ITEM_WATER).price,
             image:''
@@ -362,7 +364,7 @@ export class GoldTounaofbPage {
             type: ITEM_WATER,
             name: '水',
             num: 0,
-            remain: this.currentStatus.water,
+            remain: this.desertService.getCurrState().water,
             weight: this.getPriceAndWeight(ITEM_WATER).weight,
             price: this.getPriceAndWeight(ITEM_WATER).price,
             image:''
@@ -371,7 +373,7 @@ export class GoldTounaofbPage {
             type: ITEM_FOOD,
             name: '食物',
             num: 0,
-            remain: this.currentStatus.food,
+            remain:this.desertService.getCurrState().food,
             weight: this.getPriceAndWeight(ITEM_FOOD).weight,
             price: this.getPriceAndWeight(ITEM_FOOD).price,
             image:''
@@ -384,7 +386,7 @@ export class GoldTounaofbPage {
             type: ITEM_WATER,
             name: '水',
             num: 0,
-            remain: this.currentStatus.water,
+            remain: this.desertService.getCurrState().water,
             weight: this.getPriceAndWeight(ITEM_WATER).weight,
             price: this.getPriceAndWeight(ITEM_WATER).price,
             image:''
@@ -419,7 +421,6 @@ export class GoldTounaofbPage {
   useTent = false;
 
   userAction(type, item?, count?) {
-    console.log(this.currentStatus)
 
     if (!this.group_u) {
       this.showToast('bottom', "只有领队可以执行")
@@ -437,16 +438,16 @@ export class GoldTounaofbPage {
             good.num = 0
             switch (good.type) {
               case ITEM_WATER:
-                good.remain = this.currentStatus.water
+                good.remain =  this.desertService.getCurrState().water
                 break;
               case ITEM_COMPASS:
-                good.remain = this.currentStatus.compass
+                good.remain = this.desertService.getCurrState().compass
                 break;
               case ITEM_FOOD:
-                good.remain = this.currentStatus.food
+                good.remain = this.desertService.getCurrState().food
                 break;
               case ITEM_TENT:
-                good.remain = this.currentStatus.tent
+                good.remain = this.desertService.getCurrState().tent
                 break;
             }
           }
@@ -504,21 +505,20 @@ export class GoldTounaofbPage {
 
     }
 
-    this.currentStatus = this.desertService.getCurrState()
     for (let good of this.goods) {
 
       switch (good.type) {
         case ITEM_FOOD:
-          good.remain = this.currentStatus.food
+          good.remain = this.desertService.getCurrState().food
           break;
         case ITEM_WATER:
-          good.remain = this.currentStatus.water
+          good.remain = this.desertService.getCurrState().water
           break;
         case ITEM_COMPASS:
-          good.remain = this.currentStatus.compass
+          good.remain = this.desertService.getCurrState().compass
           break;
         case ITEM_TENT:
-          good.remain = this.currentStatus.tent
+          good.remain = this.desertService.getCurrState().tent
           break;
 
       }
@@ -526,23 +526,8 @@ export class GoldTounaofbPage {
     }
   }
 
-  currentStatus = {
-    position: '1',
-    place: PLACE_START,
-    money: 900,
-    weight: 900,
-    food: 0,
-    days: 1,
-    water: 0,
-    tent: 0,
-    compass: 0,
-    gold: 0,
-    asked: false,
-    isSuccess: false,
-    isDead: false,
-    status: [],
-    events: []
-  };
+
+
   common
   result
   name_position
@@ -556,7 +541,7 @@ export class GoldTounaofbPage {
       this.sim_id = res;
 
 
-      this.userData.getAlready(this.sim_id + this.n_id + this.currentStatus.days).then(res => {
+      this.userData.getAlready(this.sim_id + this.n_id + this.desertService.currState.days).then(res => {
         console.log(res)
         this.already = res
       });
@@ -567,7 +552,7 @@ export class GoldTounaofbPage {
       this.title = this.common.title;
       this.content = this.common.content;
 
-      let params = {sim_id: this.sim_id, n_id: this.n_id, g_id: this.g_id}
+      let params = {sim_id: this.sim_id, n_id: this.n_id, g_id: this.g_id,day:this.currDay}
       this.userData.getCurrentDays().then(v => {
   console.log(v)
         this.http.getGoldStatus(params).subscribe(res => {
@@ -600,7 +585,6 @@ export class GoldTounaofbPage {
 
           }
           this.messages = this.desertService.getMessagesFromOlder()
-          this.currentStatus = this.desertService.getCurrState()
           this.desertService.updateStatus()
 
           this.setGoods();
@@ -613,7 +597,7 @@ export class GoldTounaofbPage {
                 {
 
                   if (!v && !e) {
-                    if (this.currentStatus.place == PLACE_START && this.currentStatus.days > 1) {
+                    if (this.desertService.getCurrState().place == PLACE_START && this.desertService.getCurrState().days > 1) {
                       //若在开始位置且天数>1 判断是否结算
                       let f = confirm("是否出售所有黄金并等待结算？");
                       if (f) {
@@ -628,22 +612,22 @@ export class GoldTounaofbPage {
                           console.log(res)
                           let count = +res['totalRanking']
                           count = count + 1
-                          let money = this.currentStatus.money;
+                          let money = this.desertService.getCurrState().money;
                           switch (count) {
                             case 1:
-                              money = money + (this.currentStatus.gold * 50 * 100)
+                              money = money + (this.desertService.getCurrState().gold * 50 * 100)
                               break;
                             case 2:
-                              money = money + (this.currentStatus.gold * 50 * 90)
+                              money = money + (this.desertService.getCurrState().gold * 50 * 90)
                               break;
                             case 3:
-                              money = money + (this.currentStatus.gold * 50 * 85)
+                              money = money + (this.desertService.getCurrState().gold * 50 * 85)
                               break;
                             case 4:
-                              money = money + (this.currentStatus.gold * 50 * 80)
+                              money = money + (this.desertService.getCurrState().gold * 50 * 80)
                               break;
                             default:
-                              money = money + (this.currentStatus.gold * 50 * 75)
+                              money = money + (this.desertService.getCurrState().gold * 50 * 75)
                               break;
 
 
@@ -652,7 +636,7 @@ export class GoldTounaofbPage {
                             sim_id: this.sim_id,
                             g_id: this.g_id,
                             n_id: this.n_id,
-                            current_status: this.currentStatus,
+                            current_status: this.desertService.getCurrState(),
                             money: money + '',
                             answer: ''
                           }
@@ -686,14 +670,14 @@ export class GoldTounaofbPage {
 
             }
           })
-          if (this.currentStatus.place == PLACE_TOMBS) {
+          if (this.desertService.getCurrState().place == PLACE_TOMBS) {
             //若在王陵 获得随机事件
             if (this.group_u) {
-              this.userData.getAlready(this.sim_id + this.n_id + this.currentStatus.days).then(res => {
+              this.userData.getAlready(this.sim_id + this.n_id + this.desertService.getCurrState().days).then(res => {
                 if (!res) {
                   let result = this.desertService.trigRandomEvent()
                   this.showToast('bottom', result.msg)
-                  this.userData.setAlready(this.sim_id + this.n_id + this.currentStatus.days, true)
+                  this.userData.setAlready(this.sim_id + this.n_id + this.desertService.getCurrState().days, true)
                 } else {
 
                 }
@@ -746,7 +730,8 @@ export class GoldTounaofbPage {
       money: '0',
       sim_id: this.sim_id,
       n_id: this.n_id,
-      g_id: this.g_id
+      g_id: this.g_id,
+      day:this.currDay
     }
 
     this.http.updateRankingData(pas).subscribe(res => {
@@ -803,7 +788,7 @@ export class GoldTounaofbPage {
   getPriceAndWeight(type) {
 
 
-    return this.desertService.getUnitWeightAndUnitPrice(type, this.currentStatus.place)
+    return this.desertService.getUnitWeightAndUnitPrice(type, this.desertService.getCurrState().place)
   }
 
   answer
@@ -824,18 +809,17 @@ export class GoldTounaofbPage {
     this.lrClickPopShow = true;
     this.lrPopShow = false;
     this.btmMore = false;
-    this.currentStatus.asked = true;
-    this.desertService.getCurrState().asked = false;
-    this.userData.setAlready(this.sim_id + this.n_id + this.currentStatus.days, true)
+    this.desertService.getCurrState().asked = true;
 
-    this.currentStatus = this.desertService.getCurrState()
+    this.userData.setAlready(this.sim_id + this.n_id + this.desertService.getCurrState().days, true)
+
 
   }
 
   mapsrc
 
   MapShow() {
-    this.mapsrc = 'assets/img/' + this.currentStatus.position + '.png'
+    this.mapsrc = 'assets/img/' + this.desertService.currState.position + '.png'
     this.mapShow = true;
     this.btmMore = false;
   }
@@ -847,17 +831,17 @@ export class GoldTounaofbPage {
 
   getImgBg() {
     console.log(this.type);
-    if (this.currentStatus.place == PLACE_START) {
+    if (this.desertService.currState.place == PLACE_START) {
       this.ImgBg = 'assets/img/bj1.png';
-    } else if (this.currentStatus.place == PLACE_OASIS) {
+    } else if (this.desertService.currState.place == PLACE_OASIS) {
       this.ImgBg = 'assets/img/bj2.png';
-    } else if (this.currentStatus.place == PLACE_VILLIGE) {
+    } else if (this.desertService.currState.place == PLACE_VILLIGE) {
       this.ImgBg = 'assets/img/bj3.png';
-    } else if (this.currentStatus.place == PLACE_DESERT) {
+    } else if (this.desertService.currState.place == PLACE_DESERT) {
       this.ImgBg = 'assets/img/bj4.png';
-    } else if (this.currentStatus.place == PLACE_TOMBS) {
+    } else if (this.desertService.currState.place == PLACE_TOMBS) {
       this.ImgBg = 'assets/img/bj5.png';
-    }else if(this.currentStatus.place == PLACE_END){
+    }else if(this.desertService.currState.place == PLACE_END){
       this.ImgBg = 'assets/img/bj66.png';
     }
   }

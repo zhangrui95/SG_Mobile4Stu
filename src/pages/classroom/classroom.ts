@@ -59,6 +59,10 @@ export class ClassroomPage {
 
   ionViewDidEnter() {
     this.isComeback = true;
+
+    if (this.timer) {
+      clearTimeout(this.timer)
+    }
     this.polling()
     this.ws.connect();
     this.userData.getIsDead().then(v => {
@@ -89,6 +93,56 @@ export class ClassroomPage {
     if (this.ws.messages) {
       this.registeReciever()
     }
+    const params = {sim_id: this.sim_id, u_id: this.userId};
+    this.http.getProcessOfStu(params).subscribe(res => {
+
+      let tItems = res['list']
+      if (tItems.length> (this.preCount))
+        this.desert.setDays(Math.ceil((tItems.length - this.preCount) / 2))
+      let curr = this.desert.getCurrState().days
+      let currN;
+      for (let i = tItems.length - 1; i >= 0; i--) {
+
+        if (tItems[i].n_name.indexOf('.') == -1) {
+          currN = tItems[i]
+          this.currNode = tItems[i]
+          break;
+        }
+      }
+      this.showToast('top', '第' + curr + '天')
+      let params = {sim_id: this.sim_id, n_id: currN.n_id, g_id: this.g_id, day: curr}
+      this.http.getGoldStatus(params).subscribe(res => {
+        console.log(res)
+        if (currN.n_name.indexOf('-') != -1) {
+          let arr = currN.n_name.split('-')
+          if (res['listGDK'].length > 0) {
+            this.desert.setCurrState(JSON.parse(res['listGDK'][0]['current_status']), arr[0], arr[1].split('.')[0])
+          } else {
+            this.desert.setCurrState({
+              position: '1',
+              place: '营地',
+              money: 900,
+              weight: 900,
+              food: 0,
+              days: 1,
+              water: 0,
+              tent: 0,
+              compass: 0,
+              gold: 0,
+              useTent: false,
+              useCompass: false,
+              asked: false,
+              isSuccess: false,
+              isDead: false,
+              status: [],
+              events: []
+            }, arr[0], arr[1].split('.')[0])
+
+          }
+        }
+      })
+    })
+
 
   }
 
@@ -205,6 +259,7 @@ export class ClassroomPage {
               clearTimeout(this.timer)
             }
             this.timer = setTimeout(() => {
+              clearTimeout(this.timer)
               this.polling()
             }, 3000)
             // this.registeReciever()
@@ -218,12 +273,12 @@ export class ClassroomPage {
 
             this.items = res['list'];
 
-            if(this.simType=='gold'){
+
+            if (this.simType == 'gold') {
               if (this.items.length > this.preCount) {
                 this.desert.setDays(Math.ceil((this.items.length - this.preCount) / 2))
               }
             }
-
 
 
             if (this.items) {
@@ -398,11 +453,10 @@ export class ClassroomPage {
       return
     }
     this.itemClicked = true
-    let count = 2;
-
-    if (index > count) {
-
-      this.userData.setCurrentDays(Math.ceil((index - count) / 2) )
+    let day = 1;
+    if ((index+1) >  this.preCount) {
+      day = Math.ceil(((index+1) - this.preCount) / 2)
+      // this.userData.setCurrentDays(Math.ceil((index - count) / 2) )
     }
     let param = {
       n_id: nid
@@ -448,6 +502,7 @@ export class ClassroomPage {
                 sim_id: this.sim_id,
                 group_u: this.group_u,
                 lastnid: i.n_id
+                , day: day
               })
 
             }
@@ -485,8 +540,8 @@ export class ClassroomPage {
 
           break;
       }
-      if(this.timer)
-      clearTimeout(this.timer)
+      if (this.timer)
+        clearTimeout(this.timer)
     });
 
   }
