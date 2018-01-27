@@ -143,6 +143,7 @@ export class DecisionPage {
         return;
       }
       this.userData.getSimData('simdata').then(res => {
+        res.days=res.days+1
         this.param = {
           sim_id: this.sim_id,
           g_id: this.g_id,

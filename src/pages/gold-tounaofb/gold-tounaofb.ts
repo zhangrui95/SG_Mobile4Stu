@@ -600,7 +600,6 @@ export class GoldTounaofbPage {
 
           }
           this.messages = this.desertService.getMessagesFromOlder()
-
           this.currentStatus = this.desertService.getCurrState()
           this.desertService.updateStatus()
 
@@ -859,7 +858,7 @@ export class GoldTounaofbPage {
     } else if (this.currentStatus.place == PLACE_TOMBS) {
       this.ImgBg = 'assets/img/bj5.png';
     }else if(this.currentStatus.place == PLACE_END){
-      this.ImgBg = 'assets/img/bj5.png';
+      this.ImgBg = 'assets/img/bj66.png';
     }
   }
   back(){

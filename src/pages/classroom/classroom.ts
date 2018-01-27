@@ -404,7 +404,7 @@ export class ClassroomPage {
 
     if (index > count) {
 
-      this.userData.setCurrentDays(Math.ceil((index - count) / 2) + 1)
+      this.userData.setCurrentDays(Math.ceil((index - count) / 2) )
     }
     let param = {
       n_id: nid
@@ -487,6 +487,8 @@ export class ClassroomPage {
 
           break;
       }
+      if(this.timer)
+      clearTimeout(this.timer)
     });
 
   }
