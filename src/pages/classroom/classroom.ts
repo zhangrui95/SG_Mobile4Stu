@@ -38,6 +38,7 @@ export class ClassroomPage {
   group_u = false;
   isComeback = true
   action;
+  loadShow = false;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,

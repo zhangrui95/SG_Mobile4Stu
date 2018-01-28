@@ -66,6 +66,7 @@ export class GoldTounaofbPage {
   lostDuration
   group_u;
   sendBtn = true;
+  loadShow =  false;
 
   refreshData() {
 
